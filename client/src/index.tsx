@@ -4,7 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./Components/User/Login";
+import Login from "./Routes/Login";
+import Register from "./Routes/Register";
+import Error from "./Components/Error";
 
 // type createBrowserRouter(
 //   routes: RouteObject[],
@@ -14,10 +16,32 @@ import Login from "./Components/User/Login";
 //   }
 // ): RemixRouter;
 
+// interface RouteObject {
+//   path?: string;
+//   index?: boolean;
+//   children?: React.ReactNode;
+//   caseSensitive?: boolean;
+//   id?: string;
+//   loader?: LoaderFunction;
+//   action?: ActionFunction;
+//   element?: React.ReactNode | null;
+//   Component?: React.ComponentType | null;
+//   errorElement?: React.ReactNode | null;
+//   ErrorBoundary?: React.ComponentType | null;
+//   handle?: RouteObject["handle"];
+//   shouldRevalidate?: ShouldRevalidateFunction;
+//   lazy?: LazyRouteFunction<RouteObject>;
+// }
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 

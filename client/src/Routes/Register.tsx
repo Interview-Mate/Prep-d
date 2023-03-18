@@ -1,10 +1,12 @@
+//classname signup label not rendering
+
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 
-export default function Login() {
+export default function Register() {
   return (
     <>
       {/*
-        This Login requires updating your template:
+        This Register requires updating your template:
 
         ```
         <html class="h-full bg-gray-50">
@@ -20,28 +22,59 @@ export default function Login() {
               alt="Your Company"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Sign in to your account
+              Sign up
             </h2>
           </div>
           <form className="mt-8 space-y-6" action="#" method="POST">
-            <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-                <label htmlFor="email-address" className="sr-only">
+                <label htmlFor="first-name" className="signup-label">
+                  First name
+                </label>
+                <input
+                  id="first-name"
+                  name="firstname"
+                  autoComplete="firstname"
+                  required
+                  //need to  move this elsewhere
+                  style={{ paddingLeft: 12 }}
+                  className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="First name"
+                />
+              </div>
+              <div>
+                <label htmlFor="last-name" className="signup-label">
+                  Last name
+                </label>
+                <input
+                  id="last-name"
+                  name="lastname"
+                  autoComplete="lastname"
+                  required
+                  //need to  move this elsewhere
+                  style={{ paddingLeft: 12 }}
+                  className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="Last name"
+                />
+              </div>
+              <div>
+                <label htmlFor="last-name" className="signup-label">
                   Email address
                 </label>
                 <input
-                  id="email-address"
+                  id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
+                  //need to  move this elsewhere
+                  style={{ paddingLeft: 12 }}
                   className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   placeholder="Email address"
                 />
               </div>
               <div>
-                <label htmlFor="password" className="sr-only">
+                <label htmlFor="password" className="signup-label">
                   Password
                 </label>
                 <input
@@ -53,6 +86,21 @@ export default function Login() {
                   className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   placeholder="Password"
                 />
+              </div>
+              <div>
+                <label htmlFor="password" className="signup-label">
+                  IT Specialization
+                </label>
+                <select
+                  id="specialization"
+                  name="specialization"
+                  autoComplete="specialization"
+                  required
+                  className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option value="frontend">Frontend</option>
+                  <option value="backend">Backend</option>
+                </select>
               </div>
             </div>
 
@@ -71,15 +119,6 @@ export default function Login() {
                   Remember me
                 </label>
               </div>
-
-              <div className="text-sm">
-                <a
-                  href="register"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Don't have an account yet? Sign up here!
-                </a>
-              </div>
             </div>
 
             <div>
@@ -93,7 +132,7 @@ export default function Login() {
                     aria-hidden="true"
                   />
                 </span>
-                Sign in
+                Sign up
               </button>
             </div>
           </form>
