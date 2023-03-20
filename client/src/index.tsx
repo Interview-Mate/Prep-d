@@ -6,32 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Routes/Login";
 import Register from "./Routes/Register";
+import Dashboard from "./Routes/Dashboard";
 import Error from "./Components/Error";
-
-// type createBrowserRouter(
-//   routes: RouteObject[],
-//   opts?: {
-//     basename?: string;
-//     window?: Window;
-//   }
-// ): RemixRouter;
-
-// interface RouteObject {
-//   path?: string;
-//   index?: boolean;
-//   children?: React.ReactNode;
-//   caseSensitive?: boolean;
-//   id?: string;
-//   loader?: LoaderFunction;
-//   action?: ActionFunction;
-//   element?: React.ReactNode | null;
-//   Component?: React.ComponentType | null;
-//   errorElement?: React.ReactNode | null;
-//   ErrorBoundary?: React.ComponentType | null;
-//   handle?: RouteObject["handle"];
-//   shouldRevalidate?: ShouldRevalidateFunction;
-//   lazy?: LazyRouteFunction<RouteObject>;
-// }
 
 const router = createBrowserRouter([
   {
@@ -42,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 

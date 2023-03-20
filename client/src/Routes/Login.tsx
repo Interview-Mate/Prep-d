@@ -1,7 +1,13 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import triallogo from "../TrialLogo.JPG";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/dashboard");
+  }
+
   return (
     <>
       {/*
@@ -87,6 +93,7 @@ export default function Login() {
               <button
                 type="submit"
                 className="group relative flex w-full justify-center rounded-md bg-african-violet-900 py-2 px-3 text-sm font-semibold text-white hover:bg-african-violet-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                onClick={handleClick}
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                   <LockClosedIcon
