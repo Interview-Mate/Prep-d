@@ -117,3 +117,9 @@ interface User {
   level: string;
   id?: string;
 }
+type Result = {
+  input: string;
+  output: string | null;
+  error: string | null;
+};
+
