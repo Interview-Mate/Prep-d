@@ -1,6 +1,5 @@
 /// <reference types="react-scripts" />
 
-<<<<<<< HEAD
 //general types
 declare module "*.JPG";
 
@@ -49,7 +48,6 @@ type Err = {
   statusText?: string;
   message?: string;
 };
-=======
 
 type Problem = {
   // _id: string;
@@ -69,4 +67,10 @@ type Solution = any[];
 type Dict = {
   [key: number]: string;
 };
->>>>>>> ff913cd ([FE][CodeEditor] [Basic Funtionality])
+
+type Result = {
+  input: string;
+  output: string | null;
+  error: string | null;
+};
+

@@ -8,7 +8,7 @@ import {
   // SandpackSetup,
 } from '@codesandbox/sandpack-react';
 import { intervalToDuration } from 'date-fns';
-// import { VM } from 'vm2';
+import { run } from '../utils/safeEval';
 import CodeInsights from './CodeEditor/CodeInsights';
 
 import {
@@ -116,46 +116,38 @@ function CodeEditor() {
   };
 
   const runCode = async () => {
-    try {
-      setTests(0);
-      const startTime1 = performance.now();
-      // const result1 = eval(problem?.function + problem?.solution1[0]);
-      const result1 = eval(userInput + problem?.solution1[0]);
-      const endTime1 = performance.now();
+    setTests(0);
+    const startTime1 = performance.now();
+    const result1 = run(userInput + problem?.solution1[0]);
+    const endTime1 = performance.now();
 
-      const startTime2 = performance.now();
-      // const result2 = eval(problem?.function + problem?.solution2[0]);
-      const result2 = eval(userInput + problem?.solution2[0]);
-      const endTime2 = performance.now();
+    const startTime2 = performance.now();
+    const result2 = run(userInput + problem?.solution2[0]);
+    const endTime2 = performance.now();
 
-      const averageTime = (endTime1 - startTime1 + (endTime2 - startTime2)) / 2;
-
-      console.log('runCode');
-      // const result3 =new VM().run(problem.function + problem.solution2[0]);
-      // console.log(result3)
-
-      if (result1 === problem?.solution1[1])
-        setTests((prevTests) => prevTests + 1);
-      if (result2 === problem?.solution2[1])
-        setTests((prevTests) => prevTests + 1);
-      if (
-        result1 === problem?.solution1[1] &&
-        result2 === problem?.solution2[1]
-      ) {
-        const endTime = performance.now();
-        setSolveTime(endTime - solveTime);
-        setRuntime(averageTime);
-        if (!solved) setScore((prevScore: number) => prevScore + 100);
-        setSolved(true);
-        setError('');
-      } else {
-        if (solved) setScore((prevScore: number) => prevScore - 100);
-        setSolved(false);
-      }
-    } catch (error) {
+    const averageTime = (endTime1 - startTime1 + (endTime2 - startTime2)) / 2;
+    console.log(result1.output, result2.output)
+    if (result1.output === problem?.solution1[1])
+      setTests((prevTests) => prevTests + 1);
+    if (result2.output === problem?.solution2[1])
+      setTests((prevTests) => prevTests + 1);
+    if (
+      result1.output === problem?.solution1[1] &&
+      result2.output === problem?.solution2[1]
+    ) {
+      const endTime = performance.now();
+      setSolveTime(endTime - solveTime);
+      setRuntime(averageTime);
+      if (!solved) setScore((prevScore: number) => prevScore + 100);
+      setSolved(true);
+      setError('');
+    } else if (result1.error !== '') {
+      if (solved) setScore((prevScore: number) => prevScore - 100);
+      setError(result1.error);
+      setSolved(false);
+    } else {
       if (solved) setScore((prevScore: number) => prevScore - 100);
       setSolved(false);
-      setError(`${error}`);
     }
   };
 
