@@ -8,6 +8,12 @@ import Login from "./Routes/Login";
 import Register from "./Routes/Register";
 import Dashboard from "./Routes/Dashboard";
 import Error from "./Components/Error";
+import Coding from "./Routes/Coding";
+import Interview from "./Routes/Interview";
+import PastInterviews from "./Routes/PastInterviews";
+import Profile from "./Routes/Profile";
+import Settings from "./Routes/Settings";
+import Insights from "./Routes/Insights";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +29,36 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/codingtest",
+    element: <Coding />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/interview",
+    element: <Interview />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/pastinterviews",
+    element: <PastInterviews />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/settings",
+    element: <Settings />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/insights",
+    element: <Insights />,
     errorElement: <Error />,
   },
 ]);

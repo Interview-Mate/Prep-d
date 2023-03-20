@@ -85,7 +85,7 @@ export default function Register() {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="signup-label">
+                <label htmlFor="specialization" className="signup-label">
                   IT Specialization
                 </label>
                 <select
