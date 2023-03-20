@@ -57,6 +57,7 @@ type Problem = {
   function: string | undefined;
   solution1: Solution;
   solution2: Solution;
+  solution3: Solution;
   language: string;
   level: number;
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export const run = function (code: string) {
   const result = {
     input: code,
@@ -6,8 +7,7 @@ export const run = function (code: string) {
   };
 
   try {
-    result.output = stringify(runHidden(code));
-    result.output = JSON.parse(result.output);
+    result.output = runHidden(code);
   } catch (e: any) {
     result.error = e.message;
   }

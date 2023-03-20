@@ -6,6 +6,7 @@ export const problem1 = {
   function: 'function add(a, b) {\n\n  //Insert your code \n\n};',
   solution1: ['add(1, 1);', 2],
   solution2: ['add(2, 8);', 10],
+  solution3: ['add(44, 3);', 47],
   language: 'javascript',
   level: 1,
 };
@@ -18,23 +19,12 @@ export const problem2 = {
   function: 'function reverseString(str) {\n\n  //Insert your code \n\n};',
   solution1: ['reverseString("hello");', 'olleh'],
   solution2: ['reverseString("world");', 'dlrow'],
+  solution3: ['reverseString("Codeworks");', 'skrowedoC'],
   language: 'javascript',
   level: 1,
 };
 
 export const problem3 = {
-  name: 'N-Queens',
-  description:
-    'Write a function that returns the number of distinct solutions to the n-queens problem.',
-  hint: 'You can use recursion.',
-  function: 'function solveNQueens(n) {\n\n  //Insert your code \n\n};',
-  solution1: ['solveNQueens(4);', 2],
-  solution2: ['solveNQueens(8);', 92],
-  language: 'javascript',
-  level: 4,
-};
-
-export const problem4 = {
   name: 'Palindrome Checker',
   description:
     'Write a function that takes a string as an argument and returns true if the string is a palindrome (reads the same backwards as forwards), otherwise returns false.',
@@ -42,8 +32,22 @@ export const problem4 = {
   function: 'function isPalindrome(str) {\n\n //Insert your code \n\n};',
   solution1: ['isPalindrome("racecar");', true],
   solution2: ['isPalindrome("hello");', false],
+  solution3: ['isPalindrome("anna");', true],
   language: 'javascript',
   level: 2,
+};
+
+export const problem4 = {
+  name: 'N-Queens',
+  description:
+    'Write a function that returns the number of distinct solutions to the n-queens problem.',
+  hint: 'You can use recursion.',
+  function: 'function solveNQueens(n) {\n\n  //Insert your code \n\n};',
+  solution1: ['solveNQueens(4);', 2],
+  solution2: ['solveNQueens(8);', 92],
+  solution3: ['solveNQueens(5);', 10],
+  language: 'javascript',
+  level: 4,
 };
 
 export const problem5 = {
@@ -66,6 +70,7 @@ export const problem6 = {
   function: 'function mergeSort(arr) {\n\n //Insert your code \n\n};',
   solution1: ['mergeSort([5, 2, 9, 1, 5]);', [1, 2, 5, 5, 9]],
   solution2: ['mergeSort([10, 3, 8, 6, 4]);', [3, 4, 6, 8, 10]],
+  solution3: ['mergeSort([1, 2, 3, 4, 5]);', [1, 2, 3, 4, 5]],
   language: 'javascript',
   level: 3,
 };
@@ -78,6 +83,7 @@ export const problem7 = {
   function: 'function findMax(nums) {\n\n //Insert your code \n\n};',
   solution1: ['findMax([3, 7, 1, 9, 4]);', 9],
   solution2: ['findMax([12, 0, 5, 18, 2]);', 18],
+  solution3: ['findMax([1, 2, 3, 4, 5]);', 5],
   language: 'javascript',
   level: 2,
 };

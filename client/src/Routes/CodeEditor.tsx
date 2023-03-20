@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import {
-  SandpackCodeViewer,
   SandpackLayout,
   SandpackProvider,
-  SandpackPreview,
-  // SandpackSetup,
 } from '@codesandbox/sandpack-react';
 import { intervalToDuration } from 'date-fns';
 import { run } from '../utils/safeEval';
@@ -125,15 +122,22 @@ function CodeEditor() {
     const result2 = run(userInput + problem?.solution2[0]);
     const endTime2 = performance.now();
 
-    const averageTime = (endTime1 - startTime1 + (endTime2 - startTime2)) / 2;
-    console.log(result1.output, result2.output)
+    const startTime3 = performance.now();
+    const result3 = run(userInput + problem?.solution3[0]);
+    const endTime3 = performance.now();
+
+
+    const averageTime = (endTime1 - startTime1 + endTime2 - startTime2 + endTime3 - startTime3) / 3;
     if (result1.output === problem?.solution1[1])
       setTests((prevTests) => prevTests + 1);
     if (result2.output === problem?.solution2[1])
       setTests((prevTests) => prevTests + 1);
+    if (result3.output === problem?.solution3[1])
+      setTests((prevTests) => prevTests + 1);
     if (
       result1.output === problem?.solution1[1] &&
-      result2.output === problem?.solution2[1]
+      result2.output === problem?.solution2[1] &&
+      result3.output === problem?.solution3[1]
     ) {
       const endTime = performance.now();
       setSolveTime(endTime - solveTime);
@@ -141,9 +145,11 @@ function CodeEditor() {
       if (!solved) setScore((prevScore: number) => prevScore + 100);
       setSolved(true);
       setError('');
-    } else if (result1.error !== '') {
+    } else if (result1.error !== '' || result2.error !== '' || result3.error !== '') {
       if (solved) setScore((prevScore: number) => prevScore - 100);
-      setError(result1.error);
+      if(result1.error !== '') setError(result1.error);
+      else if(result2.error !== '') setError(result2.error);
+      else if(result3.error !== '') setError(result3.error);
       setSolved(false);
     } else {
       if (solved) setScore((prevScore: number) => prevScore - 100);
