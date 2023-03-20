@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import {
+  SandpackCodeViewer,
   SandpackLayout,
   SandpackProvider,
+  SandpackPreview,
   // SandpackSetup,
 } from '@codesandbox/sandpack-react';
 import { intervalToDuration } from 'date-fns';
@@ -11,7 +13,7 @@ import CodeInsights from './CodeEditor/CodeInsights';
 
 import {
   problem1,
-  // problem2,
+  problem2,
   // problem3,
   // problem4,
   // problem5,
@@ -21,18 +23,19 @@ import {
 
 function CodeEditor() {
   // const [user, setUser] = useState<any>();
+  const [userInput, setUserInput] = useState<string | undefined>('');
   const [problems, setProblems] = useState<Problem[]>([]);
   const [problem, setProblem] = useState<Problem>();
   const [error, setError] = useState<string>('');
-  const [solved, setSolved] = useState<boolean | ''>(false);
+  const [solved, setSolved] = useState<boolean | string>(false);
   const [number, setNumber] = useState<number | undefined>();
   const [tests, setTests] = useState<number>(0);
   const [solveTime, setSolveTime] = useState<number>(0);
-  const [runtime, setRuntime] = useState<number | string>(0);
+  const [runtime, setRuntime] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [toggleHint, setToggleHint] = useState<boolean>(false);
 
-  const difficulty: Dict = {
+  const level: Dict = {
     1: 'Beginner',
     2: 'Intermediate',
     3: 'Advanced',
@@ -51,23 +54,22 @@ function CodeEditor() {
       // .includes(problem._id)
       // );
 
-      // filter by difficulty
+      // filter by level
       // const filteredProblems = receivedProblems.filter(
-      //   (problem) => problem.difficulty === 1
+      //   (problem) => problem.level === 1
       // );
 
-      // shuffle problems
-      for (let i = receivedProblems.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [receivedProblems[i], receivedProblems[j]] = [
-          receivedProblems[j],
-          receivedProblems[i],
-        ];
-      }
+      // sort by level
+      // receivedProblems.sort((a, b) => a.level - b.level);
 
-      // sort problems by difficulty
-      receivedProblems.sort((a, b) => a.level - b.level);
-      
+      // shuffle problems
+      // for (let i = receivedProblems.length - 1; i > 0; i--) {
+      //   const j = Math.floor(Math.random() * (i + 1));
+      //   [receivedProblems[i], receivedProblems[j]] = [
+      //     receivedProblems[j],
+      //     receivedProblems[i],
+      //   ];
+      // }
 
       setProblems(receivedProblems);
       setNumber(0);
@@ -75,7 +77,7 @@ function CodeEditor() {
 
     fetchData([
       problem1,
-      // problem2,
+      problem2,
       // problem3,
       // problem4,
       // problem5,
@@ -90,14 +92,14 @@ function CodeEditor() {
       setError('');
       setSolved('');
       setRuntime(0);
-      const time = performance.now();
-      setSolveTime(time);
+      setSolveTime(performance.now());
       setProblem(problems[number as number]);
+      setUserInput(problem?.function);
     }
   }, [number]);
 
   const handleNext = () => {
-    //save solution, score and runtime to db
+    //save solution to db
     // apiService.saveSolution({
     //   userId: user._id,
     //   problemId: problem._id,
@@ -106,8 +108,7 @@ function CodeEditor() {
     //   runtime: number,
     //   solveTime: number
     // });
-
-    setNumber((prevnumber) => (prevnumber as number) + 1);
+    setNumber((prevNumber) => (prevNumber as number) + 1);
   };
 
   const handleHint = () => {
@@ -118,17 +119,20 @@ function CodeEditor() {
     try {
       setTests(0);
       const startTime1 = performance.now();
-      const result1 = eval(problem?.function + problem?.solution1[0]);
+      // const result1 = eval(problem?.function + problem?.solution1[0]);
+      const result1 = eval(userInput + problem?.solution1[0]);
       const endTime1 = performance.now();
 
-      // const result3 =new VM().run(problem.function + problem.solution2[0]);
-      // console.log(result3)
-
       const startTime2 = performance.now();
-      const result2 = eval(problem?.function + problem?.solution2[0]);
+      // const result2 = eval(problem?.function + problem?.solution2[0]);
+      const result2 = eval(userInput + problem?.solution2[0]);
       const endTime2 = performance.now();
 
       const averageTime = (endTime1 - startTime1 + (endTime2 - startTime2)) / 2;
+
+      console.log('runCode');
+      // const result3 =new VM().run(problem.function + problem.solution2[0]);
+      // console.log(result3)
 
       if (result1 === problem?.solution1[1])
         setTests((prevTests) => prevTests + 1);
@@ -140,7 +144,7 @@ function CodeEditor() {
       ) {
         const endTime = performance.now();
         setSolveTime(endTime - solveTime);
-        setRuntime(averageTime.toFixed(4));
+        setRuntime(averageTime);
         if (!solved) setScore((prevScore: number) => prevScore + 100);
         setSolved(true);
         setError('');
@@ -155,11 +159,17 @@ function CodeEditor() {
     }
   };
 
-  const prettifyTime = (time: number | string) => {
+  const prettifyTime = (time: number) => {
     const duration = intervalToDuration({ start: 0, end: time as number });
-    if(duration.hours === 0 && duration.minutes === 0) return `${duration.seconds}s`;
-    else if(duration.hours === 0) return `${duration.minutes}m ${duration.seconds}s`;
+    if (duration.hours === 0 && duration.minutes === 0)
+      return `${duration.seconds}s`;
+    else if (duration.hours === 0)
+      return `${duration.minutes}m ${duration.seconds}s`;
     else return `${duration.hours}h ${duration.minutes}m ${duration.seconds}s`;
+  };
+
+  const handleChange = (input: any) => {
+    setUserInput(input);
   };
 
   return (
@@ -172,10 +182,7 @@ function CodeEditor() {
     >
       {problem && (number as number) < problems.length ? (
         <div className='flex items-center justify-center h-full w-full'>
-          <div
-            className='border border-teal-600 rounded-md mr-8 p-4 h-full min-h-max w-1/4 flex flex-col bg-white'
-            // style={{ backgroundColor: 'rgba(252, 252, 252, 1)' }}
-          >
+          <div className='border border-teal-600 rounded-md mr-8 p-4 h-full min-h-max w-1/4 flex flex-col bg-white'>
             <div className='text-right'>
               Score: <span className='font-bold'>{score}</span>
             </div>
@@ -183,8 +190,7 @@ function CodeEditor() {
             <h3>{problem.description}</h3>
             <br />
             <p>
-              Difficulty:{' '}
-              <span className='font-bold'>{difficulty[problem.level]}</span>
+              Level: <span className='font-bold'>{level[problem.level]}</span>
             </p>
 
             <p
@@ -214,7 +220,7 @@ function CodeEditor() {
               <div>
                 <h4 className='text-pink-500 font-bold'>Correct solution!</h4>
                 <br />
-                <p className='text-sm'>runtime: {runtime}ms</p>
+                <p className='text-sm'>Run time: {runtime.toFixed(4)}ms</p>
                 <p className='text-sm'>Solve time: {prettifyTime(solveTime)}</p>
               </div>
             )}
@@ -231,9 +237,7 @@ function CodeEditor() {
                   defaultLanguage={problem.language}
                   theme='vs-light'
                   value={problem.function}
-                  onChange={(value) =>
-                    setProblem({ ...problem, function: value })
-                  }
+                  onChange={handleChange}
                   options={{
                     minimap: {
                       enabled: false,
@@ -242,9 +246,10 @@ function CodeEditor() {
                     tabSize: 2,
                   }}
                 />
+                {/* <SandpackPreview /> */}
               </SandpackLayout>
             </SandpackProvider>
-            
+
             <div className='mt-5 flex justify-between items-center'>
               <div className='mx-4 w-10'>
                 {(number as number) + 1}/{problems.length}
