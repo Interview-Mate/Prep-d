@@ -1,5 +1,6 @@
 /// <reference types="react-scripts" />
 
+<<<<<<< HEAD
 //general types
 declare module "*.JPG";
 
@@ -48,3 +49,24 @@ type Err = {
   statusText?: string;
   message?: string;
 };
+=======
+
+type Problem = {
+  // _id: string;
+  name: string;
+  description: string;
+  hint: string;
+  function: string | undefined;
+  solution1: Solution;
+  solution2: Solution;
+  language: string;
+  level: number;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Solution = any[];
+
+type Dict = {
+  [key: number]: string;
+};
+>>>>>>> ff913cd ([FE][CodeEditor] [Basic Funtionality])
