@@ -1,10 +1,10 @@
 import Navbar from "../Components/Navbar";
 
-export default function Dashboard() {
+export default function Profile() {
   return (
     <>
       <Navbar />
-      <div>This will be the dashboard</div>
+      <div>Here you'll find user info</div>
     </>
   );
 }

@@ -17,6 +17,13 @@ code {
     monospace;
 }
 
+.app-title {
+  color: white;
+  font-size: 2.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+
 .signup-label {
   margin-top: 50px;
 }

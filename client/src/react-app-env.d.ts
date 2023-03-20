@@ -1,7 +1,9 @@
 /// <reference types="react-scripts" />
 
+//general types
 declare module "*.JPG";
 
+//router types
 declare function useNavigate(): NavigateFunction;
 
 interface NavigateFunction {
@@ -40,3 +42,9 @@ interface RouteObject {
   shouldRevalidate?: ShouldRevalidateFunction;
   lazy?: LazyRouteFunction<RouteObject>;
 }
+
+//error types
+type Err = {
+  statusText?: string;
+  message?: string;
+};
