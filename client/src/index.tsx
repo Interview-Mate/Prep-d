@@ -15,6 +15,31 @@ import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
 
+// type createBrowserRouter(
+//   routes: RouteObject[],
+//   opts?: {
+//     basename?: string;
+//     window?: Window;
+//   }
+// ): RemixRouter;
+
+// interface RouteObject {
+//   path?: string;
+//   index?: boolean;
+//   children?: React.ReactNode;
+//   caseSensitive?: boolean;
+//   id?: string;
+//   loader?: LoaderFunction;
+//   action?: ActionFunction;
+//   element?: React.ReactNode | null;
+//   Component?: React.ComponentType | null;
+//   errorElement?: React.ReactNode | null;
+//   ErrorBoundary?: React.ComponentType | null;
+//   handle?: RouteObject["handle"];
+//   shouldRevalidate?: ShouldRevalidateFunction;
+//   lazy?: LazyRouteFunction<RouteObject>;
+// }
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -62,8 +87,9 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/code",
-    element: <CodeEditor />,
+    path: "/codingtest",
+    element: <Coding />,
+    errorElement: <Error />,
   },
 ]);
 
