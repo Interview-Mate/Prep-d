@@ -3,14 +3,19 @@ export const run = function (code: string) {
   const result = {
     input: code,
     output: '',
+    runtime: 0,
     error: '',
   };
 
+  const startTime = performance.now();
   try {
     result.output = runHidden(code);
   } catch (e: any) {
     result.error = e.message;
   }
+  const endTime = performance.now();
+
+  result.runtime = endTime - startTime;
 
   return result;
 };

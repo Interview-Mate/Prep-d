@@ -72,6 +72,7 @@ type Dict = {
 type Result = {
   input: string;
   output: string | null;
+  runtime: number;
   error: string | null;
 };
 
