@@ -121,6 +121,7 @@ interface User {
 type Result = {
   input: string;
   output: string | null;
+  runtime: number;
   error: string | null;
 };
 
