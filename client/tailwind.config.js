@@ -2,7 +2,19 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "eerie-black": "#262626ff",
+        "dark-cyan": "#548687ff",
+        "african-violet": {
+          400: "#FFBFEF",
+          900: "#c98bb9ff",
+        },
+        // prettier-ignore
+        "seasalt": "#f8f7f9ff",
+        white: "#fcfcfcff",
+      },
+    },
     theme: {
       screens: {
         sm: "480px",
@@ -10,13 +22,6 @@ module.exports = {
         lg: "976px",
         xl: "1440px",
       },
-      // colors: {
-      //   eerieblack: rgba(38, 38, 38, 1),
-      //   darkcyan: rgba(84, 134, 135, 1),
-      //   africanviolet: rgba(201, 139, 185, 1),
-      //   seasalt: rgba(248, 247, 249, 1),
-      //   white: rgba(252, 252, 252, 1),
-      // },
     },
   },
   plugins: [require("@tailwindcss/forms")],
