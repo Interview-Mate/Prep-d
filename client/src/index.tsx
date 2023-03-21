@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
+
 import Login from "./Routes/Login";
 import Register from "./Routes/Register";
 import Dashboard from "./Routes/Dashboard";
@@ -68,8 +70,16 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <App />
+    <Auth0Provider
+      domain="dev-jha6px2ereu57v06.us.auth0.com"
+      clientId="OgDgqM8zGI8BJLmkEWVkD8BS2I6M6eWw"
+      authorizationParams={{
+        redirect_uri: "http://localhost:3000/dashboard",
+      }}
+    >
+      <RouterProvider router={router} />
+      <App />
+    </Auth0Provider>
   </React.StrictMode>
 );
 
