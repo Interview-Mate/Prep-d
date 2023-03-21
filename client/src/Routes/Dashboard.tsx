@@ -1,8 +1,12 @@
 import Navbar from "../Components/Navbar";
 import Coding from "../Assets/CodingChallengeMock.png";
 import Interview from "../Assets/InterviewMock.JPG";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Dashboard() {
+  const { isAuthenticated } = useAuth0();
+  console.log({ isAuthenticated });
+
   return (
     <>
       <Navbar />

@@ -1,8 +1,11 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useAuth0 } from "@auth0/auth0-react";
 
-export default function Example() {
+export default function Navbar() {
+  const { logout, isAuthenticated } = useAuth0();
+
   const navigation = [
     { name: "Dashboard", href: "/dashboard", current: true },
     { name: "Past Interviews", href: "/pastinterviews", current: false },
@@ -120,10 +123,17 @@ export default function Example() {
                           </a>
                         )}
                       </Menu.Item>
+                      {/* {isAuthenticated && ( */}
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/"
+                            onClick={() =>
+                              logout({
+                                logoutParams: {
+                                  returnTo: window.location.origin,
+                                },
+                              })
+                            }
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -133,6 +143,7 @@ export default function Example() {
                           </a>
                         )}
                       </Menu.Item>
+                      {/* )} */}
                     </Menu.Items>
                   </Transition>
                 </Menu>

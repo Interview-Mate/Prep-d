@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import Login from "./Routes/Login";
-import Register from "./Routes/Register";
 import Dashboard from "./Routes/Dashboard";
 import Error from "./Components/Error";
 import Coding from "./Routes/Coding";
@@ -17,15 +16,13 @@ import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
 
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
     errorElement: <Error />,
   },
   {
