@@ -1,7 +1,7 @@
 import React, {useRef, useEffect } from 'react'; 
 import Navbar from "../Components/Navbar";
-import UserWebCam from '../Components/UserWebCam'
-
+import UserWebCam from '../Components/Interview/UserWebCam'
+import AvatarWebCam from '../Components/Interview/AvatarWebCam';
 
 
 export default function LiveInterview() {
@@ -12,12 +12,12 @@ export default function LiveInterview() {
 
       <Navbar />
 
-      <div className ='flex flex-col items-center justify-center h-full'>
+      <div className ='flex flex-col items-center justify-center w-full pt-20'>
         
-        <div className = 'flex justify-center space-x-8'>
+        <div className = 'flex justify-center space-x-1'>
 
             <UserWebCam/>
-            <UserWebCam/>
+            <AvatarWebCam/>
 
         </div>
 

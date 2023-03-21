@@ -37,11 +37,21 @@ const UserWebCam: React.FC<Props> = () => {
   }, [stream]);
 
   return (
-    <div className='rounded-lg shadow-lg w-full h-full'>
+
+    <div className='w-full h-96'>
 
       {stream && (
         <video ref= {videoRef} autoPlay muted />
+      
       )}
+
+      
+      {/* <div  className='flex justify-end'>
+        <div className='bg-white w-24 flex justify-center'> 
+           YOU
+        </div>
+      </div> */}
+
     </div>
   )
 }
