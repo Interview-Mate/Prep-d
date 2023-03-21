@@ -38,7 +38,7 @@ const UserWebCam: React.FC<Props> = () => {
 
   return (
 
-    <div className='w-full h-96'>
+    <div className='w-full h-auto'>
 
       {stream && (
         <video ref= {videoRef} autoPlay muted />
