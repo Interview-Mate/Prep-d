@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const interviewCont = require ("./controllers/interview.controller");
-const exerciseCont = require ("./controllers/execise.controller");
+const exerciseCont = require ("./controllers/exercise.controller");
 const userCont = require ('./controllers/user.controller');
 import { Request, Response } from "express";
 
@@ -24,8 +24,8 @@ router.put("/interview/:id/questions", interviewCont.addQuestionToInterview);
 
 //exercise methods
 //TODO
-router.get('/getuser/:id', exerciseCont.getExercise);
-router.post("/user/:user_id", interviewCont.addExercise);
+// router.get('/getuser/:id', exerciseCont.getExercise);
+// router.post("/user/:user_id", exerciseCont.addExercise);
 
 
 export default router;
