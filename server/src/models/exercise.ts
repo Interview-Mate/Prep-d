@@ -23,24 +23,4 @@ const Exercise = mongoose.model('Exercise', exerciseSchema);
 export default Exercise;
 
 
-// const exerciseSchema = new mongoose.Schema({
-//   name: String, //Simple addition
-//   description: String,
-//   hint: String,
-//   function: String,
-//   solutions: [
-//     {
-//       args: String,
-//       expected_output: String
-//     },
-//   ],
-//   language: String,
-//   level: Number,
-//   tests:[
-// {
-//     input_parameters:Array,
-//     test:String,
-//     expected_output:Array,
-//   }
-// ]
-// });
+

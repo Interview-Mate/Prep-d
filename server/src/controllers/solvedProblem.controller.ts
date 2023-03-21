@@ -44,7 +44,6 @@ exports.addSolvedProblem = async (req: Request, res: Response)=> {
         .status(201)
         .json(updated);
 
-
     } else {
 
     let problem = await SolvedProblem.create(
@@ -87,7 +86,6 @@ exports.getAllSolvedProblems = async (req: Request, res: Response) => {
         return { ...problem, exercise };
       })
     );
-      console.log(solvedProblems)
     res
       .status(200)
       .json(solvedProblems);
@@ -99,50 +97,3 @@ exports.getAllSolvedProblems = async (req: Request, res: Response) => {
   }
 };
 
-
-
-//________________________________________________________________________
-
-// async function getUnionData() {
-//     let unionData = await SolvedProblem.aggregate([
-//       { $unionWith: { coll: 'exercises' } },
-//       { $match: { id: 'problem_id' } },
-//     ]);
-//     console.log('uniondata:', unionData);
-// }
-//________________________________________________________________________
-
-
-//  async function getUnionData1() {
-//     let solvedProblemByUser =await SolvedProblem.aggregate(
-//     [{
-//       $lookup:
-//       {
-//         from: 'solvedproblems',
-//         localField: 'problem_id',
-//         foreignField: '_id',
-//         as: 'solved_problems_by_user'
-//       }
-//     }]
-//   )
-//   console.log('solvedProblemByUser: ',solvedProblemByUser)
-// }
-// getUnionData1()
-
-//________________________________________________________________________
-
-// async function getLookupData() {
-//   const lookupData = await SolvedProblem.aggregate([
-//     {
-//       $lookup: {
-//         from: 'exercises',
-//         localField: 'problem_id',
-//         foreignField: '_id',
-//         as: 'problemsss'
-//       }
-//     },
-//     { $unwind: '$problemsss' },
-//   ])
-//   console.log('lookupData:' ,lookupData);
-// }
-// getLookupData();

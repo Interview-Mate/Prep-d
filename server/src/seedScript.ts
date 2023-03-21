@@ -1,9 +1,16 @@
 import Exercise from "./models/exercise"
+//WARN:
+// This function populatex the "exercises" collection in the database.
+// It needs to be executed only once before starting interacting with that collection.
+// It should not be imported in server/index.ts
+// In order to execute it:
+//  - run "tsc" in the terminal
+//  - go to server/dist/seedScript.js
+//  - execute the file by clicking on the arrow button (top right)
 
 async function populateExerciseCollection () {
   try {
-    //TODO
-    // await Exercise.deleteMany({});
+    await Exercise.deleteMany({});
 
     await Exercise.insertMany([{
       name: 'Simple Addition',
@@ -93,9 +100,9 @@ async function populateExerciseCollection () {
     console.error(err);
   }
 console.log('Collection populated!');
-};
+ };
 
- populateExerciseCollection();
+ export default populateExerciseCollection;
 
 
 

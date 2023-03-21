@@ -24,9 +24,7 @@ router.put("/interview/:id/questions", interviewCont.addQuestionToInterview);
 
 
 //exercise methods
-//TODO
-// router.get('/getuser/:id', exerciseCont.getExercise);
-// router.post("/user/:user_id", exerciseCont.addExercise);
+router.get("/get-all-exercises", exerciseCont.getAllExercises);
 
 //solved problems
 router.get("/problems/:userId", solvedProblemCont.getAllSolvedProblems);

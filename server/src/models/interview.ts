@@ -1,8 +1,7 @@
 import { mongoose } from './index.models';
 
 const interviewSchema = new mongoose.Schema({
-  //TODO: user_id instead of username?
-  username: {
+  userna_id: {
     type: String,
     required: true,
   },

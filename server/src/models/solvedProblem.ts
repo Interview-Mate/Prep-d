@@ -1,14 +1,5 @@
 import {mongoose} from './index.models';
 
-// userId: string,
-// problemId: string,
-// solution: string,
-// score: number,
-// runtime: number,
-// solveTime: number
-
-
-
 const solvedProblemSchema = new mongoose.Schema({
   user_id: String,
   problem_id: String,
