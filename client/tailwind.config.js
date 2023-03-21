@@ -1,23 +1,27 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./node_modules/flowbite/**/*.js"],
   theme: {
-    extend: {},
-    theme: {
-      screens: {
-        sm: "480px",
-        md: "768px",
-        lg: "976px",
-        xl: "1440px",
+    extend: {
+      colors: {
+        "eerie-black": "#262626ff",
+        "dark-cyan": "#548687ff",
+        "african-violet": {
+          400: "#FFBFEF",
+          900: "#c98bb9ff",
+        },
+        // prettier-ignore
+        "seasalt": "#f8f7f9ff",
+        white: "#fcfcfcff",
       },
-      // colors: {
-      //   eerieblack: rgba(38, 38, 38, 1),
-      //   darkcyan: rgba(84, 134, 135, 1),
-      //   africanviolet: rgba(201, 139, 185, 1),
-      //   seasalt: rgba(248, 247, 249, 1),
-      //   white: rgba(252, 252, 252, 1),
-      // },
+    },
+
+    screens: {
+      sm: "480px",
+      md: "768px",
+      lg: "976px",
+      xl: "1440px",
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("flowbite/plugin")],
 };
