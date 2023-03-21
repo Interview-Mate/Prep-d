@@ -3,8 +3,8 @@ export const run = function (code: string) {
   const result = {
     input: code,
     output: '',
-    runtime: 0,
     error: '',
+    runtime: 0,
   };
 
   const startTime = performance.now();

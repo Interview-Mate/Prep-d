@@ -22,6 +22,7 @@
     "flowbite": "^1.6.4",
     "date-fns": "^2.29.3",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-frame-component": "^5.2.6",
     "react-router-dom": "^6.9.0",

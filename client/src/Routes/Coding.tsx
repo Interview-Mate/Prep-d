@@ -7,7 +7,7 @@ import ProblemCard from './Coding/ProblemCard';
 
 import {
   problem1,
-  problem2,
+  // problem2,
   // problem3,
   // problem4,
   // problem5,
@@ -65,7 +65,7 @@ function Coding() {
 
     fetchData([
       problem1,
-      problem2,
+      // problem2,
       // problem3,
       // problem4,
       // problem5,
@@ -187,7 +187,7 @@ function Coding() {
 
             <div className='mx-4 text-center w-3/4'>
               <Editor
-                className='border p-0.5 border-teal-600 rounded-md bg-white'
+                className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
                 height='65vh'
                 defaultLanguage={problem.language}
                 theme='vs-light'
