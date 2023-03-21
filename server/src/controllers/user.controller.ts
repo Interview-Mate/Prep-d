@@ -29,27 +29,28 @@ exports.getAllUsers = async (req: Request, res: Response) => {
 exports.createUser = async (req: Request, res: Response)=> {
   try {
     let existingUsername = await User.find({username : req.body.username})
-    if(existingUsername){
+    if(existingUsername.length > 0){
       throw new Error('A user with this username already exists')
-    }
-    let user = await User.create(
-      {
-        name:  req.body.name,
-        surname: req.body.surname,
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        level: req.body.level,
-      });
+    }else{
+      let user = await User.create(
+        {
+          name:  req.body.name,
+          surname: req.body.surname,
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
+          level: req.body.level,
+        });
       console.log('User created');
       res
         .status(201)
         .json(user);
-    } catch (err: any) {
-      res
-        .status(403)
-        .json(err.message)
     }
+  } catch (err: any) {
+    res
+      .status(403)
+      .json(err.message)
+  }
 };
 
 exports.getUser = async (req: Request, res: Response) => {

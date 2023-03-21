@@ -1,40 +1,40 @@
-//TODO: update Interview
-export type Interview  = {
-  username: string;
-  score: number;
-  date: Date;
-  cloudinary_url: string;
-  questions: Question[] ;
-  
-};
+// //TODO: update Interview
+// export type Interview  = {
+//   username: string;
+//   score: number;
+//   date: Date;
+//   cloudinary_url: string;
+//   questions: Question[] ;
 
-export type Question = {
-  timestamp: Date | string;
-  question_text: string;
-  answer_text: string;
-  answer_audio_url:string;
-  score: number;
-}
+// };
 
-export type Exercise = {
-  name: string;
-  description: string;
-  hint: string;
-  function: string;
-  solution1: any[];
-  solution2: any[];
-  solution3: any[];
-  language: string;
-  level: number;
+// export type Question = {
+//   timestamp: Date | string;
+//   question_text: string;
+//   answer_text: string;
+//   answer_audio_url:string;
+//   score: number;
+// }
 
-}
+// export type Exercise = {
+//   name: string;
+//   description: string;
+//   hint: string;
+//   function: string;
+//   solution1: any[];
+//   solution2: any[];
+//   solution3: any[];
+//   language: string;
+//   level: number;
 
-export interface IUser {
-  name: string;
-  surname: string;
-  username: string;
-  email: string;
-  password: string;
-  level: number;
-}
+// }
+
+// export interface IUser {
+//   name: string;
+//   surname: string;
+//   username: string;
+//   email: string;
+//   password: string;
+//   level: number;
+// }
 

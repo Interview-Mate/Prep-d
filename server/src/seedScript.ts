@@ -2,6 +2,7 @@ import Exercise from "./models/exercise"
 
 async function populateExerciseCollection () {
   try {
+    //TODO
     // await Exercise.deleteMany({});
 
     await Exercise.insertMany([{

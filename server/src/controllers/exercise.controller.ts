@@ -2,7 +2,7 @@ import  Exercise  from '../models/exercise';
 import { Request, Response } from "express";
 
 // TODO: method that returns problems sorted by level
-// beginner[
+// level 1[
 //   {
 //    problemName: "Simple addition",
 //    problem_id: "37497"
