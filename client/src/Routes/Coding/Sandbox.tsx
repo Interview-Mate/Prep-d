@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { run } from '../../Util/safeEval';
+import { run } from '../../Util/SafeEval';
 
 const Sandbox = ({ userInput, problem, safelyRunCode, onResult }: any) => {
   useEffect(() => {
