@@ -73,9 +73,7 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
       max_tokens: 4096,
       temperature: 0.7,
     });
-    return res.status(200).json({
-      data: response.data.choices[0].message
-    });
+    return res.status(200).json(response.data);
     
   } catch (error: any) {
     if (error.response) {
