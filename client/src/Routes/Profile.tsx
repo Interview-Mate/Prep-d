@@ -2,10 +2,7 @@ import Navbar from "../Components/Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Profile() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-  console.log({ user });
-  console.log({ isAuthenticated });
-  console.log({ isLoading });
+  const { user, isLoading } = useAuth0();
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -14,7 +11,7 @@ export default function Profile() {
   return (
     <>
       <Navbar />
-      {isAuthenticated && (
+      {user && (
         <div className="profile-container">
           <div className="profile-title">Hi, {user.nickname}!</div>
           <img src={user.picture} alt={user.name} />
