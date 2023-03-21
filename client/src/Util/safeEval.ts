@@ -20,19 +20,19 @@ export const run = function (code: string) {
   return result;
 };
 
-const stringify = function (output: string) {
-  let result: string;
+// const stringify = function (output: string) {
+//   let result: string;
 
-  if (typeof output == 'undefined') {
-    result = 'undefined';
-  } else if (output === null) {
-    result = 'null';
-  } else {
-    result = JSON.stringify(output) || output.toString();
-  }
+//   if (typeof output == 'undefined') {
+//     result = 'undefined';
+//   } else if (output === null) {
+//     result = 'null';
+//   } else {
+//     result = JSON.stringify(output) || output.toString();
+//   }
 
-  return result;
-};
+//   return result;
+// };
 
 const runHidden = function (code: string) {
   const indexedDB = null;
