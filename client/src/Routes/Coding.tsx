@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
-import { SandpackLayout, SandpackProvider } from '@codesandbox/sandpack-react';
-import { intervalToDuration } from 'date-fns';
 import Frame from 'react-frame-component';
 import Sandbox from './Coding/Sandbox';
 import CodeInsights from './Coding/CodeInsights';
+import ProblemCard from './Coding/ProblemCard';
 
 import {
   problem1,
@@ -28,16 +27,8 @@ function Coding() {
   const [solveTime, setSolveTime] = useState<number>(0);
   const [runtime, setRuntime] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
-  const [toggleHint, setToggleHint] = useState<boolean>(false);
   const [safelyRunCode, setSafelyRunCode] = useState<boolean>(false);
   const [results, setResults] = useState<Result[]>([]);
-
-  const level: Dict = {
-    1: 'Beginner',
-    2: 'Intermediate',
-    3: 'Advanced',
-    4: 'Expert',
-  };
 
   useEffect(() => {
     const fetchData = async (receivedProblems: Problem[]) => {
@@ -151,10 +142,6 @@ function Coding() {
     setNumber((prevNumber) => (prevNumber as number) + 1);
   };
 
-  const handleHint = () => {
-    setToggleHint(!toggleHint);
-  };
-
   const handleChange = (input: any) => {
     setUserInput(input);
   };
@@ -162,15 +149,6 @@ function Coding() {
   const runCode = () => {
     setTests(0);
     setSafelyRunCode(true);
-  };
-
-  const prettifyTime = (time: number) => {
-    const duration = intervalToDuration({ start: 0, end: time as number });
-    if (duration.hours === 0 && duration.minutes === 0)
-      return `${duration.seconds}s`;
-    else if (duration.hours === 0)
-      return `${duration.minutes}m ${duration.seconds}s`;
-    else return `${duration.hours}h ${duration.minutes}m ${duration.seconds}s`;
   };
 
   return (
@@ -187,6 +165,7 @@ function Coding() {
           />
         </Frame>
       </div>
+
       <div
         className='h-screen w-screen transition duration-200 ease-in-out p-20'
         style={{
@@ -196,51 +175,15 @@ function Coding() {
       >
         {problem && (number as number) < problems.length ? (
           <div className='flex items-center justify-center h-full w-full'>
-            <div className='border border-teal-600 rounded-md mr-8 p-4 h-full min-h-max w-1/4 flex flex-col bg-white'>
-              <div className='text-right'>
-                Score: <span className='font-bold'>{score}</span>
-              </div>
-              <h2 className='text-xl font-bold'>{problem.name}</h2>
-              <h3>{problem.description}</h3>
-              <br />
-              <p>
-                Level: <span className='font-bold'>{level[problem.level]}</span>
-              </p>
-
-              <p
-                onClick={handleHint}
-                className='mt-4 italic text-sm cursor-pointer hover:font-bold'
-              >
-                Get a hint <br />
-                {toggleHint && problem.hint}
-                <br />
-              </p>
-
-              {tests !== 0 && (
-                <div className='text-sm'>
-                  <p>Tests passed: {tests}/3</p>
-                  <br />
-                </div>
-              )}
-
-              {!solved && solved !== '' && (
-                <div className='font-bold'>
-                  <h4> Wrong solution! </h4>
-                  <br />
-                  <p className='italic text-sm text-red-500'>{error}</p>
-                </div>
-              )}
-              {solved && (
-                <div>
-                  <h4 className='text-pink-500 font-bold'>Correct solution!</h4>
-                  <br />
-                  <p className='text-sm'>Run time: {runtime.toFixed(4)}ms</p>
-                  <p className='text-sm'>
-                    Solve time: {prettifyTime(solveTime)}
-                  </p>
-                </div>
-              )}
-            </div>
+            <ProblemCard
+              problem={problem}
+              score={score}
+              tests={tests}
+              solved={solved}
+              error={error}
+              runtime={runtime}
+              solveTime={solveTime}
+            />
 
             <div className='mx-4 text-center w-3/4'>
               <Editor
