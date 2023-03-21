@@ -5,11 +5,24 @@ import UserWebCam from '../Components/UserWebCam'
 
 
 export default function LiveInterview() {
+
+
   return (
-    <>
+    <div className='w-full h-full'>
+
       <Navbar />
-      <UserWebCam />
-      <div>Here you can be live interviewed by a bot</div>
-    </>
+
+      <div className ='flex flex-col items-center justify-center h-full'>
+        
+        <div className = 'flex justify-center space-x-8'>
+
+            <UserWebCam/>
+            <UserWebCam/>
+
+        </div>
+
+      </div>
+
+    </div>
   );
 }

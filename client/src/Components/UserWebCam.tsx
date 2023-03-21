@@ -37,14 +37,10 @@ const UserWebCam: React.FC<Props> = () => {
   }, [stream]);
 
   return (
-    <div className='video-call'>
+    <div className='rounded-lg shadow-lg w-full h-full'>
 
       {stream && (
-        <>
-        <video className='w-1/2' ref= {videoRef} autoPlay muted />
-
-        {/* to be replaced with avatar  */}
-        </>
+        <video ref= {videoRef} autoPlay muted />
       )}
     </div>
   )
