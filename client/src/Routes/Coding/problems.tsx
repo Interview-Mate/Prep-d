@@ -58,6 +58,7 @@ export const problem5 = {
   function: 'function fizzBuzz(num) {\n\n //Insert your code \n\n};',
   solution1: ['fizzBuzz(9);', 'Fizz'],
   solution2: ['fizzBuzz(10);', 'Buzz'],
+  solution3: ['fizzBuzz(15);', 'FizzBuzz'],
   language: 'javascript',
   level: 1,
 };

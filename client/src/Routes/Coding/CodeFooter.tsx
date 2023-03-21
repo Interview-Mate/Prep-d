@@ -1,6 +1,11 @@
-import React from 'react';
 
-const CodeFooter = ({number, problems, runCode, solved, handleNext}: any) => {
+const CodeFooter = ({number, problems, runCode, solved, handleNext}: {
+  problems: Problem[];
+  number: number | undefined;
+  solved: boolean | string;
+  runCode: () => void;
+  handleNext: () => void;
+}) => {
   return (
     <div className='mt-5 flex justify-between items-center'>
       <div className='mx-4 w-10'>

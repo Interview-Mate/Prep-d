@@ -3,7 +3,7 @@ import Sandbox from '../Sandbox';
 
 jest.mock('../../../Util/SafeEval', () => {
   return {
-    run: (code: any) => {
+    run: (code: string) => {
       const result = {
         input: code,
         output: eval(code),

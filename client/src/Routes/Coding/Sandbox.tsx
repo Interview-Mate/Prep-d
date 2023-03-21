@@ -1,7 +1,17 @@
 import { useEffect } from 'react';
 import { run } from '../../Util/SafeEval';
 
-const Sandbox = ({ userInput, problem, safelyRunCode, onResult }: any) => {
+const Sandbox = ({
+  userInput,
+  problem,
+  safelyRunCode,
+  onResult,
+}: {
+  userInput: string | undefined;
+  problem: Problem | undefined;
+  safelyRunCode: any;
+  onResult: (results: Result[]) => void;
+}) => {
   useEffect(() => {
     if (safelyRunCode) {
       const result1 = run(userInput + problem?.solution1[0]);

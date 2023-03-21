@@ -5,16 +5,26 @@ import Sandbox from './Coding/Sandbox';
 import CodeInsights from './Coding/CodeInsights';
 import CodeFooter from './Coding/CodeFooter';
 import ProblemCard from './Coding/ProblemCard';
+import Navbar from '../Components/Navbar';
 
 import {
   problem1,
-  // problem2,
-  // problem3,
-  // problem4,
-  // problem5,
-  // problem6,
-  // problem7,
+  problem2,
+  problem3,
+  problem4,
+  problem5,
+  problem6,
+  problem7,
 } from './Coding/problems';
+import { useParams } from 'react-router-dom';
+
+const level: Dict = {
+  beginner: 1,
+  intermediate: 2,
+  advanced: 3,
+  expert: 4,
+  all: 5,
+};
 
 function Coding() {
   // const [user, setUser] = useState<any>();
@@ -30,6 +40,7 @@ function Coding() {
   const [score, setScore] = useState<number>(0);
   const [safelyRunCode, setSafelyRunCode] = useState<boolean>(false);
   const [results, setResults] = useState<Result[]>([]);
+  const { levelId, problemId } = useParams();
 
   useEffect(() => {
     const fetchData = async (receivedProblems: Problem[]) => {
@@ -43,36 +54,45 @@ function Coding() {
       // .includes(problem._id)
       // );
 
-      // filter by level
-      // const filteredProblems = receivedProblems.filter(
-      //   (problem) => problem.level === 1
-      // );
-
       // sort by level
       // receivedProblems.sort((a, b) => a.level - b.level);
 
-      // shuffle problems
-      // for (let i = receivedProblems.length - 1; i > 0; i--) {
-      //   const j = Math.floor(Math.random() * (i + 1));
-      //   [receivedProblems[i], receivedProblems[j]] = [
-      //     receivedProblems[j],
-      //     receivedProblems[i],
-      //   ];
-      // }
-
-      setProblems(receivedProblems);
-      setNumber(0);
+      if (levelId && levelId !== 'all') {
+        // filter by level
+        const filteredProblems = receivedProblems.filter(
+          (problem) => problem.level === level[levelId]
+        );
+        setProblems(filteredProblems);
+      } else if (levelId && levelId === 'all') {
+        // shuffle problems
+        for (let i = receivedProblems.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [receivedProblems[i], receivedProblems[j]] = [
+            receivedProblems[j],
+            receivedProblems[i],
+          ];
+        }
+        setProblems(receivedProblems);
+      } else if (problemId) {
+        // filter by problemId
+        const filteredProblems = receivedProblems.filter(
+          (problem) => problem.name === problemId
+        );
+        setProblems(filteredProblems);
+      } else setProblems(receivedProblems);
     };
 
     fetchData([
       problem1,
-      // problem2,
-      // problem3,
-      // problem4,
-      // problem5,
-      // problem6,
-      // problem7,
+      problem2,
+      problem3,
+      problem4,
+      problem5,
+      problem6,
+      problem7,
     ]);
+
+    setNumber(0);
   }, []);
 
   useEffect(() => {
@@ -153,66 +173,63 @@ function Coding() {
   };
 
   return (
-    <div
-      className='h-screen w-screen transition duration-200 ease-in-out p-20'
-      style={{
-        color: 'rgba(38, 38, 38, 1)',
-        background: 'rgba(248, 247, 249, 1)',
-      }}
-    >
-      {problem && (number as number) < problems.length && (
-        <div className='flex items-center justify-center h-full w-full'>
-          <ProblemCard
-            problem={problem}
-            score={score}
-            tests={tests}
-            solved={solved}
-            error={error}
-            runtime={runtime}
-            solveTime={solveTime}
-          />
-
-          <div className='mx-4 text-center w-3/4'>
-            <Editor
-              className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
-              height='65vh'
-              defaultLanguage={problem.language}
-              theme='vs-light'
-              value={problem.function}
-              onChange={handleChange}
-              options={{
-                minimap: {
-                  enabled: false,
-                },
-                wordWrap: 'on',
-                tabSize: 2,
-              }}
-            />
-
-            <CodeFooter
-              problems={problems}
-              number={number}
-              runCode={runCode}
+    <div className='h-screen w-full transition duration-200 ease-in-out  bg-seasalt' >
+      <Navbar />
+      <div className='p-20' >
+        {problem && (number as number) < problems.length && (
+          <div className='flex items-center justify-center h-full w-full'>
+            <ProblemCard
+              problem={problem}
+              score={score}
+              tests={tests}
               solved={solved}
-              handleNext={handleNext}
+              error={error}
+              runtime={runtime}
+              solveTime={solveTime}
             />
+
+            <div className='mx-4 text-center w-3/4'>
+              <Editor
+                className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
+                height='65vh'
+                defaultLanguage={problem.language}
+                theme='vs-light'
+                value={problem.function}
+                onChange={handleChange}
+                options={{
+                  minimap: {
+                    enabled: false,
+                  },
+                  wordWrap: 'on',
+                  tabSize: 2,
+                }}
+              />
+
+              <CodeFooter
+                problems={problems}
+                number={number}
+                runCode={runCode}
+                solved={solved}
+                handleNext={handleNext}
+              />
+            </div>
           </div>
+        )}
+        {number === problems.length && (
+          <CodeInsights problems={problems} score={score} />
+        )}
+        <div style={{ display: 'none' }}>
+          <Frame>
+            <Sandbox
+              userInput={userInput}
+              problem={problem}
+              safelyRunCode={safelyRunCode}
+              onResult={(receivedResults: Result[]) =>
+                setResults(receivedResults)
+              }
+            />
+          </Frame>
         </div>
-      )}
-      {number === problems.length && (
-        <CodeInsights problems={problems} score={score} />
-      )}
-      <div style={{ display: 'none' }}>
-        <Frame>
-          <Sandbox
-            userInput={userInput}
-            problem={problem}
-            safelyRunCode={safelyRunCode}
-            onResult={(receivedResults: Result[]) =>
-              setResults(receivedResults)
-            }
-          />
-        </Frame>
       </div>
     </div>
   );

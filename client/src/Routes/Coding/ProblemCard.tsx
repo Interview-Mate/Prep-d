@@ -41,7 +41,7 @@ const ProblemCard = ({
   };
 
   return (
-    <div className='border border-teal-600 rounded-md mr-8 p-4 h-full min-h-max w-1/4 flex flex-col bg-white'>
+    <div className='border border-teal-600 rounded-md mr-8 p-4 h-full w-1/4 flex flex-col bg-white'>
       <div className='text-right'>
         Score: <span className='font-bold'>{score}</span>
       </div>
