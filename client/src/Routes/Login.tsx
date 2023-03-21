@@ -2,31 +2,23 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 import Interview from "../Assets/InterviewMock.JPG";
 import { useAuth0 } from "@auth0/auth0-react";
 // import { useNavigate } from "react-router-dom";
-import {
-  // useState,
-  useEffect,
-} from "react";
 
 export default function Login() {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
-  // const [authenticated, setAuthenticated] = useState(false);
-  // useEffect(() => {
-  //   if (isAuthenticated) setAuthenticated(true);
-  // });
+  const { loginWithRedirect, isAuthenticated, isLoading, error } = useAuth0();
+
   console.log({ isAuthenticated });
-  // const navigate = useNavigate();
 
   return (
     <>
       <h1 className="app-title">InterviewMate</h1>
-      {/* {!isAuthenticated && (
-        ? (
-          navigate("/dashboard")
-        ) : */}
+      {/* {isLoading && <p>Page is loading...</p>}
+      {error && <p>{error.message}</p>} */}
+
       <div className="login-container">
         <div>
           <img className="login-image" src={Interview}></img>
         </div>
+
         <div className="login-button">
           <button className="login-span" onClick={() => loginWithRedirect()}>
             <div>
@@ -39,7 +31,6 @@ export default function Login() {
           </button>
         </div>
       </div>
-      {/* )} */}
     </>
   );
 }

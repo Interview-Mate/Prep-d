@@ -16,7 +16,6 @@ export default function Profile() {
           <div className="profile-title">Hi, {user.nickname}!</div>
           <img src={user.picture} alt={user.name} />
           <h2>{user.name}</h2>
-          <p>{user.email}</p>
           <div className="profile-element">
             <label htmlFor="level">Your level of experience</label>
             <select

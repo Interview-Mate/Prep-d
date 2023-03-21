@@ -16,8 +16,8 @@ import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+// const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+// const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 const router = createBrowserRouter([
   {
