@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
 import Editor from '@monaco-editor/react';
 import Frame from 'react-frame-component';
 import Sandbox from './Coding/Sandbox';
 import CodeInsights from './Coding/CodeInsights';
+import CodeFooter from './Coding/CodeFooter';
 import ProblemCard from './Coding/ProblemCard';
 
 import {
@@ -142,7 +143,7 @@ function Coding() {
     setNumber((prevNumber) => (prevNumber as number) + 1);
   };
 
-  const handleChange = (input: any) => {
+  const handleChange = (input: SetStateAction<string | undefined>) => {
     setUserInput(input);
   };
 
@@ -152,7 +153,55 @@ function Coding() {
   };
 
   return (
-    <>
+    <div
+      className='h-screen w-screen transition duration-200 ease-in-out p-20'
+      style={{
+        color: 'rgba(38, 38, 38, 1)',
+        background: 'rgba(248, 247, 249, 1)',
+      }}
+    >
+      {problem && (number as number) < problems.length && (
+        <div className='flex items-center justify-center h-full w-full'>
+          <ProblemCard
+            problem={problem}
+            score={score}
+            tests={tests}
+            solved={solved}
+            error={error}
+            runtime={runtime}
+            solveTime={solveTime}
+          />
+
+          <div className='mx-4 text-center w-3/4'>
+            <Editor
+              className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
+              height='65vh'
+              defaultLanguage={problem.language}
+              theme='vs-light'
+              value={problem.function}
+              onChange={handleChange}
+              options={{
+                minimap: {
+                  enabled: false,
+                },
+                wordWrap: 'on',
+                tabSize: 2,
+              }}
+            />
+
+            <CodeFooter
+              problems={problems}
+              number={number}
+              runCode={runCode}
+              solved={solved}
+              handleNext={handleNext}
+            />
+          </div>
+        </div>
+      )}
+      {number === problems.length && (
+        <CodeInsights problems={problems} score={score} />
+      )}
       <div style={{ display: 'none' }}>
         <Frame>
           <Sandbox
@@ -165,73 +214,7 @@ function Coding() {
           />
         </Frame>
       </div>
-
-      <div
-        className='h-screen w-screen transition duration-200 ease-in-out p-20'
-        style={{
-          color: 'rgba(38, 38, 38, 1)',
-          backgroundColor: 'rgba(248, 247, 249, 1)',
-        }}
-      >
-        {problem && (number as number) < problems.length ? (
-          <div className='flex items-center justify-center h-full w-full'>
-            <ProblemCard
-              problem={problem}
-              score={score}
-              tests={tests}
-              solved={solved}
-              error={error}
-              runtime={runtime}
-              solveTime={solveTime}
-            />
-
-            <div className='mx-4 text-center w-3/4'>
-              <Editor
-                className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
-                height='65vh'
-                defaultLanguage={problem.language}
-                theme='vs-light'
-                value={problem.function}
-                onChange={handleChange}
-                options={{
-                  minimap: {
-                    enabled: false,
-                  },
-                  wordWrap: 'on',
-                  tabSize: 2,
-                }}
-              />
-
-              <div className='mt-5 flex justify-between items-center'>
-                <div className='mx-4 w-10'>
-                  {(number as number) + 1}/{problems.length}
-                </div>
-                <div className='w-fit'>
-                  <button
-                    onClick={runCode}
-                    className='border border-teal-600 rounded-md px-4 py-2 hover:bg-teal-600 hover:text-white'
-                  >
-                    Test solution
-                  </button>
-                </div>
-                <div className='ml-4 mr-10 w-10'>
-                  {solved && (
-                    <button
-                      onClick={handleNext}
-                      className='border border-teal-600 rounded-md px-4 py-2 hover:bg-teal-600 hover:text-white'
-                    >
-                      Next
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <CodeInsights problems={problems} score={score} />
-        )}
-      </div>
-    </>
+    </div>
   );
 }
 

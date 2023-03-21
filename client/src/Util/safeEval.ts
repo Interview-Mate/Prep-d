@@ -10,8 +10,8 @@ export const run = function (code: string) {
   const startTime = performance.now();
   try {
     result.output = runHidden(code);
-  } catch (e: any) {
-    result.error = e.message;
+  } catch (error: any) {
+    result.error = error.message;
   }
   const endTime = performance.now();
 
