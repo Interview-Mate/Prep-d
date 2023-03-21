@@ -64,7 +64,8 @@ type Err = {
 };
 
 type Problem = {
-  // _id: string;
+  _id: string;
+  __v: number;
   name: string;
   description: string;
   hint: string;
@@ -78,6 +79,16 @@ type Problem = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Solution = any[];
+
+type SolvedProblem = {
+  userId: string;
+  problemId: string;
+  solution: string | undefined;
+  runtime: number;
+  solveTime: number
+  score: number,
+};
+
 
 type Dict = {
   [key: number | string]: string | number;

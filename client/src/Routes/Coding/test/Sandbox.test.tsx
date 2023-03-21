@@ -1,7 +1,7 @@
 import { render, act } from '@testing-library/react';
 import Sandbox from '../Sandbox';
 
-jest.mock('../../../Util/SafeEval', () => {
+jest.mock('../../../Util/safeEval', () => {
   return {
     run: (code: string) => {
       const result = {

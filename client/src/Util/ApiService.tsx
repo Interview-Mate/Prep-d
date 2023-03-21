@@ -73,44 +73,58 @@ export const updateAnswer = async (interview_id: string, question_text: string, 
 
 //TODO move cloudinary upload here
 export const saveSolution = async (solution: Solution) => {
+export const saveSolvedProblem = async (solvedProblem: SolvedProblem) => {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/problem`,
+      `http://localhost:4000/problem`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(solution),
+        body: JSON.stringify(solvedProblem),
       }
     );
-    const savedSolution = await response.json();
-    return savedSolution;
+    const savedSolvedProblem = await response.json();
+    return savedSolvedProblem;
   } catch (error) {
-    console.error('Error saving solution:', error);
+    console.error('Error saving solved problem:', error);
   }
 };
 
-export const getSolutions = async (userId: string) => {
+export const getSolvedProblems = async (userId: string) => {
+  console.log(userId)
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/problems/:${userId}}`
+      `http://localhost:4000/problems/${userId}`
     );
-    const solutions = await response.json();
-    return solutions;
+    const solvedProblems = await response.json();
+    return solvedProblems;
   } catch (error) {
-    console.error('Error getting solutions:', error);
+    console.error('Error getting solved problems:', error);
   }
-}
+};
 
 export const getProblems = async () => {
+  // console.log(process.env.REACT_APP_SERVER_URL);
+
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/problems`
-    );
+    const response = await fetch(`http://localhost:4000/get-all-exercises`);
     const problems = await response.json();
     return problems;
   } catch (error) {
     console.error('Error getting problems:', error);
+  }
+}
+
+export const getAllUsers = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:4000/get-all-users`
+    );
+    const users = await response.json();
+    return users;
+  } catch (error) {
+    console.error('Error getting users:', error);
   }
 }

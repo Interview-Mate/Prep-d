@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { run } from '../../Util/SafeEval';
+import { run } from '../../Util/safeEval';
 
 const Sandbox = ({
   userInput,

@@ -6,16 +6,12 @@ import CodeInsights from './Coding/CodeInsights';
 import CodeFooter from './Coding/CodeFooter';
 import ProblemCard from './Coding/ProblemCard';
 import Navbar from '../Components/Navbar';
-
 import {
-  problem1,
-  problem2,
-  problem3,
-  problem4,
-  problem5,
-  problem6,
-  problem7,
-} from './Coding/problems';
+  getProblems,
+  getSolvedProblems,
+  saveSolvedProblem,
+  getAllUsers,
+} from '../Util/ApiService';
 import { useParams } from 'react-router-dom';
 
 const level: Dict = {
@@ -27,7 +23,7 @@ const level: Dict = {
 };
 
 function Coding() {
-  // const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<any>();
   const [userInput, setUserInput] = useState<string | undefined>('');
   const [problems, setProblems] = useState<Problem[]>([]);
   const [problem, setProblem] = useState<Problem>();
@@ -43,56 +39,60 @@ function Coding() {
   const { levelId, problemId } = useParams();
 
   useEffect(() => {
-    const fetchData = async (receivedProblems: Problem[]) => {
-      // const receivedProblems = await apiService.getProblems();
-      // const user = await apiService.getUser();
-      // setUser(user);
+    const fetchData = async () => {
+      const receivedProblems = await getProblems();
+      const solvedProblems = await getSolvedProblems(user._id);
 
+      console.log(solvedProblems);
+      console.log(receivedProblems);
       // filter out problems that are not solved
-      // const filteredProblems = receivedProblems.filter(
-      // (problem) => !user.solutions.map((solution) => solution.problemId)
-      // .includes(problem._id)
-      // );
+      // console.log(filteredProblems);
 
-      // sort by level
-      // receivedProblems.sort((a, b) => a.level - b.level);
+
+      solvedProblems.map(obj => obj.problem_id)
+
+      const filteredProblems = receivedProblems.filter(
+        (problem: Problem) => !solvedProblems.includes(problem._id)
+      );
+
+      
+        console.log(filteredProblems);
 
       if (levelId && levelId !== 'all') {
         // filter by level
-        const filteredProblems = receivedProblems.filter(
-          (problem) => problem.level === level[levelId]
+        const problemsFilteredByLevel = filteredProblems.filter(
+          (problem: Problem) => problem.level === level[levelId]
         );
-        setProblems(filteredProblems);
+        setProblems(problemsFilteredByLevel);
       } else if (levelId && levelId === 'all') {
         // shuffle problems
-        for (let i = receivedProblems.length - 1; i > 0; i--) {
+        for (let i = filteredProblems.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
-          [receivedProblems[i], receivedProblems[j]] = [
-            receivedProblems[j],
-            receivedProblems[i],
+          [filteredProblems[i], filteredProblems[j]] = [
+            filteredProblems[j],
+            filteredProblems[i],
           ];
         }
-        setProblems(receivedProblems);
+        setProblems(filteredProblems);
       } else if (problemId) {
         // filter by problemId
-        const filteredProblems = receivedProblems.filter(
-          (problem) => problem.name === problemId
+        const problemsFilteredById = filteredProblems.filter(
+          (problem: Problem) => problem._id === problemId
         );
-        setProblems(filteredProblems);
-      } else setProblems(receivedProblems);
+        setProblems(problemsFilteredById);
+      } else setProblems(filteredProblems);
+
+      setNumber(0);
     };
+    if (user) fetchData();
+  }, [user]);
 
-    fetchData([
-      problem1,
-      problem2,
-      problem3,
-      problem4,
-      problem5,
-      problem6,
-      problem7,
-    ]);
-
-    setNumber(0);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const users = await getAllUsers();
+      setUser(await users[0]);
+    };
+    fetchUser();
   }, []);
 
   useEffect(() => {
@@ -152,14 +152,14 @@ function Coding() {
 
   const handleNext = () => {
     //save solution to db
-    // apiService.saveSolution({
-    //   userId: user._id,
-    //   problemId: problem._id,
-    //   solution: problem.function,
-    //   score: score,
-    //   runtime: number,
-    //   solveTime: number
-    // });
+    saveSolvedProblem({
+      userId: user._id,
+      problemId: problem?._id,
+      solution: problem?.function,
+      score: score,
+      runtime: runtime,
+      solveTime: solveTime,
+    });
     setNumber((prevNumber) => (prevNumber as number) + 1);
   };
 
@@ -173,9 +173,9 @@ function Coding() {
   };
 
   return (
-    <div className='h-screen w-full transition duration-200 ease-in-out  bg-seasalt' >
+    <div className='h-screen w-full transition duration-200 ease-in-out  bg-seasalt'>
       <Navbar />
-      <div className='p-20' >
+      <div className='p-20'>
         {problem && (number as number) < problems.length && (
           <div className='flex items-center justify-center h-full w-full'>
             <ProblemCard

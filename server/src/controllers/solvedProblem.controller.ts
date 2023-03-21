@@ -70,25 +70,27 @@ exports.addSolvedProblem = async (req: Request, res: Response)=> {
 
 
 exports.getAllSolvedProblems = async (req: Request, res: Response) => {
+  console.log(req.params.userId)
   try {
     const userId = req.params.userId;
     const problems = await SolvedProblem.find({ user_id: userId }).lean();
+    res.status(200).json(problems);
+    // const exercisesIds = problems.map((problem:any) => problem.problem_id);
+    // const exercisesFromDB = await Exercise.find({ _id: { $in: exercisesIds } }).lean();
 
-    const exercisesIds = problems.map((problem:any) => problem.problem_id);
-    const exercisesFromDB = await Exercise.find({ _id: { $in: exercisesIds } }).lean();
+    // const solvedProblems = await Promise.all(
+    //   problems.map(async (problem:any) => {
+    //     const exercise = exercisesFromDB.find(
+    //       ex => ex._id.toString() === problem.problem_id.toString()
+    //     );
 
-    const solvedProblems = await Promise.all(
-      problems.map(async (problem:any) => {
-        const exercise = exercisesFromDB.find(
-          ex => ex._id.toString() === problem.problem_id.toString()
-        );
-
-        return { ...problem, exercise };
-      })
-    );
-    res
-      .status(200)
-      .json(solvedProblems);
+    //     return { ...problem, exercise };
+    //   })
+    // );
+    //   console.log(solvedProblems)
+    // res
+    //   .status(200)
+    //   .json(solvedProblems);
   } catch (err: any) {
     console.error(err);
     res
