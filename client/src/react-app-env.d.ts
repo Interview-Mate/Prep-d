@@ -66,7 +66,7 @@ type Problem = {
 type Solution = any[];
 
 type Dict = {
-  [key: number]: string;
+  [key: number | string]: string | number;
 };
 
 type Result = {

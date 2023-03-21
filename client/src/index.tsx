@@ -59,6 +59,16 @@ const router = createBrowserRouter([
   {
     path: "/codingtest",
     element: <Coding />,
+    children: [
+      {
+        path: "level/:levelId",
+        element: <Coding />,
+      },
+      {
+        path: ":problemId",
+        element: <Coding />,
+      },
+    ],
     errorElement: <Error />,
   },
   {
