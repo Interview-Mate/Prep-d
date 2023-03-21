@@ -2,6 +2,7 @@ const router = require("express").Router();
 const interviewCont = require ("./controllers/interview.controller");
 const exerciseCont = require ("./controllers/execise.controller");
 const userCont = require ('./controllers/user.controller');
+const puncCont = require ('./controllers/punctuator.controller');
 import { Request, Response } from "express";
 
 router.get('/', (req: Request, res: Response) => {
@@ -27,5 +28,6 @@ router.put("/interview/:id/questions", interviewCont.addQuestionToInterview);
 router.get('/getuser/:id', exerciseCont.getExercise);
 router.post("/user/:user_id", interviewCont.addExercise);
 
+router.post("/punctuate", puncCont.punctuate);
 
 export default router;

@@ -14,6 +14,7 @@ import PastInterviews from "./Routes/PastInterviews";
 import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
+import Speech from "./Components/Speech";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
   {
     path: "/insights",
     element: <Insights />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/speech",
+    element: <Speech />,
     errorElement: <Error />,
   },
 ]);
