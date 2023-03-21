@@ -2,6 +2,7 @@ import Interview from "../models/interview";
 import { Request, Response } from "express";
 import { Configuration, OpenAIApi } from "openai";
 import dotenv from "dotenv";
+import { ChatCompletionRequestMessage } from "openai";
 dotenv.config();
 
 const configuration = new Configuration({
@@ -55,49 +56,34 @@ exports.newInterview = async (req: Request, res: Response) => {
 // Returns the text of the answer obtained from chatGPT
 // TODO: implement
 //}
-// interface Message {
-//   role: string;
-//   content: string;
-// }
+
 
 exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
-  let prompt = "provide an interview question";
-  let systemPrompt =
-    "You are an interviewer, interviewing someone for a job at your company. It is for a senior position in the field of software development. Begin by asking an introductory question";
-  // const messages: Message[] =  [
-  // {role: "system", content: "You are an interviewer, interviewing someone for a job at your company. It is for a senior position in the field of software development. Begin by asking an introductory question"},
-  //   {role: "user", content: "Sure, I have been working in software development for over 10 years. I have experience in both front-end and back-end development, as well as project management."},
-  //   {role: "assistant", content: "Can you tell me a little bit about your background and experience in software development?"},
-  // ]
+  
+  const messages: ChatCompletionRequestMessage[] =  [
+    {role: "system", content: "You are an interviewer, interviewing someone for a job at your company. It is for a senior position in the field of software development. Begin by asking an introductory question"},
+    {role: "user", content: "Sure, I have been working in software development for over 10 years. I have experience in both front-end and back-end development, as well as project management."},
+    {role: "assistant", content: "Can you tell me a little bit about your background and experience in software development?"},
+  ]
 
   try {
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: systemPrompt },
-        {
-          role: "user",
-          content:
-            "Sure, I have been working in software development for over 10 years. I have experience in both front-end and back-end development, as well as project management.",
-        },
-        {
-          role: "assistant",
-          content:
-            "Can you tell me a little bit about your background and experience in software development?",
-        },
-      ],
-      max_tokens: 2000,
+      messages: messages,
+      max_tokens: 4096,
       temperature: 0.7,
     });
     return res.status(200).json({
-      data: response.data.choices[0].message,
+      data: response.data.choices[0].message
     });
+    
   } catch (error: any) {
     if (error.response) {
       res.status(500);
       console.log(`error during generating response: ${error}`);
     }
   }
+  
   //   // throw Error("Function not implemented")
 };
 
