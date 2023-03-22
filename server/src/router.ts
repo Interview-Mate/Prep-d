@@ -26,7 +26,7 @@ router.put("/interview/:id/questions", interviewCont.addQuestionToInterview);
 //exercise methods
 //TODO
 router.get('/getuser/:id', exerciseCont.getExercise);
-router.post("/user/:user_id", interviewCont.addExercise);
+// router.post("/user/:user_id", interviewCont.addExercise);
 
 router.post("/punctuate", puncCont.punctuate);
 
