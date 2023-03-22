@@ -12,10 +12,11 @@ const AvatarWebCam = () => {
   return (
 
     <div className='w-full h-auto 
-    bg-gradient-radial from-white-500 via-gray-500 to-white-500
+    bg-gradient-radial from-white-500 via-gray-400 to-white-500
     bg-gradient-to-r from-white via-gray to-white
-
      '>
+
+
       <Canvas camera={{ fov: 10, position: [0, 0, 10] }} >
        <OrbitControls />
        <ambientLight />

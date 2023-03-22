@@ -23,7 +23,8 @@
     "react-scripts": "5.0.1",
     "tailwindest": "^1.0.3",
     "three": "^0.150.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.3.6"
   },
   "scripts": {
     "start": "react-scripts start",
