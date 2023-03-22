@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const interviewCont = require ("./controllers/interview.controller");
-const exerciseCont = require ("./controllers/execise.controller");
+const exerciseCont = require ("./controllers/exercise.controller");
+const solvedProblemCont = require ("./controllers/solvedProblem.controller");
 const userCont = require ('./controllers/user.controller');
 import { Request, Response } from "express";
 
@@ -27,6 +28,10 @@ router.post('/chat-response', interviewCont.getQuestionFromChatGPT)
 //TODO
 // router.get('/getuser/:id', exerciseCont.getExercise);
 // router.post("/user/:user_id", interviewCont.addExercise);
+router.get("/get-all-exercises", exerciseCont.getAllExercises);
 
+//solved problems
+router.get("/problems/:userId", solvedProblemCont.getAllSolvedProblems);
+router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 export default router;

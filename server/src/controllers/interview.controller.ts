@@ -30,6 +30,12 @@ exports.getInterview = async (req: Request, res: Response) => {
     let id = req.params.id;
     let result = await Interview.findById(id);
     res.json(result).status(200);
+    if (!result) {
+      throw new Error("Interview not found");
+    }
+     res
+      .json(result)
+      .status(200);
   } catch (err: any) {
     res.status(500).json(err.message);
   }
@@ -50,54 +56,25 @@ exports.newInterview = async (req: Request, res: Response) => {
   }
 };
 
-// function getQuestionFromChatGPT (level:String, jobType:String, questionType:String) : String {
-// Calls chatGPT to get an interview question for a certain level for a certain job type
-// of questionType either "Behavioural" or "Coding"
-// Returns the text of the answer obtained from chatGPT
-// TODO: implement
-//}
+function getQuestionFromChatGPT (level:String, jobType:String, questionType:String) : String {
+  // Calls chatGPT to get an interview question for a certain level for a certain job type
+  // of questionType either "Behavioural" or "Coding"
+  // Returns the text of the answer obtained from chatGPT
+  // TODO: implement
+  throw Error('Function not implemented')
+}
 
 
-exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
-  
-  const messages: ChatCompletionRequestMessage[] =  [
-    {role: "system", content: "You are an interviewer, interviewing someone for a job at your company. It is for a senior position in the field of software development. Begin by asking an introductory question"},
-    {role: "user", content: "Sure, I have been working in software development for over 10 years. I have experience in both front-end and back-end development, as well as project management."},
-    {role: "assistant", content: "Can you tell me a little bit about your background and experience in software development?"},
-  ]
-
-  try {
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: messages,
-      max_tokens: 4096,
-      temperature: 0.7,
-    });
-    return res.status(200).json(response.data);
-    
-  } catch (error: any) {
-    if (error.response) {
-      res.status(500);
-      console.log(`error during generating response: ${error}`);
-    }
-  }
-  
-  //   // throw Error("Function not implemented")
-};
-
-exports.addQuestionToInterview = async (req: Request, res: Response) => {
-  //TODO: clarify if chatGPT calls are going to be made client side or
-  // server side -  API design will change accordingly
-  // ATM this function might not be useful (but works :) )
+exports.addQuestionToInterview =  async (req : Request, res: Response) => {
   try {
     const interview_id = req.params.id;
     const { question_text, answer_text, answer_audio_url, score } = req.body;
 
     const newQuestion = {
-      question_text,
-      answer_text,
-      answer_audio_url,
-      score,
+      problem_name: String,
+      solution: String,
+      score: Number,
+      runtime: Number,
       timestamp: Date.now(),
     };
 
@@ -108,11 +85,51 @@ exports.addQuestionToInterview = async (req: Request, res: Response) => {
     );
 
     if (!interview) {
-      return res.status(404).json({ error: "Interview not found" });
+      throw new Error("Exercise not found");
+
     }
-    return res.status(201).json(newQuestion);
-  } catch (error) {
+    res
+      .status(201)
+      .json(newQuestion);
+  } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: "Server error" });
+    res
+      .status(500)
+      .json(error.message)
   }
-};
+}
+
+exports.addExerciseToInterview =  async (req : Request, res: Response) => {
+
+  try {
+    const interview_id = req.params.id;
+    const { solution, answer_text, answer_audio_url, score } = req.body;
+
+    const newExercise = {
+      solution,
+      answer_text,
+      answer_audio_url,
+      score,
+      timestamp: Date.now(),
+    };
+
+    const interview = await Interview.findOneAndUpdate(
+      { _id: interview_id },
+      { $push: { coding_exericses: newExercise } },
+      { new: true }
+    );
+
+    if (!interview) {
+      throw new Error("Exercise not found");
+
+    }
+    res
+      .status(201)
+      .json(newExercise);
+  } catch (error: any) {
+    console.error(error);
+    res
+      .status(500)
+      .json(error.message)
+  }
+}

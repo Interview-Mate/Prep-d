@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
+    "dev": "tsx --watch src/index.ts",
     "test": "jest",
     "test-async": "jest --detectOpenHandles",
     "test:watch": "jest --watch",
@@ -20,6 +21,7 @@
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.21",
     "ts-node": "^10.9.1",
+    "tsx": "^3.12.5",
     "typescript": "^5.0.2"
   },
   "dependencies": {

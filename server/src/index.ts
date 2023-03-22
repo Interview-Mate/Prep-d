@@ -3,6 +3,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import router from './router';
 import {dbConnection} from './models/index.models';
+import populateExerciseCollection from './seedScript';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app
   try {
     await dbConnection;
     console.log('Connected to DB');
+   // populateExerciseCollection(); //WARN: populates the exercises collection; execute just once
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
