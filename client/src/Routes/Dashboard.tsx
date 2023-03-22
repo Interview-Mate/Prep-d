@@ -1,11 +1,19 @@
 import Navbar from "../Components/Navbar";
 import Coding from "../Assets/CodingChallengeMock.png";
 import Interview from "../Assets/InterviewMock.JPG";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useContext } from "react";
+import { Context } from "../Context";
+// import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const { user } = useAuth0();
-  console.log({ user });
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
+
   return (
     <>
       <Navbar />
@@ -16,6 +24,10 @@ export default function Dashboard() {
         <a href="/interview">
           <img className="dashboard-image" src={Interview}></img>
         </a>
+
+        {isAuthenticated &&
+          currentUser.email === "" &&
+          console.log("empty string?")}
       </div>
     </>
   );

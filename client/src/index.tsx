@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { ContextProvider } from "./Context";
 
 import Login from "./Routes/Login";
 import Dashboard from "./Routes/Dashboard";
@@ -74,8 +75,10 @@ root.render(
         redirect_uri: "http://localhost:3000/dashboard",
       }}
     >
-      <RouterProvider router={router} />
-      <App />
+      <ContextProvider>
+        <RouterProvider router={router} />
+        <App />
+      </ContextProvider>
     </Auth0Provider>
   </React.StrictMode>
 );
