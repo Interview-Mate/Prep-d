@@ -1,41 +1,78 @@
 import { mongoose } from './index.models';
 
+
 const interviewSchema = new mongoose.Schema({
-  userna_id: {
+  user_id: {
     type: String,
     required: true,
   },
-  score: Number,
   date: {
     type: Date, default: () => Date.now()
    },
-  cloudinary_url: String,
-  //TODO: how is this array going to be populated ?
-  questions: [
+
+  assistant: [
       {
         timestamp: {
           type: Date, default: () => Date.now()
         },
-        question_text: String, // text from chatGTP answer
-        answer_text: String, // text extracted from user uploaded audio file or
-        answer_audio_url:String, // url of audio asset
-        score: Number,
+        feedback: String,
+        grade: Number,
+        next_question: String,
+        interview_id: String,
       },
     ],
-  coding_exericses: [
-      {
-        timestamp: {
-          type: Date, default: () => Date.now()
-        },
-        //  problem_id: added automatically
-        problem_name: String,
-        solution: String,
-        score: Number,
-        runtime: Number,
+
+  user: [
+    {
+      timestamp: {
+        type: Date, default: () => Date.now()
       },
-    ],
+      cloudinary_url: String,
+      text: String,
+      interview_id: String,
+    },
+  ],
+
+  overall_score: Number,
+
 });
 
 const Interview = mongoose.model('Interview', interviewSchema);
 export default Interview;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const userResponce = {
+  cloudinary_url: String,
+  text: String,
+  interview_id: String,
+  timestamp: {
+    type: Date, default: () => Date.now()
+  },
+}
+
+const AssistantResponce = {
+  feedback: String,
+  grade: Number,
+  next_question: String,
+  interview_id: String,
+  timestamp: {
+    type: Date, default: () => Date.now()
+  },
+}

@@ -18,51 +18,6 @@ import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
 
-// const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-// const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-
-// const router = createBrowserRouter([
-//   // {
-//   //   path: "/",
-//   //   element: <Login />,
-//   //   errorElement: <Error />,
-//   // },
-//   {
-//     path: "/",
-//     element: <AuthenticationGuard component={Dashboard} />,
-//     errorElement: <Error />,
-//   },
-//   {
-//     path: "/codingtest",
-//     element: <AuthenticationGuard component={Coding} />,
-//     errorElement: <Error />,
-//   },
-//   {
-//     path: "/interview",
-//     element: <AuthenticationGuard component={Interview} />,
-//     errorElement: <Error />,
-//   },
-//   {
-//     path: "/pastinterviews",
-//     element: <AuthenticationGuard component={PastInterviews} />,
-//     errorElement: <Error />,
-//   },
-//   {
-//     path: "/profile",
-//     element: <AuthenticationGuard component={Profile} />,
-//     errorElement: <Error />,
-//   },
-//   {
-//     path: "/settings",
-//     element: <AuthenticationGuard component={Settings} />,
-//     errorElement: <Error />,
-//   },
-//   {
-//     path: "/insights",
-//     element: <AuthenticationGuard component={Insights} />,
-//     errorElement: <Error />,
-//   },
-// ]);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

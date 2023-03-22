@@ -1,8 +1,11 @@
 const router = require("express").Router();
+
 const interviewCont = require("./controllers/interview.controller");
 const exerciseCont = require("./controllers/exercise.controller");
 const solvedProblemCont = require("./controllers/solvedProblem.controller");
 const userCont = require("./controllers/user.controller");
+const puncCont = require ('./controllers/punctuator.controller');
+
 import { Request, Response } from "express";
 
 router.get("/", (req: Request, res: Response) => {
@@ -17,13 +20,15 @@ router.delete("/users/:id", userCont.deleteUser);
 router.put("/user/:id", userCont.editUser);
 
 //interview methods
+
 router.get("/interview/:interviewid", interviewCont.getInterview);
 router.get("/get-all-interviews/:userid", interviewCont.getInterviewsByUser);
-router.post("/interview/:userid", interviewCont.newInterview);
 router.put(
   "/interview/:interviewid/questions",
   interviewCont.addQuestionToInterview
 );
+router.post("/interview/:userId", interviewCont.newInterview);
+router.post('/chat-response', interviewCont.getQuestionFromChatGPT)
 
 //exercise methods
 router.get("/get-all-exercises", exerciseCont.getAllExercises);
@@ -32,4 +37,7 @@ router.get("/get-all-exercises", exerciseCont.getAllExercises);
 router.get("/problems/:userId", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
+router.post("/punctuate", puncCont.punctuate);
+
 export default router;
+
