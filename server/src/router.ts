@@ -18,17 +18,14 @@ router.delete("/users/:id", userCont.deleteUser);
 router.put("/user/:id", userCont.editUser);
 
 //interview methods
-router.get("/get-all-interviews/:username", interviewCont.getInterviewsByUser);
+router.get("/get-all-interviews/:userId", interviewCont.getInterviewsByUser);
 router.get("/interview/:id", interviewCont.getInterview);
-router.post("/interview/:username", interviewCont.newInterview);
+router.post("/interview/:userId", interviewCont.newInterview);
 router.put("/interview/:id/questions", interviewCont.addQuestionToInterview);
 router.post('/chat-response', interviewCont.getQuestionFromChatGPT)
 
 
 //exercise methods
-//TODO
-// router.get('/getuser/:id', exerciseCont.getExercise);
-// router.post("/user/:user_id", interviewCont.addExercise);
 router.get("/get-all-exercises", exerciseCont.getAllExercises);
 
 //solved problems

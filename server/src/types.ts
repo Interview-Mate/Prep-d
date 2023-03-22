@@ -1,6 +1,6 @@
-// //TODO: update Interview
+ //FIXME: update Interview
 export type Interview  = {
-  username: string;
+  user_id: string;
   score: number;
   date: Date;
   cloudinary_url: string;
@@ -43,4 +43,17 @@ export interface IUser {
   email: string;
   password: string;
   level: number;
+}
+
+export type UserResponce = {
+  cloudinary_url: string,
+  text: string,
+  interview_id: string
+}
+
+export type AssistantResponce = {
+  feedback: string,
+  grade: number,
+  next_question: string,
+  interview_id: string
 }
