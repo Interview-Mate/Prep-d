@@ -32,6 +32,7 @@ router.get("/get-all-exercises", exerciseCont.getAllExercises);
 router.get("/problems/:userId", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
-
+// NEW
 router.post("/punctuate", puncCont.punctuate);
+
 export default router;

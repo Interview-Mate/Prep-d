@@ -15,6 +15,7 @@ import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
 import Speech from "./Components/Speech";
+import CompVoice from "./Components/CompVoice";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,11 @@ const router = createBrowserRouter([
   {
     path: "/speech",
     element: <Speech />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/compvoice",
+    element: <CompVoice />,
     errorElement: <Error />,
   },
 ]);

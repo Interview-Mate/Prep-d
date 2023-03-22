@@ -22,8 +22,13 @@ const Speech: React.FC = () => {
   speechRecognition.current.interimResults = true;
   speechRecognition.current.continuous = true;
 
+// TODO previous screen: input variables trigger a new interview in DB, generates an interviewID
+// TODO interviewID + variables retrieved as props?
+// TODO retrieve first Q from ChatGPT and render(/speak)
 
   useEffect(() => {
+    // TODO get interviewID, variables from props?
+
     // Request access to the user's microphone
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       const recorder = new MediaRecorder(stream);
@@ -50,6 +55,8 @@ const Speech: React.FC = () => {
         speechRecognition.current.start();
       }
     });
+
+      // TODO get first question from interviewer
   }, []);
 
   const startRecording = () => {
@@ -57,6 +64,11 @@ const Speech: React.FC = () => {
     speechRecognition.current.start();
     mediaRecorder?.start();
   };
+
+// TODO - needs interview ID, question_text, feedback, score
+  // const addAnswer = async (interviewID: string, questionText: string, audioUrl: string, punctuatedText: string, feedback: string, score: number): Promise<void> => {
+  //   const output = await ApiService.updateAnswer(interviewID, questionText, audioUrl, punctuatedText, feedback, score);
+  // };
 
   // To be split into more managable functions!
   const stopRecording = async () => {
@@ -78,7 +90,7 @@ const Speech: React.FC = () => {
     formData.append("file", audioBlob);
     formData.append("upload_preset", "j1mgzp8n");
 
-    // To be moved into ApiService
+    // TODO move into ApiService
     try {
       const cloudinaryResponse = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
@@ -88,7 +100,12 @@ const Speech: React.FC = () => {
         }
       );
       const publicId = cloudinaryResponse.data.public_id;
-
+      // const audioUrl = cloudinaryResponse.data.url
+      
+      // Add answer URL and Text to DB
+      // TODO - needs interview ID, questionText, feedback, score
+      // addAnswer(interviewID, questionText, audioUrl, punctuatedText, feedback, score)
+      
       // Add the audio clip to the list of clips
       setAudioClips((prev) => [
         ...prev,
