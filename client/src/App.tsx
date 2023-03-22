@@ -14,6 +14,9 @@ import PastInterviews from "./Routes/PastInterviews";
 import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
+import Speech from "./Components/Speech";
+import CompVoice from "./Components/CompVoice";
+
 import { useContext } from "react";
 import { Context } from "./Context";
 import Navbar from "./Components/Navbar";
@@ -68,6 +71,16 @@ function App() {
     {
       path: "/insights",
       element: <AuthenticationGuard component={Insights} />,
+      errorElement: <Error />,
+    },
+    {
+      path: "/speech",
+      element: <AuthenticationGuard component={Speech} />,
+      errorElement: <Error />,
+    },
+    {
+      path: "/compvoice",
+      element: <AuthenticationGuard component={CompVoice} />,
       errorElement: <Error />,
     },
   ]);

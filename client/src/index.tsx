@@ -3,21 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { useAuth0, Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { ContextProvider } from "./Context";
-import { AuthenticationGuard } from "./Components/AuthenticationGuard";
-
-import Login from "./Routes/Login";
-import Dashboard from "./Routes/Dashboard";
-import Error from "./Components/Error";
-import Coding from "./Routes/Coding";
-import Interview from "./Routes/Interview";
-import PastInterviews from "./Routes/PastInterviews";
-import Profile from "./Routes/Profile";
-import Settings from "./Routes/Settings";
-import Insights from "./Routes/Insights";
-
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
