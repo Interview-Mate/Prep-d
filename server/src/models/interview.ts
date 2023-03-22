@@ -5,12 +5,11 @@ const interviewSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  score: Number,
   date: {
     type: Date, default: () => Date.now()
    },
   cloudinary_url: String,
-  //TODO: how is this array going to be populated ?
+
   questions: [
       {
         timestamp: {
@@ -22,20 +21,29 @@ const interviewSchema = new mongoose.Schema({
         score: Number,
       },
     ],
-  coding_exericses: [
-      {
-        timestamp: {
-          type: Date, default: () => Date.now()
-        },
-        //  problem_id: added automatically
-        problem_name: String,
-        solution: String,
-        score: Number,
-        runtime: Number,
-      },
-    ],
+    score: Number,
+
 });
 
 const Interview = mongoose.model('Interview', interviewSchema);
 export default Interview;
 
+
+const userResponce = {
+  cloudinary_url: String,
+  text: String,
+  interview_id: String,
+  timestamp: {
+    type: Date, default: () => Date.now()
+  },
+}
+
+const AssistantResponce = {
+  feedback: String,
+  grade: Number,
+  next_question: String,
+  interview_id: String,
+  timestamp: {
+    type: Date, default: () => Date.now()
+  },
+}

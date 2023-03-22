@@ -1,5 +1,6 @@
 import  Interview  from '../models/interview';
 import { Request, Response } from "express";
+import { ChatCompletionRequestMessage } from "openai";
 
 
 exports.getInterviewsByUser = async function (req: Request, res: Response) {
@@ -57,18 +58,53 @@ exports.newInterview =  async (req : Request, res: Response) => {
     }
 };
 
-function getQuestionFromChatGPT (level:String, jobType:String, questionType:String) : String {
-  // Calls chatGPT to get an interview question for a certain level for a certain job type
-  // of questionType either "Behavioural" or "Coding"
-  // Returns the text of the answer obtained from chatGPT
-  // TODO: implement
-  throw Error('Function not implemented')
+function getQuestionFromChatGPT (level:String, jobType:String, questionType:String)  {
+  const messages: ChatCompletionRequestMessage[] =  [
+    {role: "system", content: "You are an interviewer, interviewing someone for a job at your company. It is for a senior position in the field of software development. Begin by asking an introductory question"},
+    {role: "user", content: "Sure, I have been working in software development for over 10 years. I have experience in both front-end and back-end development, as well as project management."},
+    {role: "assistant", content: "Can you tell me a little bit about your background and experience in software development?"},
+  ]
 }
+
+exports.addQuestionToInterview =  async (req : Request, res: Response) => {
+  try {
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: messages,
+      max_tokens: 4096,
+      temperature: 0.7,
+    });
+    return res.status(200).json(response.data);
+
+  } catch (error: any) {
+    if (error.response) {
+      res.status(500);
+      console.log(`error during generating response: ${error}`);
+//.....
+    }}}
 
 
 exports.addQuestionToInterview =  async (req : Request, res: Response) => {
   try {
     const interview_id = req.params.id;
+
+    //1. initiate converstaion - role = "system"
+    //2. user response - role = "user"
+    const userResponce = {
+      cloudinary_url: String,
+      text: String,
+      interview_id: String,
+      timestamp: Date.now(),
+    }
+    //3. assistance responce
+    const AssistantResponce = {
+      feedback: String,
+      grade: Number,
+      next_question: String,
+      interview_id: String,
+      timestamp: Date.now(),
+    }
+    //loop - 7 times
     const { question_text, answer_text, answer_audio_url, score } = req.body;
 
     const newQuestion = {
