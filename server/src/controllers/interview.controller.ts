@@ -112,7 +112,14 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
       const messageContent = response.data.choices[0].message.content;
       const lines = messageContent.split("\n");
       if (lines.length > 0) {
-        console.log(lines[lines.length - 1].trim());
+        let text = lines[lines.length - 1].trim()
+        console.log(text);
+      }
+      const content = response.data.choices[0].message.content;
+      const matchResult = content.match(/\{(.*)\}/s);
+      if (matchResult) {
+      const rating = JSON.parse(matchResult[0]);
+      console.log(rating)
       }
       return res.status(200).json(response.data);
     }
@@ -120,6 +127,7 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json(error.message);
   }
+
 };
 
 //
