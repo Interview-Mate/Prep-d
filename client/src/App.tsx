@@ -45,7 +45,17 @@ function App() {
     },
     {
       path: "/codingtest",
-      element: <AuthenticationGuard component={Coding} />,
+      element: <Coding />,
+      children: [
+        {
+          path: "level/:levelId",
+          element: <Coding />,
+        },
+        {
+          path: ":problemId",
+          element: <Coding />,
+        },
+      ],
       errorElement: <Error />,
     },
     {
