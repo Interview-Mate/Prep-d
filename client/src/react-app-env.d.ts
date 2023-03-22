@@ -98,3 +98,39 @@ interface User {
   level: string;
   id?: string;
 }
+
+interface InterviewFormValues {
+  jobLevel: string;
+  companyName: string;
+  jobField: string;
+  jobTitle: string;
+}
+
+type CompVoiceProps = {
+  message?: string;
+  setIsInterviewerSpeaking: (value: boolean) => void;
+};
+
+type InterviewFormProps = {
+  onFormSubmit: (values: { companyName: string; jobLevel: string; jobField: string; jobTitle: string }) => void;
+};
+
+type AudioClip = {
+  id: string;
+  publicId: string;
+  transcript: string;
+};
+
+type SpeechProps = {
+  isInterviewerSpeaking: boolean;
+  onAnswerRecorded: (audioUrl: any, transcript: any) => void;
+  onSaveUserResponse: () => void;
+};
+
+type InterviewProps = {
+  currentUser: any;
+  setCurrentUser: any;
+  isAuthenticated: boolean;
+  handleGetUser: () => Promise<void>;
+  handleCreateUser: () => Promise<void>;
+};

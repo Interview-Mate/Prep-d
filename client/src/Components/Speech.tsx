@@ -3,13 +3,7 @@ import axios from "axios";
 import { CloudinaryContext, Video } from "cloudinary-react";
 import * as ApiService from "../Util/ApiService";
 
-type AudioClip = {
-  id: string;
-  publicId: string;
-  transcript: string;
-};
-
-const Speech: React.FC = () => {
+const Speech: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRecorded, onSaveUserResponse, }) => {
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [audioClips, setAudioClips] = useState<AudioClip[]>([]);
@@ -22,13 +16,7 @@ const Speech: React.FC = () => {
   speechRecognition.current.interimResults = true;
   speechRecognition.current.continuous = true;
 
-// TODO previous screen: input variables trigger a new interview in DB, generates an interviewID
-// TODO interviewID + variables retrieved as props?
-// TODO retrieve first Q from ChatGPT and render(/speak)
-
   useEffect(() => {
-    // TODO get interviewID, variables from props?
-
     // Request access to the user's microphone
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       const recorder = new MediaRecorder(stream);
@@ -55,8 +43,6 @@ const Speech: React.FC = () => {
         speechRecognition.current.start();
       }
     });
-
-      // TODO get first question from interviewer
   }, []);
 
   const startRecording = () => {
@@ -64,11 +50,6 @@ const Speech: React.FC = () => {
     speechRecognition.current.start();
     mediaRecorder?.start();
   };
-
-// TODO - needs interview ID, question_text, feedback, score
-  // const addAnswer = async (interviewID: string, questionText: string, audioUrl: string, punctuatedText: string, feedback: string, score: number): Promise<void> => {
-  //   const output = await ApiService.updateAnswer(interviewID, questionText, audioUrl, punctuatedText, feedback, score);
-  // };
 
   // To be split into more managable functions!
   const stopRecording = async () => {
@@ -89,7 +70,7 @@ const Speech: React.FC = () => {
     const formData = new FormData();
     formData.append("file", audioBlob);
     formData.append("upload_preset", "j1mgzp8n");
-    
+
     // TODO move into ApiService
     try {
       const cloudinaryResponse = await axios.post(
@@ -100,35 +81,31 @@ const Speech: React.FC = () => {
         }
       );
       const publicId = cloudinaryResponse.data.public_id;
-      // const audioUrl = cloudinaryResponse.data.url
-      
-      // Add answer URL and Text to DB
-      // TODO - needs interview ID, questionText, feedback, score
-      // addAnswer(interviewID, questionText, audioUrl, punctuatedText, feedback, score)
-      
+      const audioUrl = cloudinaryResponse.data.url
+
       // Add the audio clip to the list of clips
       setAudioClips((prev) => [
         ...prev,
         { id, publicId, transcript: punctuatedText },
       ]);
       setCurrentTranscript("");
+      audioChunks.current = [];
+      setRecording(false);
+      onAnswerRecorded(audioUrl, punctuatedText);
+      onSaveUserResponse();
     } catch (error) {
       console.log(error);
     }
-    // Reset the audio chunks
-    audioChunks.current = [];
-    setRecording(false);
   };
-
-
 
   return (
     <div>
-      <h1 className="speech-title">Speech-to-Text</h1>
+      <h1 className="speech-title">Interviewee</h1>
       <div className="speech-button-container">
-        <button className="speech-button" onClick={startRecording} disabled={recording}>
+        <button className="speech-button" onClick={startRecording} disabled={recording || isInterviewerSpeaking}>
           Record
         </button>
+
         <button className="speech-button" onClick={stopRecording} disabled={!recording}>
           Stop
         </button>
