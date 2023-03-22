@@ -12,8 +12,8 @@ const openai = new OpenAIApi(configuration);
 
 exports.getInterviewsByUser = async function (req: Request, res: Response) {
   try {
-    const userName = req.params.username;
-    const interviews = await Interview.find({ username: userName }).sort({
+    const userId = req.params.userId;
+    const interviews = await Interview.find({ user_id: userId }).sort({
       date: -1,
     }); //TODO asc/desc {date: 1}
     if (interviews.length < 1) {
@@ -42,7 +42,7 @@ exports.getInterview = async (req: Request, res: Response) => {
 exports.newInterview = async (req: Request, res: Response) => {
   try {
     let interview = await Interview.create({
-      username: req.params.username,
+      user_id: req.params.userId,
       level: req.body.level,
       questions: [],
     });
@@ -58,7 +58,6 @@ exports.newInterview = async (req: Request, res: Response) => {
 // Calls chatGPT to get an interview question for a certain level for a certain job type
 // of questionType either "Behavioural" or "Coding"
 // Returns the text of the answer obtained from chatGPT
-// TODO: implement
 // throw Error('Function not implemented')
 // }
 
@@ -83,7 +82,7 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
 
   // try {
   //   let answerText: any;
-  //   const interview = await Interview.findOne({ userna_id: req.params.id })
+  //   const interview = await Interview.findOne({ user_id: req.params.id })
   //   if (!interview) {
   //     return res.status(404).json({ error: 'Interview not found' });
   //   }
@@ -123,9 +122,13 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
   }
 };
 
+//
+
 exports.addQuestionToInterview = async (req: Request, res: Response) => {
   try {
     const interview_id = req.params.id;
+
+    //!_______________________________
 
     //1. initiate converstaion - role = "system"
     //2. user response - role = "user"
@@ -163,10 +166,14 @@ exports.addQuestionToInterview = async (req: Request, res: Response) => {
     if (!interview) {
       throw new Error("Exercise not found");
     }
-    res.status(201).json(newQuestion);
+    res
+      .status(201)
+      .json(newQuestion);
   } catch (error: any) {
     console.error(error);
-    res.status(500).json(error.message);
+    res
+      .status(500)
+      .json(error.message);
   }
 };
 

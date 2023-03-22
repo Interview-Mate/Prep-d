@@ -1,6 +1,6 @@
  //FIXME: update Interview
 export type Interview  = {
-  username: string;
+  user_id: string;
   score: number;
   date: Date;
   cloudinary_url: string;
