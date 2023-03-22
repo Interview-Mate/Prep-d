@@ -6,7 +6,7 @@ export const getUser = (email: string | undefined): Promise<any> =>
     .then((res) => res.json())
     .catch((err) => err);
 
-export const createUser = async (newUser): Promise<any> => {
+export const createUser = async (newUser: User): Promise<any> => {
   try {
     const response = await fetch(`${BASE_URL}/user`, {
       method: "POST",

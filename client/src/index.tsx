@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ContextProvider } from "./Context";
+import { AuthenticationGuard } from "./Components/AuthenticationGuard";
 
 import Login from "./Routes/Login";
 import Dashboard from "./Routes/Dashboard";
@@ -28,37 +29,37 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <AuthenticationGuard component={Dashboard} />,
     errorElement: <Error />,
   },
   {
     path: "/codingtest",
-    element: <Coding />,
+    element: <AuthenticationGuard component={Coding} />,
     errorElement: <Error />,
   },
   {
     path: "/interview",
-    element: <Interview />,
+    element: <AuthenticationGuard component={Interview} />,
     errorElement: <Error />,
   },
   {
     path: "/pastinterviews",
-    element: <PastInterviews />,
+    element: <AuthenticationGuard component={PastInterviews} />,
     errorElement: <Error />,
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: <AuthenticationGuard component={Profile} />,
     errorElement: <Error />,
   },
   {
     path: "/settings",
-    element: <Settings />,
+    element: <AuthenticationGuard component={Settings} />,
     errorElement: <Error />,
   },
   {
     path: "/insights",
-    element: <Insights />,
+    element: <AuthenticationGuard component={Insights} />,
     errorElement: <Error />,
   },
 ]);

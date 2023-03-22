@@ -76,3 +76,10 @@ interface UserData<A = AppMetadata, U = UserMetadata> {
   user_metadata?: U | undefined;
   app_metadata?: A | undefined;
 }
+
+interface User {
+  email?: string | undefined;
+  name: string;
+  surname: string;
+  level: string;
+}
