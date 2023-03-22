@@ -37,7 +37,8 @@ router.get("/get-all-exercises", exerciseCont.getAllExercises);
 // router.post("/user/:user_id", exerciseCont.addExercise);
 
 //solved problems
-router.get("/problems/:userId", solvedProblemCont.getAllSolvedProblems);
+router.get("/problems/:userId", solvedProblemCont.getSolvedProblems);
+router.get("/get-all-solved", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 router.post("/punctuate", puncCont.punctuate);

@@ -9,14 +9,18 @@ const Sandbox = ({
 }: {
   userInput: string | undefined;
   problem: Problem | undefined;
-  safelyRunCode: any;
+  safelyRunCode: boolean;
   onResult: (results: Result[]) => void;
 }) => {
   useEffect(() => {
     if (safelyRunCode) {
-      const result1 = run(userInput + problem?.solution1[0]);
-      const result2 = run(userInput + problem?.solution2[0]);
-      const result3 = run(userInput + problem?.solution3[0]);
+      const solution1 = problem?.solution1[0].replace(/"/g, "'");
+      const solution2 = problem?.solution2[0].replace(/"/g, "'");
+      const solution3 = problem?.solution3[0].replace(/"/g, "'");
+
+      const result1 = run(userInput + solution1);
+      const result2 = run(userInput + solution2);
+      const result3 = run(userInput + solution3);
       onResult([result1, result2, result3]);
     }
   }, [safelyRunCode]);

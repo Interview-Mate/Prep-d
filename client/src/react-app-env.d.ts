@@ -63,6 +63,17 @@ type Err = {
   message?: string;
 };
 
+type User = {
+  _id: string;
+  __v: number;
+  name: string;
+  surname: string;
+  username: string;
+  email: string;
+  password: string;
+  level: number;
+}
+
 type Problem = {
   _id: string;
   __v: number;
@@ -81,12 +92,15 @@ type Problem = {
 type Solution = any[];
 
 type SolvedProblem = {
-  userId: string;
-  problemId: string;
+  exercise?: Problem;
+  user_id: string;
+  problem_id: string | undefined;
   solution: string | undefined;
   runtime: number;
   solveTime: number
   score: number,
+  __v?: number;
+  _id?: string;
 };
 
 

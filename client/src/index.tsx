@@ -98,11 +98,6 @@ const router = createBrowserRouter([
     element: <Insights />,
     errorElement: <Error />,
   },
-  {
-    path: "/codingtest",
-    element: <Coding />,
-    errorElement: <Error />,
-  },
 ]);
 
 const root = ReactDOM.createRoot(

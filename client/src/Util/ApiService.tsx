@@ -73,18 +73,17 @@ export const updateAnswer = async (interview_id: string, question_text: string, 
 
 //TODO move cloudinary upload here
 export const saveSolution = async (solution: Solution) => {
+const baseUrl = 'http://localhost:4000';
+
 export const saveSolvedProblem = async (solvedProblem: SolvedProblem) => {
   try {
-    const response = await fetch(
-      `http://localhost:4000/problem`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(solvedProblem),
-      }
-    );
+    const response = await fetch(`${baseUrl}/problem`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(solvedProblem),
+    });
     const savedSolvedProblem = await response.json();
     return savedSolvedProblem;
   } catch (error) {
@@ -93,11 +92,18 @@ export const saveSolvedProblem = async (solvedProblem: SolvedProblem) => {
 };
 
 export const getSolvedProblems = async (userId: string) => {
-  console.log(userId)
   try {
-    const response = await fetch(
-      `http://localhost:4000/problems/${userId}`
-    );
+    const response = await fetch(`${baseUrl}/problems/${userId}`);
+    const solvedProblems = await response.json();
+    return solvedProblems;
+  } catch (error) {
+    console.error('Error getting solved problems:', error);
+  }
+};
+
+export const getAllSolvedProblems = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/get-all-solved`);
     const solvedProblems = await response.json();
     return solvedProblems;
   } catch (error) {
@@ -106,10 +112,8 @@ export const getSolvedProblems = async (userId: string) => {
 };
 
 export const getProblems = async () => {
-  // console.log(process.env.REACT_APP_SERVER_URL);
-
   try {
-    const response = await fetch(`http://localhost:4000/get-all-exercises`);
+    const response = await fetch(`${baseUrl}/get-all-exercises`);
     const problems = await response.json();
     return problems;
   } catch (error) {
@@ -119,9 +123,7 @@ export const getProblems = async () => {
 
 export const getAllUsers = async () => {
   try {
-    const response = await fetch(
-      `http://localhost:4000/get-all-users`
-    );
+    const response = await fetch(`${baseUrl}/get-all-users`);
     const users = await response.json();
     return users;
   } catch (error) {

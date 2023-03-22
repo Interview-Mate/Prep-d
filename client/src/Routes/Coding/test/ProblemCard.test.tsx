@@ -1,5 +1,5 @@
 import { render, act } from '@testing-library/react';
-import ProblemCard from '../ProblemCard';
+import ProblemCard from '../CodeDetails';
 
 describe('ProblemCard component with solved state', () => {
   const problem = {

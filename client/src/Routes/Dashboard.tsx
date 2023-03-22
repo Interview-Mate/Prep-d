@@ -2,23 +2,38 @@ import { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Interview from '../Assets/InterviewMock.JPG';
 import { Link } from 'react-router-dom';
-import { getProblems } from '../Util/ApiService';
-
+import {
+  getProblems,
+  getSolvedProblems,
+  getAllUsers,
+} from '../Util/ApiService';
 
 export default function Dashboard() {
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [solvedIds, setSolvedIds] = useState<string[]>([]);
+  const [user, setUser] = useState<User | undefined>();
 
   useEffect(() => {
     const fetchData = async () => {
       const receivedProblems = await getProblems();
-      // const user = await apiService.getUser();
-      // setUser(user);
-
-
       setProblems(receivedProblems);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const solvedProblems = await getSolvedProblems(user!._id);
+      setSolvedIds(
+        solvedProblems.map(
+          (solvedProblem: SolvedProblem) => solvedProblem.problem_id
+        )
+      );
     };
+    if (user) fetchData();
+  }, [user]);
 
-    fetchData();
+  useEffect(() => {
+    const fetchUser = async () => {
+      const users = await getAllUsers();
+      setUser(await users[0]);
+    };
+    fetchUser();
   }, []);
 
   const level: Dict = {
@@ -72,17 +87,23 @@ export default function Dashboard() {
           <div className='border border-teal-600 rounded-md mr-8 p-4 h-max min-h-max w-full flex flex-col bg-white'>
             {problems.map((problem) => (
               <Link
-                to={'/codingtest/' + problem.name}
-                key={problem.name}
+                to={'/codingtest/' + problem._id}
+                key={problem._id}
                 className='text-right hover:opacity-50 active:opacity-75'
               >
                 {problem.name}{' '}
                 <span className='border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5'>
                   {level[problem.level]}
-                </span>{' '}
+                </span>
                 <span className='border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5'>
                   {lang[problem.language]}
                 </span>
+                {solvedIds.includes(problem._id) && (
+                  <span className='border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5'>
+                    {' '}
+                    Solved
+                  </span>
+                )}
               </Link>
             ))}
           </div>

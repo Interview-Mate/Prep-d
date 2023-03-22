@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { intervalToDuration } from 'date-fns';
+import { prettifyTime } from '../../Util/CodeEditorHelpers';
 
-const ProblemCard = ({
+const CodeDetails = ({
   problem,
   score,
   tests,
@@ -29,15 +29,6 @@ const ProblemCard = ({
 
   const handleHint = () => {
     setToggleHint(!toggleHint);
-  };
-
-  const prettifyTime = (time: number) => {
-    const duration = intervalToDuration({ start: 0, end: time });
-    return duration.hours === 0
-      ? duration.minutes === 0
-        ? `${duration.seconds}s`
-        : `${duration.minutes}m ${duration.seconds}s`
-      : `${duration.hours}h ${duration.minutes}m ${duration.seconds}s`;
   };
 
   return (
@@ -87,4 +78,4 @@ const ProblemCard = ({
   );
 };
 
-export default ProblemCard;
+export default CodeDetails;

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useState, useEffect, SetStateAction } from 'react';
 import Editor from '@monaco-editor/react';
 import Frame from 'react-frame-component';
 import Sandbox from './Coding/Sandbox';
 import CodeInsights from './Coding/CodeInsights';
 import CodeFooter from './Coding/CodeFooter';
-import ProblemCard from './Coding/ProblemCard';
+import CodeDetails from './Coding/CodeDetails';
 import Navbar from '../Components/Navbar';
 import {
   getProblems,
@@ -23,7 +24,7 @@ const level: Dict = {
 };
 
 function Coding() {
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<User | undefined>();
   const [userInput, setUserInput] = useState<string | undefined>('');
   const [problems, setProblems] = useState<Problem[]>([]);
   const [problem, setProblem] = useState<Problem>();
@@ -36,56 +37,10 @@ function Coding() {
   const [score, setScore] = useState<number>(0);
   const [safelyRunCode, setSafelyRunCode] = useState<boolean>(false);
   const [results, setResults] = useState<Result[]>([]);
+  const [previousSolution, setPreviousSolution] = useState<
+    string | undefined
+  >();
   const { levelId, problemId } = useParams();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const receivedProblems = await getProblems();
-      const solvedProblems = await getSolvedProblems(user._id);
-
-      console.log(solvedProblems);
-      console.log(receivedProblems);
-      // filter out problems that are not solved
-      // console.log(filteredProblems);
-
-
-      solvedProblems.map(obj => obj.problem_id)
-
-      const filteredProblems = receivedProblems.filter(
-        (problem: Problem) => !solvedProblems.includes(problem._id)
-      );
-
-      
-        console.log(filteredProblems);
-
-      if (levelId && levelId !== 'all') {
-        // filter by level
-        const problemsFilteredByLevel = filteredProblems.filter(
-          (problem: Problem) => problem.level === level[levelId]
-        );
-        setProblems(problemsFilteredByLevel);
-      } else if (levelId && levelId === 'all') {
-        // shuffle problems
-        for (let i = filteredProblems.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [filteredProblems[i], filteredProblems[j]] = [
-            filteredProblems[j],
-            filteredProblems[i],
-          ];
-        }
-        setProblems(filteredProblems);
-      } else if (problemId) {
-        // filter by problemId
-        const problemsFilteredById = filteredProblems.filter(
-          (problem: Problem) => problem._id === problemId
-        );
-        setProblems(problemsFilteredById);
-      } else setProblems(filteredProblems);
-
-      setNumber(0);
-    };
-    if (user) fetchData();
-  }, [user]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -94,6 +49,69 @@ function Coding() {
     };
     fetchUser();
   }, []);
+
+  useEffect(() => {
+    console.log(results);
+  }, [results]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let receivedProblems = await getProblems();
+      const solvedProblems = await getSolvedProblems(user!._id);
+
+      // filter out problems that are solved if user didn't select a specific problem
+      if (problemId === undefined) {
+        receivedProblems = receivedProblems.filter(
+          (problem: Problem) =>
+            !solvedProblems
+              .map((solvedProblem: SolvedProblem) => solvedProblem.problem_id)
+              .includes(problem._id)
+        );
+      }
+
+      if (levelId && levelId !== 'all') {
+        // filter by level
+        const problemsFilteredByLevel = receivedProblems.filter(
+          (problem: Problem) => problem.level === level[levelId]
+        );
+        setProblems(problemsFilteredByLevel);
+      } else if (levelId && levelId === 'all') {
+        // shuffle problems
+        for (let i = receivedProblems.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [receivedProblems[i], receivedProblems[j]] = [
+            receivedProblems[j],
+            receivedProblems[i],
+          ];
+        }
+        setProblems(receivedProblems);
+      } else if (problemId) {
+        // filter by problemId
+        const problemsFilteredById = receivedProblems.filter(
+          (problem: Problem) => problem._id === problemId
+        );
+        setProblems(problemsFilteredById);
+        // set code in editor to previous solution if it exists
+        if (
+          solvedProblems
+            .map((solvedProblem: SolvedProblem) => solvedProblem.problem_id)
+            .includes(problemId)
+        ) {
+          setPreviousSolution(
+            solvedProblems.filter(
+              (solvedProblem: SolvedProblem) =>
+                solvedProblem.problem_id === problemId
+            )[0].solution
+          );
+        }
+      } else setProblems(receivedProblems);
+
+      setNumber(0);
+    };
+    if (user) fetchData();
+  }, [user]);
+
+
 
   useEffect(() => {
     // Change problem when number increases
@@ -109,7 +127,7 @@ function Coding() {
   }, [number]);
 
   useEffect(() => {
-    // Check if user solved problem
+    // Check if solution is correct
     if (results.length === 3) {
       setSafelyRunCode(false);
 
@@ -153,9 +171,9 @@ function Coding() {
   const handleNext = () => {
     //save solution to db
     saveSolvedProblem({
-      userId: user._id,
-      problemId: problem?._id,
-      solution: problem?.function,
+      user_id: user!._id,
+      problem_id: problem?._id,
+      solution: userInput,
       score: score,
       runtime: runtime,
       solveTime: solveTime,
@@ -178,7 +196,7 @@ function Coding() {
       <div className='p-20'>
         {problem && (number as number) < problems.length && (
           <div className='flex items-center justify-center h-full w-full'>
-            <ProblemCard
+            <CodeDetails
               problem={problem}
               score={score}
               tests={tests}
@@ -194,7 +212,7 @@ function Coding() {
                 height='65vh'
                 defaultLanguage={problem.language}
                 theme='vs-light'
-                value={problem.function}
+                value={previousSolution ? previousSolution : problem.function}
                 onChange={handleChange}
                 options={{
                   minimap: {
@@ -216,7 +234,7 @@ function Coding() {
           </div>
         )}
         {number === problems.length && (
-          <CodeInsights problems={problems} score={score} />
+          <CodeInsights problems={problems} score={score} user={user} />
         )}
         <div style={{ display: 'none' }}>
           <Frame>
