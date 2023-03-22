@@ -1,7 +1,11 @@
  import {mongoose} from './index.models';
- //import { Schema, Document, Model, model } from "mongoose";
- //import { IUser } from '../types';
-//  const Schema = mongoose.Schema;
+
+// levels = {
+//   1: 'Beginner',
+//   2: 'Intermediate',
+//   3: 'Advanced',
+//   4: 'Expert',
+// };
 
 
 const userSchema = new mongoose.Schema({
@@ -26,7 +30,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     level: {
-        type: String,
+        type: Number,
         required: true,
     }
 });
