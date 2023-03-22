@@ -6,6 +6,8 @@
     "@headlessui/react": "^1.7.13",
     "@codesandbox/sandpack-react": "^2.1.9",
     "@heroicons/react": "^2.0.16",
+    "@react-three/drei": "^9.58.1",
+    "@react-three/fiber": "^8.12.0",
     "@monaco-editor/react": "^4.4.6",
     "@tailwindcss/forms": "^0.5.3",
     "@testing-library/jest-dom": "^5.16.5",
@@ -15,6 +17,7 @@
     "@types/node": "^16.18.16",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/three": "^0.149.0",
     "cloudinary-react": "^1.8.1",
     "flowbite": "^1.6.4",
     "date-fns": "^2.29.3",
@@ -25,7 +28,9 @@
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "tailwindest": "^1.0.3",
-    "web-vitals": "^2.1.4"
+    "three": "^0.150.1",
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.3.6"
   },
   "scripts": {
     "start": "react-scripts start",
