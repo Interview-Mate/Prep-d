@@ -1,22 +1,26 @@
-import  Interview  from '../models/interview';
+import Interview from "../models/interview";
 import { Request, Response } from "express";
-import { ChatCompletionRequestMessage } from "openai";
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
+import dotenv from "dotenv";
+dotenv.config();
 
+const configuration = new Configuration({
+  apiKey: process.env.chatGPT_key,
+});
+const openai = new OpenAIApi(configuration);
 
 exports.getInterviewsByUser = async function (req: Request, res: Response) {
   try {
     const userName = req.params.username;
-    const interviews = await Interview.find({username: userName}).sort({date: -1}); //TODO asc/desc {date: 1}
-    if (interviews.length < 1){
+    const interviews = await Interview.find({ username: userName }).sort({
+      date: -1,
+    }); //TODO asc/desc {date: 1}
+    if (interviews.length < 1) {
       throw new Error("No previous interviews found");
     }
-    res
-      .status(200)
-      .json(interviews);
+    res.status(200).json(interviews);
   } catch (err: any) {
-    res
-      .status(500)
-      .json(err.message);
+    res.status(500).json(err.message);
   }
 };
 
@@ -24,6 +28,7 @@ exports.getInterview = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
+    res.json(result).status(200);
     if (!result) {
       throw new Error("Interview not found");
     }
@@ -31,31 +36,23 @@ exports.getInterview = async (req: Request, res: Response) => {
       .json(result)
       .status(200);
   } catch (err: any) {
-     res
-      .status(500)
-      .json(err.message);
+    res.status(500).json(err.message);
   }
 };
 
-
-exports.newInterview =  async (req : Request, res: Response) => {
+exports.newInterview = async (req: Request, res: Response) => {
   try {
-    let interview = await Interview.create(
-      {
-        username: req.params.username,
-        level: req.body.level,
-        questions:[]
-      });
-      console.log('Interview created');
-      res
-        .status(201)
-        .json(interview);
-    } catch (err: any) {
-        console.log(err);
-      res
-        .status(500)
-        .json(err.message);
-    }
+    let interview = await Interview.create({
+      username: req.params.username,
+      level: req.body.level,
+      questions: [],
+    });
+    console.log("Interview created");
+    res.status(201).json(interview);
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).json(err.message);
+  }
 };
 
 function getQuestionFromChatGPT (level:String, jobType:String, questionType:String)  {
@@ -65,6 +62,23 @@ function getQuestionFromChatGPT (level:String, jobType:String, questionType:Stri
     {role: "assistant", content: "Can you tell me a little bit about your background and experience in software development?"},
   ]
 }
+
+// exports.addQuestionToInterview =  async (req : Request, res: Response) => {
+//   try {
+//     const response = await openai.createChatCompletion({
+//       model: "gpt-3.5-turbo",
+//       messages: messages,
+//       max_tokens: 4096,
+//       temperature: 0.7,
+//     });
+//     return res.status(200).json(response.data);
+
+//   } catch (error: any) {
+//     if (error.response) {
+//       res.status(500);
+//       console.log(`error during generating response: ${error}`);
+// //.....
+//     }}}
 
 exports.addQuestionToInterview =  async (req : Request, res: Response) => {
   try {

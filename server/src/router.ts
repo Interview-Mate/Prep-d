@@ -26,6 +26,9 @@ router.post('/chat-response', interviewCont.getQuestionFromChatGPT)
 
 
 //exercise methods
+//TODO
+// router.get('/getuser/:id', exerciseCont.getExercise);
+// router.post("/user/:user_id", interviewCont.addExercise);
 router.get("/get-all-exercises", exerciseCont.getAllExercises);
 
 //solved problems
