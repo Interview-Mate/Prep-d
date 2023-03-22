@@ -3,85 +3,26 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./Routes/Login";
-import Register from "./Routes/Register";
-import Dashboard from "./Routes/Dashboard";
-import Error from "./Components/Error";
-import Coding from "./Routes/Coding";
-import Interview from "./Routes/Interview";
-import PastInterviews from "./Routes/PastInterviews";
-import Profile from "./Routes/Profile";
-import Settings from "./Routes/Settings";
-import Insights from "./Routes/Insights";
-import Speech from "./Components/Speech";
-import CompVoice from "./Components/CompVoice";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/codingtest",
-    element: <Coding />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/interview",
-    element: <Interview />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/pastinterviews",
-    element: <PastInterviews />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/settings",
-    element: <Settings />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/insights",
-    element: <Insights />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/speech",
-    element: <Speech />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/compvoice",
-    element: <CompVoice />,
-    errorElement: <Error />,
-  },
-]);
+import { Auth0Provider } from "@auth0/auth0-react";
+import { ContextProvider } from "./Context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <App />
+    <Auth0Provider
+      domain="dev-jha6px2ereu57v06.us.auth0.com"
+      clientId="OgDgqM8zGI8BJLmkEWVkD8BS2I6M6eWw"
+      authorizationParams={{
+        redirect_uri: "http://localhost:3000/dashboard",
+      }}
+    >
+      <ContextProvider>
+        <App />
+      </ContextProvider>
+    </Auth0Provider>
   </React.StrictMode>
 );
 
