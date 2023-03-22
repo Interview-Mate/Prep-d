@@ -11,7 +11,7 @@ router.get("/", (req: Request, res: Response) => {
 //user methods
 router.post("/user", userCont.createUser);
 router.get("/get-all-users", userCont.getAllUsers); //for testing purposes
-router.get("/getuser/:id", userCont.getUser);
+router.get("/getuser/:email", userCont.getUser);
 router.delete("/users/:id", userCont.deleteUser);
 router.put("/user/:id", userCont.editUser);
 

@@ -1,5 +1,11 @@
 const BASE_URL = "http://localhost:4000";
 
+export const getUser = (email: string): Promise<any[]> =>
+  fetch(`${BASE_URL}/getuser/${email}`)
+    .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
+    .then((res) => res.json())
+    .catch((err) => err);
+
 export const getInterview = (id: string): Promise<any[]> =>
   fetch(`${BASE_URL}/interview/${id}`)
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
