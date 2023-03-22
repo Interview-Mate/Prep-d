@@ -1,4 +1,4 @@
- import {mongoose} from './index.models';
+import { mongoose } from "./index.models";
 
 // levels = {
 //   1: 'Beginner',
@@ -7,33 +7,24 @@
 //   4: 'Expert',
 // };
 
-
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    surname: {
-        type: String,
-        required: true,
-    },
-    username: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    level: {
-        type: Number,
-        required: true,
-    }
+  name: {
+    type: String,
+    required: true,
+  },
+  surname: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  level: {
+    type: String,
+    required: true,
+  },
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;
