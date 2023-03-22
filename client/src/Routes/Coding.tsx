@@ -192,7 +192,6 @@ function Coding() {
 
   return (
     <div className='h-screen w-full transition duration-200 ease-in-out  bg-seasalt'>
-      <Navbar />
       <div className='p-20'>
         {problem && (number as number) < problems.length && (
           <div className='flex items-center justify-center h-full w-full'>
