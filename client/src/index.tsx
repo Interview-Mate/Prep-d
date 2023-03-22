@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { useAuth0, Auth0Provider } from "@auth0/auth0-react";
 import { ContextProvider } from "./Context";
 import { AuthenticationGuard } from "./Components/AuthenticationGuard";
 
@@ -21,52 +21,53 @@ import Insights from "./Routes/Insights";
 // const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 // const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/dashboard",
-    element: <AuthenticationGuard component={Dashboard} />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/codingtest",
-    element: <AuthenticationGuard component={Coding} />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/interview",
-    element: <AuthenticationGuard component={Interview} />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/pastinterviews",
-    element: <AuthenticationGuard component={PastInterviews} />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/profile",
-    element: <AuthenticationGuard component={Profile} />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/settings",
-    element: <AuthenticationGuard component={Settings} />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/insights",
-    element: <AuthenticationGuard component={Insights} />,
-    errorElement: <Error />,
-  },
-]);
+// const router = createBrowserRouter([
+//   // {
+//   //   path: "/",
+//   //   element: <Login />,
+//   //   errorElement: <Error />,
+//   // },
+//   {
+//     path: "/",
+//     element: <AuthenticationGuard component={Dashboard} />,
+//     errorElement: <Error />,
+//   },
+//   {
+//     path: "/codingtest",
+//     element: <AuthenticationGuard component={Coding} />,
+//     errorElement: <Error />,
+//   },
+//   {
+//     path: "/interview",
+//     element: <AuthenticationGuard component={Interview} />,
+//     errorElement: <Error />,
+//   },
+//   {
+//     path: "/pastinterviews",
+//     element: <AuthenticationGuard component={PastInterviews} />,
+//     errorElement: <Error />,
+//   },
+//   {
+//     path: "/profile",
+//     element: <AuthenticationGuard component={Profile} />,
+//     errorElement: <Error />,
+//   },
+//   {
+//     path: "/settings",
+//     element: <AuthenticationGuard component={Settings} />,
+//     errorElement: <Error />,
+//   },
+//   {
+//     path: "/insights",
+//     element: <AuthenticationGuard component={Insights} />,
+//     errorElement: <Error />,
+//   },
+// ]);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <Auth0Provider
@@ -77,7 +78,6 @@ root.render(
       }}
     >
       <ContextProvider>
-        <RouterProvider router={router} />
         <App />
       </ContextProvider>
     </Auth0Provider>

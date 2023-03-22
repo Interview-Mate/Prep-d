@@ -82,4 +82,5 @@ interface User {
   name: string;
   surname: string;
   level: string;
+  id?: string;
 }

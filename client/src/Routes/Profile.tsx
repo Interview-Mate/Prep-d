@@ -1,7 +1,16 @@
-import Navbar from "../Components/Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useContext } from "react";
+import { Context } from "../Context";
 
 export default function Profile() {
+  //do we need to user current user or user from auth0 here
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
   const { user, isLoading } = useAuth0();
 
   if (isLoading) {
@@ -10,7 +19,6 @@ export default function Profile() {
 
   return (
     <>
-      <Navbar />
       {user && (
         <div className="profile-container">
           <div className="profile-title">Hi, {user.nickname}!</div>

@@ -3,11 +3,9 @@ import Interview from "../Assets/InterviewMock.JPG";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useContext } from "react";
 import { Context } from "../Context";
-// import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { loginWithRedirect } = useAuth0();
-  // console.log({ isAuthenticated });
 
   const {
     currentUser,
@@ -26,8 +24,6 @@ export default function Login() {
   return (
     <>
       <h1 className="app-title">InterviewMate</h1>
-      {/* {isLoading && <p>Page is loading...</p>}
-      {error && <p>{error.message}</p>} */}
 
       <div className="login-container">
         <div>

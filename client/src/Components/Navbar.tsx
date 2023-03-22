@@ -2,8 +2,18 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useContext } from "react";
+import { Context } from "../Context";
 
 export default function Navbar() {
+  //do we use auth0 user or currentUser here?
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
   const { logout, user } = useAuth0();
 
   const navigation = [

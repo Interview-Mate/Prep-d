@@ -1,9 +1,17 @@
-import Navbar from "../Components/Navbar";
+import { useContext } from "react";
+import { Context } from "../Context";
 
 export default function Settings() {
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
+
   return (
     <>
-      <Navbar />
       <div>Here you'll find user info, such as email and password</div>
     </>
   );

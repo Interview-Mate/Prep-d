@@ -1,27 +1,31 @@
-import Navbar from "../Components/Navbar";
 import { useState, useEffect } from "react";
 import * as ApiService from "../Util/ApiService";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useContext } from "react";
+import { Context } from "../Context";
 
 export default function PastInterviews() {
-  const { isAuthenticated, user } = useAuth0();
-  console.log(user);
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
 
   const [pastInterviews, setPastInterviews] = useState([]);
 
   useEffect(() => {
-    if (user) {
-      const fetchInterviews = async () => {
-        console.log(user.email);
-        const interviews = await ApiService.getInterviews(user.email as string);
-        setPastInterviews(interviews);
-      };
-    }
+    const fetchInterviews = async () => {
+      console.log(currentUser.email);
+      const interviews = await ApiService.getInterviews(
+        currentUser.email as string
+      );
+      setPastInterviews(interviews);
+    };
   }, []);
 
   return (
     <>
-      <Navbar />
       <div>
         Here you can listen to recordings and read transcripts of past
         interviews
