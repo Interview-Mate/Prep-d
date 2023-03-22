@@ -13,8 +13,19 @@ import {
   problem6,
   problem7,
 } from './Coding/problems';
+import { useContext } from "react";
+import { Context } from "../Context";
+// import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
+
   const [problems, setProblems] = useState<Problem[]>([]);
 
   useEffect(() => {
@@ -104,6 +115,10 @@ export default function Dashboard() {
             <img className='dashboard-image' src={Interview}></img>
           </a>
         </div>
+
+        {isAuthenticated &&
+          currentUser.email === "" &&
+          console.log("empty string?")}
       </div>
     </>
   );

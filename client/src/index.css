@@ -28,6 +28,7 @@ code {
 }
 
 .login-container {
+  align-items: center;
   display: flex;
   justify-content: space-evenly;
 }
@@ -36,6 +37,18 @@ code {
   border-radius: 20px;
   margin: 30px;
   max-width: 40vw;
+}
+
+.login-button {
+  background-color: rgba(201, 139, 185, 1);
+  border-radius: 20px;
+  height: 10vh;
+  width: 10vw;
+}
+
+.login-span {
+  display: block;
+  margin: 15px auto;
 }
 
 .signup-label {

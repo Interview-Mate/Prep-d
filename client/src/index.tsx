@@ -4,8 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
+import { ContextProvider } from "./Context";
+
 import Login from "./Routes/Login";
-import Register from "./Routes/Register";
 import Dashboard from "./Routes/Dashboard";
 import Error from "./Components/Error";
 import Coding from "./Routes/Coding";
@@ -41,15 +43,13 @@ import Speech from "./Components/Speech";
 //   lazy?: LazyRouteFunction<RouteObject>;
 // }
 
+// const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+// const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
     errorElement: <Error />,
   },
   {
@@ -104,8 +104,18 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <App />
+    <Auth0Provider
+      domain="dev-jha6px2ereu57v06.us.auth0.com"
+      clientId="OgDgqM8zGI8BJLmkEWVkD8BS2I6M6eWw"
+      authorizationParams={{
+        redirect_uri: "http://localhost:3000/dashboard",
+      }}
+    >
+      <ContextProvider>
+        <RouterProvider router={router} />
+        <App />
+      </ContextProvider>
+    </Auth0Provider>
   </React.StrictMode>
 );
 
