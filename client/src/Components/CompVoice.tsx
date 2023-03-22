@@ -88,6 +88,7 @@ const CompVoice: React.FC = () => {
       mediaStream.addTrack(destination.stream.getAudioTracks()[0]);
 
       const mediaRecorder = new MediaRecorder(mediaStream);
+      mediaRecorder.start();
       const audioChunks: Blob[] = [];
 
       mediaRecorder.addEventListener("dataavailable", (event: BlobEvent) => {
@@ -114,7 +115,6 @@ const CompVoice: React.FC = () => {
       } catch (error) {
         console.error(error);
       }
-      mediaRecorder.start();
       synth.speak(utterThis);
     }
   };

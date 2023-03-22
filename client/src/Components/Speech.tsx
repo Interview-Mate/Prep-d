@@ -89,7 +89,7 @@ const Speech: React.FC = () => {
     const formData = new FormData();
     formData.append("file", audioBlob);
     formData.append("upload_preset", "j1mgzp8n");
-
+    
     // TODO move into ApiService
     try {
       const cloudinaryResponse = await axios.post(
@@ -119,6 +119,7 @@ const Speech: React.FC = () => {
     audioChunks.current = [];
     setRecording(false);
   };
+
 
 
   return (
