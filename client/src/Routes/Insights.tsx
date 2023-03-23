@@ -1,6 +1,6 @@
-import { useContext } from 'react';
-import { Context } from '../Context';
-import Navbar from '../Components/Navbar';
+import { useContext } from "react";
+import { Context } from "../Context";
+import Navbar from "../Components/Navbar";
 
 export default function Insights() {
   const {
@@ -13,7 +13,7 @@ export default function Insights() {
 
   return (
     <>
-      <div className='h-screen w-screen bg-seasalt'>
+      <div className="h-screen w-screen bg-seasalt">
         <Navbar />
         Here you'll find insights such as the number of interviews taken and
         your average score etc
