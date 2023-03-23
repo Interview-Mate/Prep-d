@@ -15,8 +15,6 @@ import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
 import Spinner from './Components/Spinner';
-import SpeechToText from './Components/SpeechToText';
-import Interviewer from './Components/Interviewer';
 
 import { useContext } from 'react';
 import { Context } from './Context';
@@ -84,16 +82,6 @@ function App() {
       element: <AuthenticationGuard component={Insights} />,
       errorElement: <Error />,
     },
-    {
-      path: '/speechtotext',
-      element: <AuthenticationGuard component={SpeechToText} />,
-      errorElement: <Error />,
-    },
-    {
-      path: '/interviewer',
-      element: <AuthenticationGuard component={Interviewer} />,
-      errorElement: <Error />,
-    },
   ]);
 
   return (
@@ -104,7 +92,8 @@ function App() {
         <Login />
       ) : currentUser.name === '' ? (
         <FirstVisit />
-      ) : (
+      )
+       : (
         <RouterProvider router={router} fallbackElement={<Spinner />} />
       )}
     </div>
