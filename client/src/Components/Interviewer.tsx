@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const CompVoice: React.FC<CompVoiceProps> = ({ message = "this is a test message", setIsInterviewerSpeaking }) => {
+const Interviewer: React.FC<InterviewerProps> = ({ message = "this is a test message", setIsInterviewerSpeaking }) => {
   const [messages, setMessages] = useState<string[]>([]);
   const synth = window.speechSynthesis;
 
@@ -45,5 +45,5 @@ const CompVoice: React.FC<CompVoiceProps> = ({ message = "this is a test message
   );
 };
 
-export default CompVoice;
+export default Interviewer;
 

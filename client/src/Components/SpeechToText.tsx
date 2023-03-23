@@ -3,7 +3,7 @@ import axios from "axios";
 import { CloudinaryContext, Video } from "cloudinary-react";
 import * as ApiService from "../Util/ApiService";
 
-const Speech: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRecorded, onSaveUserResponse, }) => {
+const SpeechToText: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRecorded, onSaveUserResponse, }) => {
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [audioClips, setAudioClips] = useState<AudioClip[]>([]);
@@ -125,4 +125,4 @@ const Speech: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRecorded
   );
 };
 
-export default Speech;
+export default SpeechToText;

@@ -106,7 +106,7 @@ interface InterviewFormValues {
   jobTitle: string;
 }
 
-type CompVoiceProps = {
+type InterviewerProps = {
   message?: string;
   setIsInterviewerSpeaking: (value: boolean) => void;
 };

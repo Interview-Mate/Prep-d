@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import * as ApiService from "../Util/ApiService";
 import InterviewForm from "../Components/InterviewForm";
-import CompVoice from "../Components/CompVoice";
-import Speech from "../Components/Speech";
+import Interviewer from "../Components/Interviewer";
+import SpeechToText from "../Components/SpeechToText";
 
 const Interview: React.FC<InterviewProps> = ({
   currentUser,
@@ -104,11 +104,11 @@ const Interview: React.FC<InterviewProps> = ({
       {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
       {formSubmitted && (
         <>
-          <CompVoice
+          <Interviewer
             message={question}
             setIsInterviewerSpeaking={setIsInterviewerSpeaking}
           />
-          <Speech
+          <SpeechToText
             isInterviewerSpeaking={isInterviewerSpeaking}
             onAnswerRecorded={(audioUrl: any, transcript: any) => setUserAnswer({ audioUrl, transcript })}
             onSaveUserResponse={saveUserResponse}
