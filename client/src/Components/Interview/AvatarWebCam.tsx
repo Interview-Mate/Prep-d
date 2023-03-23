@@ -6,6 +6,7 @@ import { OrbitControls } from '@react-three/drei';
 const AvatarWebCam = () => {
 
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
   // for the future input of audio files 
   const audioElmRef = React.useRef<HTMLAudioElement>(null!);
@@ -41,6 +42,7 @@ const AvatarWebCam = () => {
       </div> */}
     </div>
          <div> 
+          {/* this might need to change to audio buffer */}
          <audio src='lib/interview/Man_Talking.mp3'  controls 
          
         //  ref={audioElmRef}
