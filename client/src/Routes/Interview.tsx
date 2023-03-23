@@ -1,5 +1,6 @@
-import { useContext } from "react";
-import { Context } from "../Context";
+import { useContext } from 'react';
+import { Context } from '../Context';
+import Navbar from '../Components/Navbar';
 
 export default function LiveInterview() {
   const {
@@ -12,7 +13,10 @@ export default function LiveInterview() {
 
   return (
     <>
-      <div>Here you can be live interviewed by a bot</div>
+      <div className='h-screen w-screen bg-seasalt'>
+        <Navbar />
+        Here you can be live interviewed by a bot
+      </div>
     </>
   );
 }
