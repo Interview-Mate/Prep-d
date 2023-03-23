@@ -1,5 +1,15 @@
 const BASE_URL = "http://localhost:4000";
 
+export const getAllUsers = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-all-users`);
+    const users = await response.json();
+    return users;
+  } catch (error) {
+    console.error('Error getting users:', error);
+  }
+}
+
 export const getUser = (email: string | undefined): Promise<any> =>
   fetch(`${BASE_URL}/getuser/${email}`)
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
@@ -96,3 +106,51 @@ export const updateInterview = async (interview_id: string, question_text: strin
 }
 
 //TODO move cloudinary upload here
+
+
+export const saveSolvedProblem = async (solvedProblem: SolvedProblem) => {
+  try {
+    const response = await fetch(`${BASE_URL}/problem`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(solvedProblem),
+    });
+    const savedSolvedProblem = await response.json();
+    return savedSolvedProblem;
+  } catch (error) {
+    console.error('Error saving solved problem:', error);
+  }
+};
+
+
+export const getSolvedProblems = async (userId: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/problems/${userId}`);
+    const solvedProblems = await response.json();
+    return solvedProblems;
+  } catch (error) {
+    console.error('Error getting solved problems:', error);
+  }
+};
+
+export const getAllSolvedProblems = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-all-solved`);
+    const solvedProblems = await response.json();
+    return solvedProblems;
+  } catch (error) {
+    console.error('Error getting solved problems:', error);
+  }
+};
+
+export const getProblems = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-all-exercises`);
+    const problems = await response.json();
+    return problems;
+  } catch (error) {
+    console.error('Error getting problems:', error);
+  }
+}

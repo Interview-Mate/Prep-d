@@ -31,10 +31,14 @@ router.post("/interview/:userId", interviewCont.newInterview);
 router.post('/chat-response', interviewCont.getQuestionFromChatGPT)
 
 //exercise methods
+//TODO
 router.get("/get-all-exercises", exerciseCont.getAllExercises);
+// router.get('/getuser/:id', exerciseCont.getExercise);
+// router.post("/user/:user_id", exerciseCont.addExercise);
 
 //solved problems
-router.get("/problems/:userId", solvedProblemCont.getAllSolvedProblems);
+router.get("/problems/:userId", solvedProblemCont.getSolvedProblems);
+router.get("/get-all-solved", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 router.post("/punctuate", puncCont.punctuate);

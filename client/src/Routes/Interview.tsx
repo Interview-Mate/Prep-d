@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import { Context } from '../Context';
+import Navbar from '../Components/Navbar';
 import React, { useState } from "react";
 import * as ApiService from "../Util/ApiService";
 import InterviewForm from "../Components/InterviewForm";
@@ -101,6 +104,10 @@ const Interview: React.FC<InterviewProps> = ({
 
   return (
     <>
+      <div className='h-screen w-screen bg-seasalt'>
+        <Navbar />
+        Here you can be live interviewed by a bot
+      </div>
       {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
       {formSubmitted && (
         <>

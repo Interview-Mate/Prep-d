@@ -63,6 +63,39 @@ type Err = {
   message?: string;
 };
 
+type Problem = {
+  _id: string;
+  __v: number;
+  name: string;
+  description: string;
+  hint: string;
+  function: string | undefined;
+  solution1: Solution;
+  solution2: Solution;
+  solution3: Solution;
+  language: string;
+  level: number;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Solution = any[];
+
+type SolvedProblem = {
+  exercise?: Problem;
+  user_id: string;
+  problem_id: string | undefined;
+  solution: string | undefined;
+  runtime: number;
+  solveTime: number
+  score: number,
+  __v?: number;
+  _id?: string;
+};
+
+type Dict = {
+  [key: number | string]: string | number;
+};
+
 //auth0 types
 interface UserMetadata {
   [propName: string]: any;
@@ -134,3 +167,10 @@ type InterviewProps = {
   handleGetUser: () => Promise<void>;
   handleCreateUser: () => Promise<void>;
 };
+type Result = {
+  input: string;
+  output: string | null;
+  runtime: number;
+  error: string | null;
+};
+
