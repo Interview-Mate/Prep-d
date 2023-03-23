@@ -14,9 +14,9 @@ import PastInterviews from './Routes/PastInterviews';
 import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
-import Speech from './Components/Speech';
-import CompVoice from './Components/CompVoice';
 import Spinner from './Components/Spinner';
+import SpeechToText from './Components/SpeechToText';
+import Interviewer from './Components/Interviewer';
 
 import { useContext } from 'react';
 import { Context } from './Context';
@@ -85,13 +85,13 @@ function App() {
       errorElement: <Error />,
     },
     {
-      path: '/speech',
-      element: <AuthenticationGuard component={Speech} />,
+      path: '/speechtotext',
+      element: <AuthenticationGuard component={SpeechToText} />,
       errorElement: <Error />,
     },
     {
-      path: '/compvoice',
-      element: <AuthenticationGuard component={CompVoice} />,
+      path: '/interviewer',
+      element: <AuthenticationGuard component={Interviewer} />,
       errorElement: <Error />,
     },
   ]);
