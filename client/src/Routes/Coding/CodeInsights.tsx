@@ -11,12 +11,11 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import {
-  getSolvedProblems,
-  getAllSolvedProblems,
-  getAllUsers,
-} from '../../Util/ApiService';
+import { getSolvedProblems, getAllSolvedProblems } from '../../Util/ApiService';
 import { prettifyTime } from '../../Util/CodeEditorHelpers';
+import { intervalToDuration } from 'date-fns';
+import { useContext } from 'react';
+import { Context } from '../../Context';
 
 const level: Dict = {
   1: 'Beginner',
@@ -28,11 +27,9 @@ const level: Dict = {
 const CodeInsights = ({
   problems,
   score,
-  user,
 }: {
   problems: Problem[];
   score: number;
-  user: User | undefined;
 }) => {
   const [solvedProblems, setSolvedProblems] = useState<SolvedProblem[]>([]);
   const [allSolvedProblems, setAllSolvedProblems] = useState<SolvedProblem[]>(
@@ -44,17 +41,20 @@ const CodeInsights = ({
   const [allAverageSolveTimes, setAllAverageSolveTimes] = useState<
     number | undefined
   >();
+  const { currentUser } = useContext(Context) as any;
 
   useEffect(() => {
     const fetchData = async () => {
-      const receivedUsersSolvedProblems = await getSolvedProblems(user!._id);
+      const receivedUsersSolvedProblems = await getSolvedProblems(
+        currentUser.id
+      );
       setSolvedProblems(receivedUsersSolvedProblems);
 
       const receivedAllSolvedProblems = await getAllSolvedProblems();
       setAllSolvedProblems(receivedAllSolvedProblems);
     };
     fetchData();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     setUsersAverageSolveTime(
@@ -91,24 +91,20 @@ const CodeInsights = ({
     },
   };
 
-
-  const labels = [];
-  for (let i = 1; i <= solvedProblems.length; i++) {
-    labels.push(i);
-  }
+  const labels = solvedProblems.map((problem, i) => i+1);
 
   const data = {
     labels,
     datasets: [
       {
         label: 'Level',
-        data: [15, 13, 27, 33, 48, 55, 70],
+        data: solvedProblems.map((problem) => problem.exercise.level),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
         label: 'Solve time',
-        data: [50, 30, 46, 23, 38, 21, 25],
+        data: solvedProblems.map((problem) => problem.solveTime / 1000),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },

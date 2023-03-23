@@ -63,17 +63,6 @@ type Err = {
   message?: string;
 };
 
-type User = {
-  _id: string;
-  __v: number;
-  name: string;
-  surname: string;
-  username: string;
-  email: string;
-  password: string;
-  level: number;
-}
-
 type Problem = {
   _id: string;
   __v: number;
@@ -102,7 +91,6 @@ type SolvedProblem = {
   __v?: number;
   _id?: string;
 };
-
 
 type Dict = {
   [key: number | string]: string | number;
@@ -143,6 +131,7 @@ interface User {
   level: string;
   id?: string;
 }
+
 type Result = {
   input: string;
   output: string | null;

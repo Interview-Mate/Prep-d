@@ -1,39 +1,33 @@
 import { useEffect, useState } from 'react';
 import Interview from '../Assets/InterviewMock.JPG';
+import { useContext } from "react";
+import { Context } from "../Context";
 import { Link } from 'react-router-dom';
 import {
   getProblems,
   getSolvedProblems,
-  getAllUsers,
 } from '../Util/ApiService';
 
 export default function Dashboard() {
+  const {
+    currentUser,
+  } = useContext(Context)
   const [problems, setProblems] = useState<Problem[]>([]);
   const [solvedIds, setSolvedIds] = useState<string[]>([]);
-  const [user, setUser] = useState<User | undefined>();
 
   useEffect(() => {
     const fetchData = async () => {
       const receivedProblems = await getProblems();
       setProblems(receivedProblems);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const solvedProblems = await getSolvedProblems(user!._id);
+      const solvedProblems = await getSolvedProblems(currentUser.id);
       setSolvedIds(
         solvedProblems.map(
           (solvedProblem: SolvedProblem) => solvedProblem.problem_id
         )
       );
     };
-    if (user) fetchData();
-  }, [user]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const users = await getAllUsers();
-      setUser(await users[0]);
-    };
-    fetchUser();
-  }, []);
+    if (currentUser) fetchData();
+  }, [currentUser]);
 
   const level: Dict = {
     1: 'Beginner',

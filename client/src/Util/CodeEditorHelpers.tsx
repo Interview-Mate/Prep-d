@@ -8,3 +8,4 @@ export const prettifyTime = (time: number) => {
       : `${duration.minutes}m ${duration.seconds}s`
     : `${duration.hours}h ${duration.minutes}m ${duration.seconds}s`;
 };
+
