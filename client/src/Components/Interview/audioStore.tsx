@@ -1,12 +1,30 @@
-import create from 'zustand';
+import React, { useState, useRef } from 'react';
 
-const useAudioStore = create((set: any) => ({
-  //Audio
-  audioPlay: false,
-  setAudioPlay: (value:  boolean) => set({ audioPlay: value }),
-  audioStart: false,
-  setAudioStart: (value: boolean) => set({ audioStart: value }),
+type AudioPlayerProps = {
+  audioSrc: string;
+};
 
-  }));
+const AudioPlayer: React.FC<AudioPlayerProps> = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-export default useAudioStore;
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  return (
+    <>
+      <audio ref={audioRef} src='../../../public/lib/interview/Man_Talking.mp3' />
+      <button onClick={toggleAudio}>{isPlaying ? 'Stop' : 'Play'}</button>
+    </>
+  );
+};
+
+export default AudioPlayer;

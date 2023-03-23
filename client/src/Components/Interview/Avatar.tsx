@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useAnimations } from '@react-three/drei'; 
-import { Object3D, AudioLoader, Audio, AudioAnalyser} from 'three';
+import { PositionalAudio } from "@react-three/drei";
 
 
 const animations = ['Man_Punch','Man_Death','Man_Idle', 'Man_IdleHold'
@@ -16,7 +16,10 @@ const Avatar = () => {
   // to load the animations from the model
   const { actions } = useAnimations(model.animations, model.scene);
 
-    // to scale the character 
+  // to set the play and pause
+  const [playing, setPlaying] = useState(false);
+
+  // to scale the character 
   model.scene.scale.set( 1, 1, 1 );
     
 
@@ -32,6 +35,7 @@ const Avatar = () => {
   return (
 
     <mesh>
+      
 
       {/* Load the 3D model in scene  */}
       <object3D position = {[ 0, -4.3 , 0]} >
