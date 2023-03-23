@@ -51,7 +51,7 @@
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
-    
+
     "./node_modules",
     "./node_modules/*",
     "./node_modules/@types/node/index.d.ts",
