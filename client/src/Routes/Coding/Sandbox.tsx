@@ -14,9 +14,9 @@ const Sandbox = ({
 }) => {
   useEffect(() => {
     if (safelyRunCode) {
-      const solution1 = problem?.solution1[0].replace(/"/g, "'");
-      const solution2 = problem?.solution2[0].replace(/"/g, "'");
-      const solution3 = problem?.solution3[0].replace(/"/g, "'");
+      const solution1 = problem?.solution1[0].replace(/“|”/g, '"');
+      const solution2 = problem?.solution2[0].replace(/“|”/g, '"');
+      const solution3 = problem?.solution3[0].replace(/“|”/g, '"');
 
       const result1 = run(userInput + solution1);
       const result2 = run(userInput + solution2);

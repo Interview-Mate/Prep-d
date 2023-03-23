@@ -6,12 +6,13 @@ import Sandbox from './Coding/Sandbox';
 import CodeInsights from './Coding/CodeInsights';
 import CodeFooter from './Coding/CodeFooter';
 import CodeDetails from './Coding/CodeDetails';
-import Navbar from '../Components/Navbar';
+import { useContext } from "react";
+import { Context } from "../Context";
+
 import {
   getProblems,
   getSolvedProblems,
   saveSolvedProblem,
-  getAllUsers,
 } from '../Util/ApiService';
 import { useParams } from 'react-router-dom';
 
@@ -24,7 +25,6 @@ const level: Dict = {
 };
 
 function Coding() {
-  const [user, setUser] = useState<User | undefined>();
   const [userInput, setUserInput] = useState<string | undefined>('');
   const [problems, setProblems] = useState<Problem[]>([]);
   const [problem, setProblem] = useState<Problem>();
@@ -41,23 +41,14 @@ function Coding() {
     string | undefined
   >();
   const { levelId, problemId } = useParams();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const users = await getAllUsers();
-      setUser(await users[0]);
-    };
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
+  const {
+    currentUser,
+  } = useContext(Context)
 
   useEffect(() => {
     const fetchData = async () => {
       let receivedProblems = await getProblems();
-      const solvedProblems = await getSolvedProblems(user!._id);
+      const solvedProblems = await getSolvedProblems(currentUser.id);
 
       // filter out problems that are solved if user didn't select a specific problem
       if (problemId === undefined) {
@@ -108,8 +99,8 @@ function Coding() {
 
       setNumber(0);
     };
-    if (user) fetchData();
-  }, [user]);
+    if (currentUser) fetchData();
+  }, [currentUser]);
 
 
 
@@ -171,7 +162,7 @@ function Coding() {
   const handleNext = () => {
     //save solution to db
     saveSolvedProblem({
-      user_id: user!._id,
+      user_id: currentUser.id,
       problem_id: problem?._id,
       solution: userInput,
       score: score,
@@ -233,7 +224,7 @@ function Coding() {
           </div>
         )}
         {number === problems.length && (
-          <CodeInsights problems={problems} score={score} user={user} />
+          <CodeInsights problems={problems} score={score} />
         )}
         <div style={{ display: 'none' }}>
           <Frame>
