@@ -13,7 +13,6 @@ import {
 import { Line } from 'react-chartjs-2';
 import { getSolvedProblems, getAllSolvedProblems } from '../../Util/ApiService';
 import { prettifyTime } from '../../Util/CodeEditorHelpers';
-import { intervalToDuration } from 'date-fns';
 import { useContext } from 'react';
 import { Context } from '../../Context';
 
@@ -24,13 +23,7 @@ const level: Dict = {
   4: 'Expert',
 };
 
-const CodeInsights = ({
-  problems,
-  score,
-}: {
-  problems: Problem[];
-  score: number;
-}) => {
+const CodeInsights = () => {
   const [solvedProblems, setSolvedProblems] = useState<SolvedProblem[]>([]);
   const [allSolvedProblems, setAllSolvedProblems] = useState<SolvedProblem[]>(
     []
@@ -91,7 +84,7 @@ const CodeInsights = ({
     },
   };
 
-  const labels = solvedProblems.map((problem, i) => i+1);
+  const labels = solvedProblems.map((problem, i) => i + 1);
 
   const data = {
     labels,
@@ -124,15 +117,21 @@ const CodeInsights = ({
               <h2 className='text-sm '>Completed challenges:</h2>
               <h3 className='text-sm font-bold'>{solvedProblems.length}</h3>
               <h2 className='text-sm mt-5'>Score:</h2>
-              <h3 className='text-sm font-bold'>{score}</h3>
+
+              <h3 className='text-sm font-bold'>
+                {solvedProblems.reduce(
+                  (acc, curr) => acc + curr.exercise!.level,
+                  0
+                ) * 100}
+              </h3>
               <h2 className='text-sm mt-5'>Your level: </h2>
               <h3 className='text-sm font-bold'>
                 {
-                  level[
-                    solvedProblems.reduce(
-                      (acc, curr) => acc + curr.exercise!.level,
-                      0
-                    ) / solvedProblems.length
+                  level[Math.round(solvedProblems.reduce(
+                    (acc, curr) => acc + curr.exercise!.level,
+                    0
+                  ) / solvedProblems.length)
+                    
                   ]
                 }
               </h3>

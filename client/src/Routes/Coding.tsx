@@ -48,6 +48,12 @@ function Coding() {
     const fetchData = async () => {
       let receivedProblems = await getProblems();
       const solvedProblems = await getSolvedProblems(currentUser.id);
+      setScore(
+        solvedProblems.reduce(
+          (acc: any, curr: any) => acc + curr.exercise!.level,
+          0
+        ) * 100
+      );
 
       // filter out problems that are solved if user didn't select a specific problem
       if (problemId === undefined) {
@@ -81,7 +87,7 @@ function Coding() {
           (problem: Problem) => problem._id === problemId
         );
         setProblems(problemsFilteredById);
-        // set code in editor to previous solution if it exists
+        // set code in editor and details to previous solution if it exists
         if (
           solvedProblems
             .map((solvedProblem: SolvedProblem) => solvedProblem.problem_id)
@@ -93,6 +99,20 @@ function Coding() {
                 solvedProblem.problem_id === problemId
             )[0].solution
           );
+          setSolved(true);
+          setRuntime(
+            solvedProblems.filter(
+              (solvedProblem: SolvedProblem) =>
+                solvedProblem.problem_id === problemId
+            )[0].runtime
+          );
+          setSolveTime(
+            solvedProblems.filter(
+              (solvedProblem: SolvedProblem) =>
+                solvedProblem.problem_id === problemId
+            )[0].solveTime
+          );
+          setTests(3);
         }
       } else setProblems(receivedProblems);
 
@@ -134,13 +154,13 @@ function Coding() {
         const endTime = performance.now();
         setSolveTime(endTime - solveTime);
         setRuntime((runtime1 + runtime2 + runtime3) / 3);
-        if (!solved) setScore((prevScore) => prevScore + 100);
+        if (!solved) setScore((prevScore) => prevScore + 100 * problem!.level);
         setSolved(true);
         setError('');
       }
 
       if (error1 || error2 || error3) {
-        if (solved) setScore((prevScore) => prevScore - 100);
+        if (solved) setScore((prevScore) => prevScore - 100 * problem!.level);
         if (error1) setError(error1);
         else if (error2) setError(error2);
         else if (error3) setError(error3);
@@ -148,7 +168,8 @@ function Coding() {
       }
 
       if (testsPassed < 3 && !error1 && !error2 && !error3) {
-        if (solved) setScore((prevScore: number) => prevScore - 100);
+        if (solved)
+          setScore((prevScore: number) => prevScore - 100 * problem!.level);
         setError('');
         setSolved(false);
       }
@@ -182,61 +203,59 @@ function Coding() {
       <div className='h-screen w-screen bg-seasalt'>
         <Navbar />
         <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
-        {problem && (number as number) < problems.length && (
-          <div className='flex items-center justify-center h-full w-full'>
-            <CodeDetails
-              problem={problem}
-              score={score}
-              tests={tests}
-              solved={solved}
-              error={error}
-              runtime={runtime}
-              solveTime={solveTime}
-            />
-
-            <div className='mx-4 text-center w-3/4'>
-              <Editor
-                className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
-                height='65vh'
-                defaultLanguage={problem.language}
-                theme='vs-light'
-                value={previousSolution ? previousSolution : problem.function}
-                onChange={handleChange}
-                options={{
-                  minimap: {
-                    enabled: false,
-                  },
-                  wordWrap: 'on',
-                  tabSize: 2,
-                }}
-              />
-
-              <CodeFooter
-                problems={problems}
-                number={number}
-                runCode={runCode}
+          {problem && (number as number) < problems.length && (
+            <div className='flex items-center justify-center h-full w-full'>
+              <CodeDetails
+                problem={problem}
+                score={score}
+                tests={tests}
                 solved={solved}
-                handleNext={handleNext}
+                error={error}
+                runtime={runtime}
+                solveTime={solveTime}
               />
+
+              <div className='mx-4 text-center w-3/4'>
+                <Editor
+                  className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
+                  height='65vh'
+                  defaultLanguage={problem.language}
+                  theme='vs-light'
+                  value={previousSolution ? previousSolution : problem.function}
+                  onChange={handleChange}
+                  options={{
+                    minimap: {
+                      enabled: false,
+                    },
+                    wordWrap: 'on',
+                    tabSize: 2,
+                  }}
+                />
+
+                <CodeFooter
+                  problems={problems}
+                  number={number}
+                  runCode={runCode}
+                  solved={solved}
+                  handleNext={handleNext}
+                />
+              </div>
             </div>
+          )}
+          {number === problems.length && <CodeInsights />}
+          <div style={{ display: 'none' }}>
+            <Frame>
+              <Sandbox
+                userInput={userInput}
+                problem={problem}
+                safelyRunCode={safelyRunCode}
+                onResult={(receivedResults: Result[]) =>
+                  setResults(receivedResults)
+                }
+              />
+            </Frame>
           </div>
-        )}
-        {number === problems.length && (
-          <CodeInsights problems={problems} score={score} />
-        )}
-        <div style={{ display: 'none' }}>
-          <Frame>
-            <Sandbox
-              userInput={userInput}
-              problem={problem}
-              safelyRunCode={safelyRunCode}
-              onResult={(receivedResults: Result[]) =>
-                setResults(receivedResults)
-              }
-            />
-          </Frame>
         </div>
-      </div>
       </div>
     </>
   );
