@@ -6,8 +6,9 @@ import Sandbox from './Coding/Sandbox';
 import CodeInsights from './Coding/CodeInsights';
 import CodeFooter from './Coding/CodeFooter';
 import CodeDetails from './Coding/CodeDetails';
-import { useContext } from "react";
-import { Context } from "../Context";
+import Navbar from '../Components/Navbar';
+import { useContext } from 'react';
+import { Context } from '../Context';
 
 import {
   getProblems,
@@ -41,9 +42,7 @@ function Coding() {
     string | undefined
   >();
   const { levelId, problemId } = useParams();
-  const {
-    currentUser,
-  } = useContext(Context)
+  const { currentUser } = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,8 +101,6 @@ function Coding() {
     if (currentUser) fetchData();
   }, [currentUser]);
 
-
-
   useEffect(() => {
     // Change problem when number increases
     if ((number as number) < problems.length) {
@@ -135,9 +132,8 @@ function Coding() {
 
       if (testsPassed === 3) {
         const endTime = performance.now();
-        const averageTime = (runtime1 + runtime2 + runtime3) / 3;
         setSolveTime(endTime - solveTime);
-        setRuntime(averageTime);
+        setRuntime((runtime1 + runtime2 + runtime3) / 3);
         if (!solved) setScore((prevScore) => prevScore + 100);
         setSolved(true);
         setError('');
@@ -182,8 +178,10 @@ function Coding() {
   };
 
   return (
-    <div className='h-screen w-full transition duration-200 ease-in-out  bg-seasalt'>
-      <div className='p-20'>
+    <>
+      <div className='h-screen w-screen bg-seasalt'>
+        <Navbar />
+        <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
         {problem && (number as number) < problems.length && (
           <div className='flex items-center justify-center h-full w-full'>
             <CodeDetails
@@ -239,7 +237,8 @@ function Coding() {
           </Frame>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

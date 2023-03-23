@@ -61,7 +61,8 @@ const CodeDetails = ({
 
       {!solved && solved !== '' && (
         <div className='font-bold'>
-          <h4> Wrong solution! </h4>
+          <br />
+          <h4> Incorrect solution! </h4>
           <br />
           <p className='italic text-sm text-red-500'>{error}</p>
         </div>

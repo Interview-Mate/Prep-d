@@ -1,5 +1,6 @@
-import { useContext } from "react";
-import { Context } from "../Context";
+import { useContext } from 'react';
+import { Context } from '../Context';
+import Navbar from '../Components/Navbar';
 
 export default function Settings() {
   const {
@@ -12,7 +13,10 @@ export default function Settings() {
 
   return (
     <>
-      <div>Here you'll find user info, such as email and password</div>
+      <div className='h-screen w-screen bg-seasalt'>
+        <Navbar />
+        Here you'll find user info, such as email and password
+      </div>
     </>
   );
 }

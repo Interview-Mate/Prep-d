@@ -1,25 +1,26 @@
-import "./App.css";
-import { useEffect } from "react";
-import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AuthenticationGuard } from "./Components/AuthenticationGuard";
+import './App.css';
+import { useEffect } from 'react';
+import './index.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthenticationGuard } from './Components/AuthenticationGuard';
 
-import FirstVisit from "./Components/FirstVisit";
-import Login from "./Routes/Login";
-import Dashboard from "./Routes/Dashboard";
-import Error from "./Components/Error";
-import Coding from "./Routes/Coding";
-import Interview from "./Routes/Interview";
-import PastInterviews from "./Routes/PastInterviews";
-import Profile from "./Routes/Profile";
-import Settings from "./Routes/Settings";
-import Insights from "./Routes/Insights";
-import Speech from "./Components/Speech";
-import CompVoice from "./Components/CompVoice";
+import FirstVisit from './Components/FirstVisit';
+import Login from './Routes/Login';
+import Dashboard from './Routes/Dashboard';
+import Error from './Components/Error';
+import Coding from './Routes/Coding';
+import Interview from './Routes/Interview';
+import PastInterviews from './Routes/PastInterviews';
+import Profile from './Routes/Profile';
+import Settings from './Routes/Settings';
+import Insights from './Routes/Insights';
+import Speech from './Components/Speech';
+import CompVoice from './Components/CompVoice';
+import Spinner from './Components/Spinner';
 
-import { useContext } from "react";
-import { Context } from "./Context";
-import Navbar from "./Components/Navbar";
+import { useContext } from 'react';
+import { Context } from './Context';
+import Navbar from './Components/Navbar';
 
 function App() {
   const { currentUser, isAuthenticated, isLoading, handleGetUser } = useContext(
@@ -34,80 +35,77 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <AuthenticationGuard component={Dashboard} />,
       errorElement: <Error />,
     },
     {
-      path: "/dashboard",
+      path: '/dashboard',
       element: <AuthenticationGuard component={Dashboard} />,
       errorElement: <Error />,
     },
     {
-      path: "/codingtest",
-      element: <Coding />,
+      path: '/codingtest',
+      element: <AuthenticationGuard component={Coding} />,
       children: [
         {
-          path: "level/:levelId",
-          element: <Coding />,
+          path: 'level/:levelId',
+          element: <AuthenticationGuard component={Coding} />,
         },
         {
-          path: ":problemId",
-          element: <Coding />,
+          path: ':problemId',
+          element: <AuthenticationGuard component={Coding} />,
         },
       ],
       errorElement: <Error />,
     },
     {
-      path: "/interview",
+      path: '/interview',
       element: <AuthenticationGuard component={Interview} />,
       errorElement: <Error />,
     },
     {
-      path: "/pastinterviews",
+      path: '/pastinterviews',
       element: <AuthenticationGuard component={PastInterviews} />,
       errorElement: <Error />,
     },
     {
-      path: "/profile",
+      path: '/profile',
       element: <AuthenticationGuard component={Profile} />,
       errorElement: <Error />,
     },
     {
-      path: "/settings",
+      path: '/settings',
       element: <AuthenticationGuard component={Settings} />,
       errorElement: <Error />,
     },
     {
-      path: "/insights",
+      path: '/insights',
       element: <AuthenticationGuard component={Insights} />,
       errorElement: <Error />,
     },
     {
-      path: "/speech",
+      path: '/speech',
       element: <AuthenticationGuard component={Speech} />,
       errorElement: <Error />,
     },
     {
-      path: "/compvoice",
+      path: '/compvoice',
       element: <AuthenticationGuard component={CompVoice} />,
       errorElement: <Error />,
     },
   ]);
 
   return (
-    <div className="App">
+    <div className='App'>
       {isLoading ? (
-        <div>Page is loading</div>
+        <Spinner />
       ) : !isAuthenticated ? (
         <Login />
-      ) : currentUser.name === "" ? (
+      ) : currentUser.name === '' ? (
         <FirstVisit />
       ) : (
-        <>
-          <Navbar />
-          <RouterProvider router={router} />
-        </>
+        <RouterProvider router={router} fallbackElement={<Spinner />} />
       )}
     </div>
   );
