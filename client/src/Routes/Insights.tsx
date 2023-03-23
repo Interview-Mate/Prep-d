@@ -17,6 +17,7 @@ import { useContext } from 'react';
 import { Context } from '../Context';
 import Navbar from '../Components/Navbar';
 
+
 const level: Dict = {
   1: 'Beginner',
   2: 'Intermediate',
@@ -106,6 +107,7 @@ const Insights = () => {
   };
 
   return (
+
     <div className='h-screen w-screen bg-seasalt'>
       <Navbar />
       <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
