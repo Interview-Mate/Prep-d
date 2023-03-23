@@ -1,9 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import axios from "axios";
 import { CloudinaryContext, Video } from "cloudinary-react";
 import * as ApiService from "../Util/ApiService";
+import { Context } from '../Context';
 
-const SpeechToText: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRecorded, onSaveUserResponse, }) => {
+export default function SpeechToText({ isInterviewerSpeaking, onAnswerRecorded, onSaveUserResponse, }: SpeechProps) {
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
+
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [audioClips, setAudioClips] = useState<AudioClip[]>([]);
@@ -123,6 +132,4 @@ const SpeechToText: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRe
       </CloudinaryContext>
     </div>
   );
-};
-
-export default SpeechToText;
+}

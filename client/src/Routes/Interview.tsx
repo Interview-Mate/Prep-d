@@ -7,13 +7,15 @@ import InterviewForm from "../Components/InterviewForm";
 import Interviewer from "../Components/Interviewer";
 import SpeechToText from "../Components/SpeechToText";
 
-const Interview: React.FC<InterviewProps> = ({
-  currentUser,
-  setCurrentUser,
-  isAuthenticated,
-  handleGetUser,
-  handleCreateUser,
-}) => {
+export default function Interview() {
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
+
   const [formValues, setFormValues] = useState<InterviewFormValues>({
     jobLevel: "",
     companyName: "",
@@ -30,6 +32,7 @@ const Interview: React.FC<InterviewProps> = ({
   const [userAnswer, setUserAnswer] = useState<{ audioUrl: string; transcript: string } | null>(
     null
   );
+  console.log(showInterviewForm)
 
   const newInterview = async () => {
     const res = await ApiService.createInterview(
@@ -100,16 +103,15 @@ const Interview: React.FC<InterviewProps> = ({
         }
       }
     }
-  };  
+  };
 
   return (
     <>
       <div className='h-screen w-screen bg-seasalt'>
         <Navbar />
         Here you can be live interviewed by a bot
-      </div>
-      {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
-      {formSubmitted && (
+        {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
+              {formSubmitted && (
         <>
           <Interviewer
             message={question}
@@ -122,8 +124,9 @@ const Interview: React.FC<InterviewProps> = ({
           />
         </>
       )}
-    </>
-  );
-};
+      </div>
 
-export default Interview;
+
+    </>
+  )
+}

@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from '../Context';
 
-type InterviewFormProps = {
-  onFormSubmit: (values: { companyName: string; jobLevel: string; jobField: string; jobTitle: string }) => void;
-};
-
-const InterviewForm: React.FC<InterviewFormProps> = ({
-  onFormSubmit,
-}) => {
+export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
   const [companyName, setCompanyName] = useState("");
   const [jobLevel, setJobLevel] = useState("");
   const [jobField, setJobField] = useState("");
@@ -68,6 +63,4 @@ const InterviewForm: React.FC<InterviewFormProps> = ({
       </form>
     </div>
   );
-};
-
-export default InterviewForm;
+}

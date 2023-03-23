@@ -103,7 +103,7 @@ code {
 }
 
 .speech-text {
-  color: white;
+  color: rgba(38, 38, 38, 1);
   font-size: 1.5rem;
   font-weight: 700;
   margin: 30px;
@@ -111,7 +111,7 @@ code {
 }
 
 .speech-title {
-  color: white;
+  color: rgba(38, 38, 38, 1);
   font-size: 1.3rem;
   font-weight: 500;
   margin: 30px;
@@ -125,7 +125,7 @@ code {
 }
 
 .speech-button {
-  color: white;
+  color:white;
   background-color: red;
   font-size: 1.3rem;
   font-weight: 500;
