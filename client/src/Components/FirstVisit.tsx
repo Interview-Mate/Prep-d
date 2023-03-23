@@ -4,7 +4,7 @@ import { Context } from "../Context";
 export default function FirstVisit() {
   const { handleCreateUser, user } = useContext(Context) as any;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void; target: any; }) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);

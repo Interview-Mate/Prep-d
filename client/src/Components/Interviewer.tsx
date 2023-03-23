@@ -1,6 +1,15 @@
-import React, { useEffect, useState } from "react";
+// interviewer.tsx
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from '../Context';
 
-const Interviewer: React.FC<InterviewerProps> = ({ message = "this is a test message", setIsInterviewerSpeaking }) => {
+export default function Interviewer ({ message = "this is a test message", setIsInterviewerSpeaking }: InterviewerProps) {
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
   const [messages, setMessages] = useState<string[]>([]);
   const synth = window.speechSynthesis;
 
@@ -42,8 +51,5 @@ const Interviewer: React.FC<InterviewerProps> = ({ message = "this is a test mes
         </ul>
       </div>
     </>
-  );
-};
-
-export default Interviewer;
-
+  )
+}
