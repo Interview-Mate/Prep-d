@@ -1,5 +1,12 @@
+import { Link } from 'react-router-dom';
 
-const CodeFooter = ({number, problems, runCode, solved, handleNext}: {
+const CodeFooter = ({
+  number,
+  problems,
+  runCode,
+  solved,
+  handleNext,
+}: {
   problems: Problem[];
   number: number | undefined;
   solved: boolean | string;
@@ -21,12 +28,14 @@ const CodeFooter = ({number, problems, runCode, solved, handleNext}: {
       </div>
       <div className='ml-4 mr-10 w-10'>
         {solved && (
-          <button
-            onClick={handleNext}
-            className='border border-teal-600 rounded-md px-4 py-2 hover:bg-teal-600 hover:text-white'
-          >
-            Next
-          </button>
+          <Link to={'/Insights'}>
+            <button
+              onClick={handleNext}
+              className='border border-teal-600 rounded-md px-4 py-2 hover:bg-teal-600 hover:text-white'
+            >
+              Next
+            </button>
+          </Link>
         )}
       </div>
     </div>

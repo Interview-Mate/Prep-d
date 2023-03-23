@@ -1,5 +1,5 @@
 import { render, act } from '@testing-library/react';
-import CodeInsights from '../CodeInsights';
+import Insights from '../Insights';
 
 describe('CodeInsights component', () => {
   HTMLCanvasElement.prototype.getContext = () => {
@@ -64,22 +64,16 @@ describe('CodeInsights component', () => {
   const score = 200;
 
   it('should render without crashing', async () => {
-    await act(async () =>
-      render(<CodeInsights problems={problems} score={score} />)
-    );
+    await act(async () => render(<Insights />));
   });
 
   it('should render the correct score', async () => {
-    const { getByText } = await act(async () =>
-      render(<CodeInsights problems={problems} score={score} />)
-    );
+    const { getByText } = await act(async () => render(<Insights />));
     expect(getByText('200')).toBeInTheDocument();
   });
 
   it('should render the correct number of problems', async () => {
-    const { getByText } = await act(async () =>
-      render(<CodeInsights problems={problems} score={score} />)
-    );
+    const { getByText } = await act(async () => render(<Insights />));
     expect(getByText('2')).toBeInTheDocument();
   });
 });
