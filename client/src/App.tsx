@@ -15,10 +15,11 @@ import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
 import Spinner from './Components/Spinner';
+import CVBuilder from './Routes/CVBuilder';
+
 
 import { useContext } from 'react';
 import { Context } from './Context';
-import Navbar from './Components/Navbar';
 import TextToSpeech from './Components/TextToSpeech';
 
 function App() {
@@ -88,6 +89,11 @@ function App() {
       element: <AuthenticationGuard component={TextToSpeech} />,
       errorElement: <Error />,
     },
+    {
+      path: '/cvbuilder',
+      element: <AuthenticationGuard component={CVBuilder} />,
+      errorElement: <Error />,
+    }
   ]);
 
   return (

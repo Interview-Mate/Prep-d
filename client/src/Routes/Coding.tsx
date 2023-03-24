@@ -93,26 +93,15 @@ function Coding() {
             .map((solvedProblem: SolvedProblem) => solvedProblem.problem_id)
             .includes(problemId)
         ) {
-          setPreviousSolution(
-            solvedProblems.filter(
-              (solvedProblem: SolvedProblem) =>
-                solvedProblem.problem_id === problemId
-            )[0].solution
-          );
+          const previousSolution = solvedProblems.filter(
+            (solvedProblem: SolvedProblem) =>
+              solvedProblem.problem_id === problemId
+          )[0];
           setSolved(true);
-          setRuntime(
-            solvedProblems.filter(
-              (solvedProblem: SolvedProblem) =>
-                solvedProblem.problem_id === problemId
-            )[0].runtime
-          );
-          setSolveTime(
-            solvedProblems.filter(
-              (solvedProblem: SolvedProblem) =>
-                solvedProblem.problem_id === problemId
-            )[0].solveTime
-          );
           setTests(3);
+          setPreviousSolution(previousSolution.solution);
+          setRuntime(previousSolution.runtime);
+          setSolveTime(previousSolution.solveTime);
         }
       } else setProblems(receivedProblems);
 
@@ -199,65 +188,63 @@ function Coding() {
   };
 
   return (
-    <>
-      <div className='h-screen w-screen bg-seasalt'>
-        <Navbar />
-        <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
-          {problem && (number as number) < problems.length && (
-            <div className='flex items-center justify-center h-full w-full'>
-              <CodeDetails
-                problem={problem}
-                score={score}
-                tests={tests}
+    <div className='h-screen w-screen bg-seasalt'>
+      <Navbar />
+      <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
+        {problem && (number as number) < problems.length && (
+          <div className='flex items-center justify-center h-full w-full'>
+            <CodeDetails
+              problem={problem}
+              score={score}
+              tests={tests}
+              solved={solved}
+              error={error}
+              runtime={runtime}
+              solveTime={solveTime}
+            />
+
+            <div className='mx-4 text-center w-3/4'>
+              <Editor
+                className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
+                height='65vh'
+                defaultLanguage={problem.language}
+                theme='vs-light'
+                value={previousSolution ? previousSolution : problem.function}
+                onChange={handleChange}
+                options={{
+                  minimap: {
+                    enabled: false,
+                  },
+                  wordWrap: 'on',
+                  tabSize: 2,
+                }}
+              />
+
+              <CodeFooter
+                problems={problems}
+                number={number}
+                runCode={runCode}
                 solved={solved}
-                error={error}
-                runtime={runtime}
-                solveTime={solveTime}
+                handleNext={handleNext}
               />
-
-              <div className='mx-4 text-center w-3/4'>
-                <Editor
-                  className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
-                  height='65vh'
-                  defaultLanguage={problem.language}
-                  theme='vs-light'
-                  value={previousSolution ? previousSolution : problem.function}
-                  onChange={handleChange}
-                  options={{
-                    minimap: {
-                      enabled: false,
-                    },
-                    wordWrap: 'on',
-                    tabSize: 2,
-                  }}
-                />
-
-                <CodeFooter
-                  problems={problems}
-                  number={number}
-                  runCode={runCode}
-                  solved={solved}
-                  handleNext={handleNext}
-                />
-              </div>
             </div>
-          )}
-          {number === problems.length && <Insights />}
-          <div style={{ display: 'none' }}>
-            <Frame>
-              <Sandbox
-                userInput={userInput}
-                problem={problem}
-                safelyRunCode={safelyRunCode}
-                onResult={(receivedResults: Result[]) =>
-                  setResults(receivedResults)
-                }
-              />
-            </Frame>
           </div>
+        )}
+        {number === problems.length && <Insights />}
+        <div style={{ display: 'none' }}>
+          <Frame>
+            <Sandbox
+              userInput={userInput}
+              problem={problem}
+              safelyRunCode={safelyRunCode}
+              onResult={(receivedResults: Result[]) =>
+                setResults(receivedResults)
+              }
+            />
+          </Frame>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

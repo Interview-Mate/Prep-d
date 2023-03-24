@@ -47,6 +47,10 @@ const Insights = () => {
 
       const receivedAllSolvedProblems = await getAllSolvedProblems();
       setAllSolvedProblems(receivedAllSolvedProblems);
+
+      console.log(receivedUsersSolvedProblems);
+      console.log(receivedAllSolvedProblems);
+      console.log(usersAverageSolveTime);
     };
     fetchData();
   }, []);
