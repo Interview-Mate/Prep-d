@@ -142,7 +142,7 @@ interface InterviewFormValues {
 }
 
 type InterviewerProps = {
-  message?: string;
+  videoQuestion: string;
   setIsInterviewerSpeaking: (value: boolean) => void;
   video: boolean;
 };
@@ -177,3 +177,7 @@ type Result = {
   error: string | null;
 };
 
+interface Message {
+  message: string;
+  messageType: "interviewer" | "user";
+}

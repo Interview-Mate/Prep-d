@@ -67,7 +67,7 @@ export const getInterviews = (id: string) =>
     .catch((err) => err);
     
 export const punctuate = async (text: string) => {
-  return fetch (`${BASE_URL}punctuate`, {
+  return fetch (`${BASE_URL}/punctuate`, {
     method: "POST",
     body: JSON.stringify({ text }),
     headers: {
@@ -90,23 +90,10 @@ export const createInterview = async (userId: string, level: string, company: st
     .catch((err) => console.log(err));
 }
 
-export const retrieveFirstQuestion = async ({ id, role, content }: { id: string, role: string, content: string }): Promise<any> => {
-  console.log("Id: ", id)
+export const retrieveQuestion = async ({ id, role, content }: { id: string, role: string, content: string }): Promise<any> => {
   return fetch(`${BASE_URL}/chat-response/${id}`, {
     method: "POST",
     body: JSON.stringify({ role, content }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then((res) => res.json())
-    .catch((err) => console.log(err));
-}
-
-export const retrieveAnotherQuestion = async (object: object) => {
-  return fetch (`${BASE_URL}/chat-response`, {
-    method: "POST",
-    body: JSON.stringify({ object }),
     headers: {
       'Content-Type': 'application/json'
     }
@@ -127,19 +114,20 @@ export const updateInterview = async (interview_id: string, answer_audio_url: st
     .catch((err) => console.log(err));
 }
 
-export const postAudio = async (formData: any): Promise<any> => {
+export const postAudio = async (formData: any): Promise<any> => {  
   try {
-    const cloudinaryResponse = await axios.post(
+    const response = await axios.post(
       `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
+    return response
   } catch (error) {
     console.log('Error submitting to Cloudinary', error);
   }
-};
+}
 
 export const saveSolvedProblem = async (solvedProblem: SolvedProblem) => {
   try {
