@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { useAnimations } from '@react-three/drei'; 
-import { PositionalAudio } from "@react-three/drei";
+
 
 
 const animations = ['Man_Clapping','Man_Death','Man_Idle', 'Man_Run'
@@ -12,7 +11,6 @@ const animations = ['Man_Clapping','Man_Death','Man_Idle', 'Man_Run'
 
 const Avatar = ({ isPlaying }: { isPlaying: boolean }) => {
 
-  console.log("this is the props" + isPlaying);
   
   // const model = useLoader(GLTFLoader, 'lib/interview/Male_Suit.gltf');
   const model = useLoader(GLTFLoader, 'lib/interview/Avatarmore.gltf');
@@ -32,14 +30,21 @@ const Avatar = ({ isPlaying }: { isPlaying: boolean }) => {
 
     //this is how you animate the character 
     
-    console.log(actions);
-    actions?.Man_Idle?.play();
+    // console.log(actions)
     // actions?.Man_talking?.play();
 
     if (isPlaying) {
+
+    actions?.Man_greeting?.fadeOut(200);
     actions?.Man_talking?.play();
+    
     }
-  }, [actions]);
+    else {
+      // console.log('it ran here pause')
+      actions?.Man_talking?.stop();
+      actions?.Man_Idle?.play();
+    } 
+  }, [isPlaying]);
 
 
   return (

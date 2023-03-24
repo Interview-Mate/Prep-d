@@ -3,6 +3,7 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
+
       colors: {
         "eerie-black": "#262626ff",
         "dark-cyan": "#548687ff",

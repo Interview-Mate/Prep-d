@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
 const AvatarWebCam = () => {
+  
 
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
@@ -18,20 +19,28 @@ const AvatarWebCam = () => {
     setAudioUrl(URL.createObjectURL(file));
   };
 
+  const handlePlay = () => {
+    setIsPlaying(true);
+  }
+
+  const handlePause = () => {
+    setIsPlaying(false);
+  }
+
 
   return (
 
     <>
+
     <div className='w-full h-auto 
     bg-gradient-radial from-white-500 via-gray-400 to-white-500
     bg-gradient-to-r from-white via-gray to-white
      '>
 
-
       <Canvas camera={{ fov: 10, position: [0, 0, 10] }} >
        <OrbitControls />
        <ambientLight />
-       <Avatar />
+       <Avatar isPlaying={isPlaying}/>
       </Canvas>
       
       {/* <div  className='flex justify-end'>
@@ -44,7 +53,7 @@ const AvatarWebCam = () => {
          <div> 
           {/* this might need to change to audio buffer */}
          <audio src='lib/interview/Man_Talking.mp3'  controls 
-         
+         onPlay={handlePlay} onPause={handlePause}
         //  ref={audioElmRef}
          
          />
