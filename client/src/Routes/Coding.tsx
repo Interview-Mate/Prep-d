@@ -3,7 +3,7 @@ import { useState, useEffect, SetStateAction } from 'react';
 import Editor from '@monaco-editor/react';
 import Frame from 'react-frame-component';
 import Sandbox from './Coding/Sandbox';
-import CodeInsights from './Coding/CodeInsights';
+import Insights from './Insights';
 import CodeFooter from './Coding/CodeFooter';
 import CodeDetails from './Coding/CodeDetails';
 import Navbar from '../Components/Navbar';
@@ -242,7 +242,7 @@ function Coding() {
               </div>
             </div>
           )}
-          {number === problems.length && <CodeInsights />}
+          {number === problems.length && <Insights />}
           <div style={{ display: 'none' }}>
             <Frame>
               <Sandbox
