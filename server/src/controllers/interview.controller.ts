@@ -67,6 +67,7 @@ exports.newInterview = async (req: Request, res: Response) => {
 //sends system prompt to chatGPT => returnts first question from chatGPT
 exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
   try {
+    console.log(process.env.chatGPT_key)
     const interview_id = req.params.id;
     const newInteraction = {
       role: req.body.role,

@@ -46,16 +46,13 @@ const Insights = () => {
 
       const receivedAllSolvedProblems = await getAllSolvedProblems();
       setAllSolvedProblems(receivedAllSolvedProblems);
-
-      console.log(receivedUsersSolvedProblems);
-      console.log(receivedAllSolvedProblems);
-      console.log(usersAverageSolveTime);
     };
     fetchData();
   }, []);
 
   useEffect(() => {
-    if (!allSolvedProblems.length) return;
+    if(!allSolvedProblems.length) return;
+
     setUsersAverageSolveTime(
       solvedProblems.reduce((acc, curr) => acc + curr.solveTime, 0) /
         solvedProblems.length
@@ -65,6 +62,8 @@ const Insights = () => {
       allSolvedProblems.reduce((acc, curr) => acc + curr.solveTime, 0) /
         allSolvedProblems.length
     );
+
+    
   }, [allSolvedProblems]);
 
   ChartJS.register(

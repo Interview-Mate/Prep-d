@@ -15,7 +15,7 @@ import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
 import Spinner from './Components/Spinner';
-import CVBuilder from './Routes/CVBuilder';
+import CoverLetterBuilder from './Routes/CoverLetterBuilder';
 
 
 import { useContext } from 'react';
@@ -90,8 +90,8 @@ function App() {
       errorElement: <Error />,
     },
     {
-      path: '/cvbuilder',
-      element: <AuthenticationGuard component={CVBuilder} />,
+      path: '/coverletter',
+      element: <AuthenticationGuard component={CoverLetterBuilder} />,
       errorElement: <Error />,
     }
   ]);

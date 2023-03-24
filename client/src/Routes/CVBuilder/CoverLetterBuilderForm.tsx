@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
 import { Accordion } from 'flowbite-react';
 
-function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
-  const [selectedKeywords, setSelectedKeywords] = useState([]);
+function CoverLetterBuilderForm({ CoverLetterData, setCoverLetterData, generatePDF }: any) {
 
   const handleKeywordChange = (event: { target: { value: any } }) => {
     const keyword = event.target.value;
-    if (selectedKeywords.includes(keyword)) {
-      setCVData({
-        ...CVData,
-        keywords: CVData.keywords.filter((k: any) => k !== keyword),
+    
+    if (CoverLetterData.selectedKeywords.includes(keyword)) {
+      setCoverLetterData({
+        ...CoverLetterData,
+        selectedKeywords: CoverLetterData.selectedKeywords.filter((k: any) => k !== keyword),
       });
     } else {
-      setCVData({ ...CVData, keywords: [...CVData.keywords, keyword] });
+      setCoverLetterData({...CoverLetterData, selectedKeywords: [...CoverLetterData.selectedKeywords, keyword]});
     }
+    console.log(CoverLetterData.selectedKeywords)
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
@@ -32,11 +32,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 First Name:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.firstName}
+                value={CoverLetterData.firstName}
                 onChange={(e) =>
-                  setCVData({ ...CVData, firstName: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, firstName: e.target.value })
                 }
               />
               <br />
@@ -44,11 +44,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 Last Name:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.lastName}
+                value={CoverLetterData.lastName}
                 onChange={(e) =>
-                  setCVData({ ...CVData, lastName: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, lastName: e.target.value })
                 }
               />
               <br />
@@ -56,11 +56,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 Email:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='email'
-                value={CVData.email}
+                value={CoverLetterData.email}
                 onChange={(e) =>
-                  setCVData({ ...CVData, email: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, email: e.target.value })
                 }
               />
               <br />
@@ -68,11 +68,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 Phone Number:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='tel'
-                value={CVData.phoneNumber}
+                value={CoverLetterData.phoneNumber}
                 onChange={(e) =>
-                  setCVData({ ...CVData, phoneNumber: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, phoneNumber: e.target.value })
                 }
               />
               <br />
@@ -80,11 +80,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 Street:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.street}
+                value={CoverLetterData.street}
                 onChange={(e) =>
-                  setCVData({ ...CVData, street: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, street: e.target.value })
                 }
               />
               <br />
@@ -92,31 +92,31 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 City:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.city}
-                onChange={(e) => setCVData({ ...CVData, city: e.target.value })}
+                value={CoverLetterData.city}
+                onChange={(e) => setCoverLetterData({ ...CoverLetterData, city: e.target.value })}
               />
               <br />
               <label className='block text-gray-700 text-sm font-bold mt-2'>
                 Zip Code:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.zipCode}
+                value={CoverLetterData.zipCode}
                 onChange={(e) =>
-                  setCVData({ ...CVData, zipCode: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, zipCode: e.target.value })
                 }
               />
               <label className='block text-gray-700 text-sm font-bold mt-2'>
                 State:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.city}
-                onChange={(e) => setCVData({ ...CVData, city: e.target.value })}
+                value={CoverLetterData.city}
+                onChange={(e) => setCoverLetterData({ ...CoverLetterData, city: e.target.value })}
               />{' '}
               <br />
             </Accordion.Content>
@@ -128,11 +128,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 Job Title:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.jobTitle}
+                value={CoverLetterData.jobTitle}
                 onChange={(e) =>
-                  setCVData({ ...CVData, jobTitle: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, jobTitle: e.target.value })
                 }
               />
               <br />
@@ -140,11 +140,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 Company:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
-                value={CVData.company}
+                value={CoverLetterData.company}
                 onChange={(e) =>
-                  setCVData({ ...CVData, company: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, company: e.target.value })
                 }
               />
               <br />
@@ -152,33 +152,21 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 Start Date:
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='date'
-                value={CVData.startDate}
+                value={CoverLetterData.startDate}
                 onChange={(e) =>
-                  setCVData({ ...CVData, startDate: e.target.value })
-                }
-              />
-              <br />
-              <label className='block text-gray-700 text-sm font-bold mt-2'>
-                End Date:
-              </label>
-              <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                type='date'
-                value={CVData.endDate}
-                onChange={(e) =>
-                  setCVData({ ...CVData, endDate: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, startDate: e.target.value })
                 }
               />
               <br />
               <label className='block text-gray-700 text-sm font-bold mt-2'>
                 Description:
                 <textarea
-                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-normal'
-                  value={CVData.description}
+                  className='shadow appearance-none border rounded w-full py-1 px-2  text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-normal'
+                  value={CoverLetterData.description}
                   onChange={(e) =>
-                    setCVData({ ...CVData, description: e.target.value })
+                    setCoverLetterData({ ...CoverLetterData, description: e.target.value })
                   }
                 />
               </label>{' '}
@@ -193,9 +181,9 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
               </label>
               <textarea
                 className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                value={CVData.workExperience}
+                value={CoverLetterData.workExperience}
                 onChange={(e) =>
-                  setCVData({ ...CVData, workExperience: e.target.value })
+                  setCoverLetterData({ ...CoverLetterData, workExperience: e.target.value })
                 }
               />{' '}
               <br />
@@ -208,7 +196,7 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                 <p className='block text-gray-700 text-sm font-bold mt-2'>
                   Select keywords to include:
                 </p>
-                {CVData.keywords.map((keyword) => (
+                {CoverLetterData.keywords.map((keyword: any) => (
                   <label
                     key={keyword}
                     className='block text-gray-700 text-sm mb-2'
@@ -216,7 +204,7 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                     <input
                       type='checkbox'
                       value={keyword}
-                      checked={selectedKeywords.includes(keyword)}
+                      checked={CoverLetterData.selectedKeywords.includes(keyword)}
                       onChange={handleKeywordChange}
                     />
                     {keyword}
@@ -232,11 +220,11 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
           type='submit'
         >
-          Submit
+          Generate
         </button>
       </form>
     </div>
   );
 }
 
-export default CVBuilderForm;
+export default CoverLetterBuilderForm;
