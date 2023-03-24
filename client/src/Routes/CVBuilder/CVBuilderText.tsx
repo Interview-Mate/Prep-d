@@ -36,17 +36,8 @@ const styles = StyleSheet.create({
 });
 
 function CVBuilderText({ CVData }: any) {
-  const {
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    street,
-    city,
-    zipCode,
-    workExperience,
-    keywords,
-  } = CVData;
+  const { firstName, lastName, email, phoneNumber, street, city, zipCode } =
+    CVData;
 
   return (
     <div>
@@ -63,12 +54,24 @@ function CVBuilderText({ CVData }: any) {
               <Text style={styles.body}>
                 {zipCode} {city}
               </Text>
-            </View>
-            <View style={styles.section}>
-              <Text style={styles.subheading}>Dear ...</Text>
-              <View>
-                <Text style={styles.subheading}>ChatGPT placeholder</Text>
+              <View style={{ marginTop: 10 }}>
+                <Text style={styles.subheading}>Dear ...</Text>
+                <Text style={styles.body}>
+                  I am a software engineer with a passion for building scalable
+                  and maintainable software. I have experience in both frontend
+                  and backend development, and I am currently working as a
+                  software engineer at Google. I am looking for a new challenge
+                  and would love to join your team.
+                </Text>
               </View>
+            </View>
+
+            <View style={styles.section}>
+             <Text style={styles.body}>Looking forward to hearing from you!</Text>
+              <Text style={styles.body}>Best regards,</Text>
+              <Text style={styles.body}>
+                {firstName} {lastName}
+              </Text>
             </View>
           </Page>
         </Document>

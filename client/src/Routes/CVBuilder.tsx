@@ -14,15 +14,25 @@ const CVBuilder = () => {
     zipCode: '12345',
     city: 'Berlin',
 
-    workExperience: [
-      {
-        id: 1,
-        jobTitle: 'Software Engineer',
-        company: 'Google',
-        startDate: 'January 2020',
-        endDate: 'Present',
-        keywords: ['JavaScript', 'React', 'Node.js'],
-      },
+    workExperience: 'I have worked as a ...',
+    jobTitle: 'Software Engineer',
+    company: 'Google',
+    startDate: '01.01.2020',
+    endDate: '01.01.2021',
+    description: 'Senior backend developer',
+    keywords: [
+      'Leadership',
+      'Project Management',
+      'Teamwork',
+      'Communication',
+      'Problem Solving',
+      'Time Management',
+      'Technical Skills',
+      'Creativity',
+      'Adaptability',
+      'Scalability',
+      'React',
+      'Angular',
     ],
   });
 
@@ -41,7 +51,6 @@ const CVBuilder = () => {
           generatePDF={generatePDF}
         />
         {showPDF && <CVBuilderText CVData={CVData} />}
-        
       </div>
     </div>
   );
