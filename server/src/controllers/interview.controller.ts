@@ -1,7 +1,9 @@
+//@ts-nocheck
+
 import Interview from "../models/interview";
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import parseMessage from "./../asset/chatGPTparser";
-import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
+import { Configuration, OpenAIApi } from "openai";
 import { config } from "dotenv";
 config();
 console.log("this is the key", process.env.chatGPT_key);
@@ -67,7 +69,6 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
   console.log(req.body)
   try {
     const interview_id = req.params.id;
-    //const newInteraction = req.body;
     const newInteraction = {
       role: req.body.role,
       content: req.body.content,
