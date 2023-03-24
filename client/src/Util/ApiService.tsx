@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost:4000";
+import axios from "axios";
 
 export const getAllUsers = async () => {
   try {
@@ -44,70 +45,81 @@ export const getInterviews = (id: string) =>
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
     .then((res) => res.json())
     .catch((err) => err);
-    
+
 export const punctuate = async (text: string): Promise<any> => {
-  return fetch (`${BASE_URL}/punctuate`, {
+  return fetch(`${BASE_URL}/punctuate`, {
     method: "POST",
     body: JSON.stringify({ text }),
     headers: {
       'Content-Type': 'application/json'
     }
   })
-  .then((res) => res.json())
-  .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 }
 
 export const createInterview = async (userId: string, level: string, company: string, field: string, title: string): Promise<any> => {
-  return fetch (`${BASE_URL}/interview/${userId}`, {
+  return fetch(`${BASE_URL}/interview/${userId}`, {
     method: "POST",
     body: JSON.stringify({ level, company, field, title }),
     headers: {
       'Content-Type': 'application/json'
     }
   })
-  .then((res) => res.json())
-  .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 }
 
-export const retrieveFirstQuestion = async ({id, role, content }:{id: string, role: string, content: string}): Promise<any> => {
+export const retrieveFirstQuestion = async ({ id, role, content }: { id: string, role: string, content: string }): Promise<any> => {
   console.log("Id: ", id)
-  return fetch (`${BASE_URL}/chat-response/${id}`, {
+  return fetch(`${BASE_URL}/chat-response/${id}`, {
     method: "POST",
-    body: JSON.stringify({ role, content}),
+    body: JSON.stringify({ role, content }),
     headers: {
       'Content-Type': 'application/json'
     }
   })
-  .then((res) => res.json())
-  .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 }
 
 export const retrieveAnotherQuestion = async (object: object): Promise<any> => {
-  return fetch (`${BASE_URL}/chat-response`, {
+  return fetch(`${BASE_URL}/chat-response`, {
     method: "POST",
     body: JSON.stringify({ object }),
     headers: {
       'Content-Type': 'application/json'
     }
   })
-  .then((res) => res.json())
-  .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 }
 
 export const updateInterview = async (interview_id: string, answer_audio_url: string, answer_text: string): Promise<any> => {
-  return fetch (`${BASE_URL}/interview/${interview_id}/questions`, {
+  return fetch(`${BASE_URL}/interview/${interview_id}/questions`, {
     method: "PUT",
     body: JSON.stringify({ answer_audio_url, answer_text }),
     headers: {
       'Content-Type': 'application/json'
     }
   })
-  .then((res) => res.json())
-  .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 }
 
-//TODO move cloudinary upload here
-
+export const postAudio = async (formData: any): Promise<any> => {
+  try {
+    const cloudinaryResponse = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+  } catch (error) {
+    console.log('Error submitting to Cloudinary', error);
+  }
+};
 
 export const saveSolvedProblem = async (solvedProblem: SolvedProblem) => {
   try {

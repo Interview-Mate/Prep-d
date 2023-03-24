@@ -5,7 +5,6 @@ import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import {config} from "dotenv"
 config();
 
-
 const openai = new OpenAIApi( new Configuration({
   apiKey: process.env.chatGPT_key,
 }));
@@ -63,6 +62,7 @@ exports.newInterview = async (req: Request, res: Response) => {
 //? BE => router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
 //sends system prompt to chatGPT => returnts first question from chatGPT
 exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
+  console.log(req.body)
   try {
     const interview_id = req.params.id;
     //const newInteraction = req.body;

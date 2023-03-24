@@ -61,16 +61,24 @@ export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse
     mediaRecorder?.start();
   };
 
+  const turnOffAudioInput = () => {
+  speechRecognition.current.stop();
+  mediaRecorder?.stop();
+  }
+
+  const punctuateText = async (currentTranscript: string) => {
+    const response = await ApiService.punctuate(currentTranscript);
+    const punctuatedText: string = response.punctuatedText;
+    return punctuatedText
+  }
+
   // To be split into more managable functions!
   const stopRecording = async () => {
     if (video) {
       // Stop the speech recognition and media recorder
-      speechRecognition.current.stop();
-      mediaRecorder?.stop();
-
+      turnOffAudioInput()
       // Send the current transcript to the Punctuator API to get the punctuated text
-      const response = await ApiService.punctuate(currentTranscript);
-      const punctuatedText: string = response.punctuatedText;
+      const punctuatedText = await punctuateText(currentTranscript)
       setCurrentTranscript(punctuatedText);
 
       // Convert the audio chunks into a single audio blob
@@ -82,29 +90,18 @@ export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse
       formData.append("file", audioBlob);
       formData.append("upload_preset", "j1mgzp8n");
 
-      // TODO move into ApiService
-      try {
-        const cloudinaryResponse = await axios.post(
-          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
-        const publicId = cloudinaryResponse.data.public_id;
-        const audioUrl = cloudinaryResponse.data.url
+      const cloudinaryResponse = await ApiService.postAudio(formData);
+      const publicId = cloudinaryResponse.data.public_id;
+      const audioUrl = cloudinaryResponse.data.url
 
-        // Add the audio clip to the list of clips
-        setAudioClips((prev) => [
-          ...prev,
-          { id, publicId, transcript: punctuatedText },
-        ]);
-        audioChunks.current = [];
-        setRecording(false);
-        onSaveUserResponse(audioUrl, punctuatedText);
-      } catch (error) {
-        console.log(error);
-      }
+      // Add the audio clip to the list of clips
+      setAudioClips((prev) => [
+        ...prev,
+        { id, publicId, transcript: punctuatedText },
+      ]);
+      audioChunks.current = [];
+      setRecording(false);
+      onSaveUserResponse(audioUrl, punctuatedText);
     }
     setResponseSubmitted(true);
     onSaveUserResponse(null, currentTranscript);

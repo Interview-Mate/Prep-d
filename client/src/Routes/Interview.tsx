@@ -35,7 +35,6 @@ export default function Interview() {
   );
 
   const newInterview = async (values:any) => {
-    console.log(formValues)
     const res = await ApiService.createInterview(
       currentUser.id,
       values.jobLevel,
