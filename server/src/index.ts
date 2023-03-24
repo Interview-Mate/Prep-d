@@ -8,7 +8,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import Exercise from './models/exercise';
-import populateExerciseCollection from './seedScript';
+import populateExerciseCollection from './asset/seedScript';
 
 dotenv.config();
 
@@ -40,7 +40,8 @@ app
 
     const exercises = await Exercise.find();
     if (exercises.length === 0) populateExerciseCollection()
-    
+
+
 
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
