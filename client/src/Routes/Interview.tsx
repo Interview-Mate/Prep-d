@@ -17,7 +17,7 @@ interface LoadingStatus {
 
 export default function Interview() {
 
-  
+
   const {
     currentUser,
     setCurrentUser,
@@ -45,7 +45,7 @@ export default function Interview() {
     null
   );
 
-  const newInterview = async (values:any) => {
+  const newInterview = async (values: any) => {
     const res = await ApiService.createInterview(
       currentUser.id,
       values.jobLevel,
@@ -96,60 +96,55 @@ export default function Interview() {
     await newInterview(values);
   };
 
-  const saveUserResponse = async (audioUrl: string | null, transcript: string) => {
-      const res = await ApiService.updateInterview(
-        interviewId,
-        audioUrl,
-        transcript,
-      );
-      if (res.error) {
-        console.log(res.error);
-      } else {
-        // setInterviewData((prevData) => [...prevData, { question, answer: userAnswer }]);
-        if (questionCount < 7) {
-          setQuestionCount((count) => count + 1);
-          setQuestion(res);
-          // getAnotherQuestion();
-        } 
-        // else {
-        //   getFinalFeedback() - create new method for retrieing final?
-        }
-    };
+  const saveUserResponse = async (audioUrl: string, transcript: string) => {
+    const res = await ApiService.updateInterview(
+      interviewId,
+      audioUrl,
+      transcript,
+    );
+    if (res.error) {
+      console.log(res.error);
+    } else {
+      // setInterviewData((prevData) => [...prevData, { question, answer: userAnswer }]);
+      if (questionCount < 7) {
+        setQuestionCount((count) => count + 1);
+        setQuestion(res);
+        // getAnotherQuestion();
+      }
+      // else {
+      //   getFinalFeedback() - create new method for retrieing final?
+    }
+  };
 
   return (
     <>
-
       <div className='h-screen w-screen bg-seasalt'>
         <Navbar />
-
-
         {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
-              {formSubmitted && (
-        <>
-          <div className ='flex flex-col items-center justify-center w-full pt-20'>
-            <div className = 'flex justify-center space-x-1'>
-
-                <UserWebCam />
-                <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking}/>
-
-            </div>
-          </div>
-          
-          <SpeechToText
-            isInterviewerSpeaking={isInterviewerSpeaking}
-            onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
-            video={formValues.video}
-          />
-
-          {(           <Interviewer
-            message={question}
-            setIsInterviewerSpeaking={setIsInterviewerSpeaking}
-            video={formValues.video}
-          />)}
-
-        </>
-      )}
+        {formSubmitted && (
+          <>
+            {formValues.video && (
+              <div className='flex flex-col items-center justify-center w-full pt-20'>
+                <div className='flex justify-center space-x-1'>
+                  <UserWebCam />
+                  <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking} video={formValues.video} />
+                </div>
+              </div>
+            )}
+            <SpeechToText
+              isInterviewerSpeaking={isInterviewerSpeaking}
+              onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
+              video={formValues.video}
+            />
+            <Interviewer
+              message={question}
+              setIsInterviewerSpeaking={setIsInterviewerSpeaking}
+              video={formValues.video}
+            />
+          </>
+        )}
       </div>
     </>
   )
+  
 }

@@ -86,9 +86,9 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
       }),
       temperature: 0.5,
     });
-
+  
     let updatedConversation;
-
+  
     if (response.data.choices && response.data.choices[0].message) {
       const message = response.data.choices[0].message;
 
@@ -98,6 +98,7 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
         { new: true }
       );
     }
+    console.log(interview)
     if (!interview) {
       throw new Error("Interview not found");
     }
@@ -152,8 +153,7 @@ exports.addAnswerToInterview = async (req: Request, res: Response) => {
       );
     }
     //@ts-ignore
-    let followingQuestion = parseMessage(
-      updatedConversation?.conversation[
+    let followingQuestion = parseMessage(updatedConversation?.conversation[
         updatedConversation.conversation.length - 1
       ].content
     ).nextQuestion;
