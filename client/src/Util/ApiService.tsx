@@ -58,7 +58,7 @@ export const punctuate = async (text: string): Promise<any> => {
 }
 
 export const createInterview = async (userId: string, level: string, company: string, field: string, title: string): Promise<any> => {
-  return fetch (`${BASE_URL}/${userId}`, {
+  return fetch (`${BASE_URL}/interview/${userId}`, {
     method: "POST",
     body: JSON.stringify({ level, company, field, title }),
     headers: {
@@ -69,10 +69,11 @@ export const createInterview = async (userId: string, level: string, company: st
   .catch((err) => console.log(err));
 }
 
-export const retrieveFirstQuestion = async (object: object): Promise<any> => {
-  return fetch (`${BASE_URL}/chat-response`, {
+export const retrieveFirstQuestion = async ({id, role, content }:{id: string, role: string, content: string}): Promise<any> => {
+  console.log("Id: ", id)
+  return fetch (`${BASE_URL}/chat-response/${id}`, {
     method: "POST",
-    body: JSON.stringify({ object }),
+    body: JSON.stringify({ role, content}),
     headers: {
       'Content-Type': 'application/json'
     }
@@ -93,10 +94,10 @@ export const retrieveAnotherQuestion = async (object: object): Promise<any> => {
   .catch((err) => console.log(err));
 }
 
-export const updateInterview = async (interview_id: string, question_text: string, answer_audio_url: string, answer_text: string, feedback: string, score: number): Promise<any> => {
-  return fetch (`${BASE_URL}/${interview_id}/answer`, {
-    method: "UPDATE",
-    body: JSON.stringify({ interview_id, question_text, answer_audio_url, answer_text, feedback, score }),
+export const updateInterview = async (interview_id: string, answer_audio_url: string, answer_text: string): Promise<any> => {
+  return fetch (`${BASE_URL}/interview/${interview_id}/questions`, {
+    method: "PUT",
+    body: JSON.stringify({ answer_audio_url, answer_text }),
     headers: {
       'Content-Type': 'application/json'
     }

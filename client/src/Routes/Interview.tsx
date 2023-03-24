@@ -17,10 +17,10 @@ export default function Interview() {
   } = useContext(Context) as any;
 
   const [formValues, setFormValues] = useState<InterviewFormValues>({
-    jobLevel: "",
-    companyName: "",
-    jobField: "",
-    jobTitle: "",
+    jobLevel: "senior",
+    companyName: "Codeworks",
+    jobField: "software development",
+    jobTitle: "senior developer",
   });
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -44,20 +44,21 @@ export default function Interview() {
     if (res.error) {
       console.log(res.error);
     } else {
-      setInterviewId(res.interviewId);
+      setInterviewId(res._id);
+      await getFirstQuestion(res._id);
     }
   };
 
-  const getFirstQuestion = async () => {
+  const getFirstQuestion = async (id: string) => {
     const res = await ApiService.retrieveFirstQuestion({
-      interviewId: interviewId,
+      id: id,
       role: "system",
-      content: `You are an interviewer, interviewing someone for a job at ${formValues.companyName}. It is for a ${formValues.jobLevel} position in the field of ${formValues.jobField}. Begin by asking an introductory question. After you receive a response from the user, continue asking questions in the style of an interview. If a response requires a follow up, then you can ask a follow up question. However, after two or three follow up questions, go back to asking another original question, in the normal style of an interview.`,
+      content: `You are an interviewer, interviewing someone for a job at ${formValues.companyName}. It is for a ${formValues.jobLevel} position in the field of ${formValues.jobField}. Begin by asking an introductory question.`,
     });
     if (res.error) {
       console.log(res.error);
     } else {
-      setQuestion(res.message);
+      setQuestion(res);
     }
   };
 
@@ -65,50 +66,44 @@ export default function Interview() {
     const res = await ApiService.retrieveAnotherQuestion({
       interviewId: interviewId,
       role: "system",
-      content: `You are an interviewer, interviewing someone for a job at ${formValues.companyName}. It is for a ${formValues.jobLevel} position in the field of ${formValues.jobField}. Begin by asking an introductory question. After you receive a response from the user, continue asking questions in the style of an interview. If a response requires a follow up, then you can ask a follow up question. However, after two or three follow up questions, go back to asking another original question, in the normal style of an interview.`,
+      content: `You are an interviewer, interviewing someone for a job at ${formValues.companyName}. It is for a ${formValues.jobLevel} position in the field of ${formValues.jobField}. Begin by asking an introductory question.`,
     });
     if (res.error) {
       console.log(res.error);
     } else {
-      setQuestion(res.message);
+      setQuestion(res);
     }
   };
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
-    setFormValues(values);
+    // setFormValues(values);
     setFormSubmitted(true);
     setShowInterviewForm(false);
     await newInterview();
-    await getFirstQuestion();
   };
 
-  const saveUserResponse = async () => {
-    if (userAnswer) {
+  const saveUserResponse = async (audioUrl: string, transcript: string) => {
       const res = await ApiService.updateInterview(
         interviewId,
-        question,
-        userAnswer.audioUrl,
-        userAnswer.transcript,
-        "feedback",
-        5,
+        audioUrl,
+        transcript,
       );
       if (res.error) {
         console.log(res.error);
       } else {
-        setInterviewData((prevData) => [...prevData, { question, answer: userAnswer }]);
+        // setInterviewData((prevData) => [...prevData, { question, answer: userAnswer }]);
         if (questionCount < 7) {
           setQuestionCount((count) => count + 1);
-          getAnotherQuestion();
+          setQuestion(res);
+          // getAnotherQuestion();
         }
       }
-    }
-  };
+    };
 
   return (
     <>
       <div className='h-screen w-screen bg-seasalt'>
         <Navbar />
-        Here you can be live interviewed by a bot
         {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
               {formSubmitted && (
         <>
@@ -118,8 +113,7 @@ export default function Interview() {
           />
           <SpeechToText
             isInterviewerSpeaking={isInterviewerSpeaking}
-            onAnswerRecorded={(audioUrl: any, transcript: any) => setUserAnswer({ audioUrl, transcript })}
-            onSaveUserResponse={saveUserResponse}
+            onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
           />
         </>
       )}
