@@ -95,10 +95,10 @@ function App() {
       {isLoading ? (
         <Spinner />
       ) : !isAuthenticated ? (
-        <Login />
-      ) : currentUser.name === '' ? (
-        <FirstVisit />
-      )
+        <Login />)
+      //  : currentUser.name === '' ? (
+      //   <FirstVisit />
+      // )
        : (
         <RouterProvider router={router} fallbackElement={<Spinner />} />
       )}

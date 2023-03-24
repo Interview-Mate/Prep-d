@@ -7,6 +7,8 @@
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
     "@monaco-editor/react": "^4.4.6",
+    "@react-three/drei": "^9.58.4",
+    "@react-three/fiber": "^8.12.0",
     "@tailwindcss/forms": "^0.5.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -27,6 +29,7 @@
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "tailwindest": "^1.0.3",
+    "three": "^0.150.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
