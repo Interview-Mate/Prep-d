@@ -32,6 +32,7 @@ export default function Interview() {
     jobField: "software development",
     jobTitle: "senior developer",
   });
+
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [interviewId, setInterviewId] = useState("");
@@ -44,6 +45,7 @@ export default function Interview() {
   );
 
   const newInterview = async () => {
+    
     const res = await ApiService.createInterview(
       currentUser.id,
       formValues.jobLevel,
