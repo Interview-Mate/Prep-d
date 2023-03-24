@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Context } from '../Context';
 import Navbar from '../Components/Navbar';
 import React, { useState } from "react";
@@ -6,8 +6,18 @@ import * as ApiService from "../Util/ApiService";
 import InterviewForm from "../Components/InterviewForm";
 import Interviewer from "../Components/Interviewer";
 import SpeechToText from "../Components/SpeechToText";
+import UserWebCam from '../Components/Interview/UserWebCam'
+import AvatarWebCam from '../Components/Interview/AvatarWebCam';
+import { all } from 'q';
+
+interface LoadingStatus {
+  userWebCam: boolean;
+  avatarWebCam: boolean;
+}
 
 export default function Interview() {
+
+  
   const {
     currentUser,
     setCurrentUser,
@@ -22,6 +32,7 @@ export default function Interview() {
     jobField: "software development",
     jobTitle: "senior developer",
   });
+
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [interviewId, setInterviewId] = useState("");
@@ -34,6 +45,7 @@ export default function Interview() {
   );
 
   const newInterview = async () => {
+    
     const res = await ApiService.createInterview(
       currentUser.id,
       formValues.jobLevel,
@@ -48,6 +60,7 @@ export default function Interview() {
       await getFirstQuestion(res._id);
     }
   };
+
 
   const getFirstQuestion = async (id: string) => {
     const res = await ApiService.retrieveFirstQuestion({
@@ -102,19 +115,33 @@ export default function Interview() {
 
   return (
     <>
+
       <div className='h-screen w-screen bg-seasalt'>
         <Navbar />
+
+
         {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
               {formSubmitted && (
         <>
-          <Interviewer
-            message={question}
-            setIsInterviewerSpeaking={setIsInterviewerSpeaking}
-          />
+          <div className ='flex flex-col items-center justify-center w-full pt-20'>
+            <div className = 'flex justify-center space-x-1'>
+
+                <UserWebCam />
+                <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking}/>
+
+            </div>
+          </div>
+          
           <SpeechToText
             isInterviewerSpeaking={isInterviewerSpeaking}
             onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
           />
+
+          {( <Interviewer
+            message={question}
+            setIsInterviewerSpeaking={setIsInterviewerSpeaking}
+          />)}
+
         </>
       )}
       </div>

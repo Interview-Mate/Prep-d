@@ -101,8 +101,8 @@ function App() {
       {isLoading ? (
         <Spinner />
       ) : !isAuthenticated ? (
-        <Login />
-      ) : currentUser.name === '' ? (
+        <Login />)
+       : currentUser.name === '' ? (
         <FirstVisit />
       )
        : (
