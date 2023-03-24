@@ -117,7 +117,7 @@ function CVBuilderForm({ CVData, setCVData, generatePDF }: any) {
                   type='text'
                   value={CVData.city}
                   onChange={(e) =>
-                    setCVData({ ...CVData, state: e.target.value })
+                    setCVData({ ...CVData, city: e.target.value })
                   }
                 />
                 <br />
