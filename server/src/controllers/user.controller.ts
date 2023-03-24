@@ -17,7 +17,7 @@ exports.getAllUsers = async (req: Request, res: Response) => {
     res.status(200).json(allUsers);
   } catch (err) {
     console.log(err);
-    res.json(err).status(500);
+    res.status(500).json(err);
   }
 };
 
@@ -38,7 +38,7 @@ exports.getUser = async (req: Request, res: Response) => {
     if (!existingUser) {
       throw new Error("User not found");
     }
-    res.json(existingUser).status(200);
+    res.status(200).json(existingUser);
   } catch (err: any) {
     res.status(500).json(err.message);
   }

@@ -1,4 +1,4 @@
-import Exercise from "./models/exercise"
+import Exercise from "../models/exercise"
 //WARN:
 // This function populatex the "exercises" collection in the database.
 // It needs to be executed only once before starting interacting with that collection.

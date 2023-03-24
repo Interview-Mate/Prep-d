@@ -1,21 +1,21 @@
 import Interview from "../models/interview";
-import { Request, Response } from "express";
-import { Configuration, OpenAIApi } from "openai";
-import dotenv from "dotenv";
-import { ChatCompletionRequestMessage } from "openai";
-dotenv.config();
+import { Request, Response, response } from "express";
+import parseMessage from "./../asset/chatGPTparser"
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
+import {config} from "dotenv"
+config();
 
-const configuration = new Configuration({
+
+const openai = new OpenAIApi( new Configuration({
   apiKey: process.env.chatGPT_key,
-});
-const openai = new OpenAIApi(configuration);
+}));
 
 exports.getInterviewsByUser = async function (req: Request, res: Response) {
   try {
     const userId = req.params.userId;
     const interviews = await Interview.find({ user_id: userId }).sort({
       date: -1,
-    }); //TODO asc/desc {date: 1}
+    });
     if (interviews.length < 1) {
       throw new Error("No previous interviews found");
     }
@@ -29,22 +29,27 @@ exports.getInterview = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
-    res.json(result).status(200);
-    if (!result) {
-      throw new Error("Interview not found");
-    }
-    res.json(result).status(200);
+      if (!result) {
+        throw new Error("Interview not found");
+      }
+    res.status(200).json(result);
   } catch (err: any) {
     res.status(500).json(err.message);
   }
 };
 
+
+//! FE => createInterview - url/:userID => (userId, level, company, field, title)
+//? BE => router.post("/interview/:userId", interviewCont.newInterview);
 exports.newInterview = async (req: Request, res: Response) => {
   try {
     let interview = await Interview.create({
       user_id: req.params.userId,
       level: req.body.level,
-      questions: [],
+      company: req.body.company,
+      field: req.body.field,
+      title: req.body.title,
+      conversation: [],
     });
     console.log("Interview created");
     res.status(201).json(interview);
@@ -54,154 +59,146 @@ exports.newInterview = async (req: Request, res: Response) => {
   }
 };
 
-// function getQuestionFromChatGPT (level:String, jobType:String, questionType:String) : String {
-// Calls chatGPT to get an interview question for a certain level for a certain job type
-// of questionType either "Behavioural" or "Coding"
-// Returns the text of the answer obtained from chatGPT
-// throw Error('Function not implemented')
-// }
 
+
+//! FE => retrieveAnotherQuestion - url/chat-response => (object)
+//? BE => router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
+//sends system prompt to chatGPT => returnts first question from chatGPT
 exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
-  const messages: ChatCompletionRequestMessage[] = [
-    {
-      role: "system",
-      content:
-        "You are an interviewer, interviewing someone for a job at your company. It is for a senior position in the field of software development. Begin by asking an introductory question. After you receive a response from the user, continue asking questions in the style of an interview. If a response requires a follow up, then you can ask a follow up question. However, after two or three follow up questions, go back to asking another original question, in the normal style of an interview.",
-    },
-    {
-      role: "assistant",
-      content:
-        "Can you tell us about your background and experience in software development?",
-    },
-    {
-      role: "user",
-      content:
-        "I've been working in the software development industry for the past 8 years, primarily as a full-stack developer. I hold a Bachelor's degree in Computer Science, which gave me a solid foundation in computer programming, algorithms, and data structures. I started my career as an intern at a software development firm where I was introduced to various software development methodologies such as Agile and Scrum. Since then, I've worked for both startups and large corporations, gaining experience in developing web applications, mobile applications, and enterprise-level software systems. My technical skills include proficiency in programming languages such as JavaScript, Python, and Java, as well as a strong understanding of various front-end frameworks such as React and Angular. I also have experience working with various back-end frameworks such as Node.js, Flask, and Spring Boot. In my previous role as a senior software developer, I worked on complex software systems, collaborating with cross-functional teams to design, develop, and deploy robust solutions that met the needs of our clients. I have experience in developing scalable and fault-tolerant applications, as well as building APIs and microservices using various cloud platforms such as AWS, Azure, and Google Cloud Platform. In summary, I am a highly motivated and experienced software developer with a strong foundation in computer science principles and a passion for building scalable and robust software systems. Rate my response out of 5 with a comment and return this as a JSON object. Then on a new line continue to the next question.",
-    },
-  ];
-
-  // try {
-  //   let answerText: any;
-  //   const interview = await Interview.findOne({ user_id: req.params.id })
-  //   if (!interview) {
-  //     return res.status(404).json({ error: 'Interview not found' });
-  //   }
-  //   answerText = interview.questions[0].answer_text;
-  //   messages.push({ role: "user", content: answerText });
-  // } catch (error: any) {
-  //   console.error(error);
-  //   res
-  //     .status(500)
-  //     .json(error.message)
-  // }
-
-  try {
-    console.log(messages);
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: messages,
-      max_tokens: 2000,
-      temperature: 0.7,
-    });
-    if (
-      response.data.choices &&
-      response.data.choices.length > 0 &&
-      response.data.choices[0].message &&
-      response.data.choices[0].message.content
-    ) {
-      const messageContent = response.data.choices[0].message.content;
-      const lines = messageContent.split("\n");
-      if (lines.length > 0) {
-        console.log(lines[lines.length - 1].trim());
-      }
-      return res.status(200).json(response.data);
-    }
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json(error.message);
-  }
-};
-
-//
-
-exports.addQuestionToInterview = async (req: Request, res: Response) => {
   try {
     const interview_id = req.params.id;
-
-    //!_______________________________
-
-    //1. initiate converstaion - role = "system"
-    //2. user response - role = "user"
-    const userResponce = {
-      cloudinary_url: String,
-      text: String,
-      interview_id: String,
-      timestamp: Date.now(),
-    }
-    //3. assistance responce
-    const AssistantResponce = {
-      feedback: String,
-      grade: Number,
-      next_question: String,
-      interview_id: String,
-      timestamp: Date.now(),
-    }
-    //loop - 7 times
-    const { question_text, answer_text, answer_audio_url, score } = req.body;
-
-    const newQuestion = {
-      problem_name: String,
-      solution: String,
-      score: Number,
-      runtime: Number,
-      timestamp: Date.now(),
+    //const newInteraction = req.body;
+    const newInteraction = {
+      role: req.body.role,
+      content: req.body.content,
     };
 
     const interview = await Interview.findOneAndUpdate(
       { _id: interview_id },
-      { $push: { questions: newQuestion } },
+      { $push: { conversation: newInteraction } },
       { new: true }
-    );
+      );
 
-    if (!interview) {
-      throw new Error("Exercise not found");
-    }
+      const response = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        //@ts-ignore
+        messages: (interview.conversation.map(x => {
+          return { role: x.role, content: x.content}
+        }
+        )),
+        temperature: 0.5,
+      })
+
+      let updatedConversation ;
+
+      if (response.data.choices && response.data.choices[0].message ){
+        const message = response.data.choices[0].message;
+
+        updatedConversation =  await Interview.findOneAndUpdate(
+          { _id: interview_id },
+          { $push: { conversation: message } },
+          { new: true }
+          );
+        }
+        if (!interview) {
+          throw new Error("Interview not found");
+        }
+        res
+        .status(201)
+        .json(updatedConversation?.conversation[1].content);
+      } catch (error: any) {
+        console.error(error);
+        res
+        .status(500)
+        .json(error.message);
+      }
+    };
+
+
+
+
+    //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
+    //? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
+    //adds user answer to DB => returnts next question from chatGPT
+    exports.addAnswerToInterview = async (req: Request, res: Response) => {
+      try {
+        const interview_id = req.params.id;
+        const { answer_text, answer_audio_url } = req.body;
+        const userAnswer = answer_text.concat(' Rate my response out of 5 with a comment. Then continue to the next question. return this as a JSON object in this format {rating_number: input the rating you gave me as a number , rating_feedback:  the feedback you gave me to the previous question ,next_question: your next question}.')
+        const newInteraction = {
+          role: "user",
+          cloudinary_url: answer_audio_url,
+          content: userAnswer,
+        };
+
+        const interview = await Interview.findOneAndUpdate(
+          { _id: interview_id },
+          { $push: { conversation: newInteraction } },
+          { new: true }
+          );
+
+          const response = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            //@ts-ignore
+            messages: (interview.conversation.map(x => {
+              return { role: x.role, content: x.content}
+            }
+            )),
+            temperature: 0.5,
+          })
+
+          let updatedConversation ;
+          if (response.data.choices && response.data.choices[0].message ){
+            // console.log("#################",response.data.choices)
+            const message = response.data.choices[0].message;
+
+            updatedConversation =  await Interview.findOneAndUpdate(
+              { _id: interview_id },
+              { $push: { conversation: message } },
+              { new: true }
+              );
+            }
+
+            //@ts-ignore
+            let followingQuestion = (parseMessage(updatedConversation?.conversation[updatedConversation.conversation.length - 1].content).nextQuestion)
+            //console.log("+++++++++++++++",followingQuestion)
+
+            if (!interview) {
+              throw new Error("Interview not found");
+            }
+            res
+            .status(201)
+            .json(followingQuestion);
+          } catch (error: any) {
+            console.error(error);
+            res
+            .status(500)
+            .json(error.message);
+          }
+        };
+
+
+exports.getInterviewRating = async (req: Request, res: Response) => {
+  try {
+    let id = req.params.id;
+    let result = await Interview.findById(id);
+      if (!result) {
+        throw new Error("Interview not found");
+      }
+        //@ts-ignore
+        let grades : any = result.conversation
+        //@ts-ignore
+        .map(x => parseMessage(x.content).rating ?? 0)
+        .filter (x => x !== 0 )
+      let len = grades.length
+
+      let average = grades.reduce((acc: Number, curr: any): Number => (acc + curr)) / grades.length
     res
-      .status(201)
-      .json(newQuestion);
-  } catch (error: any) {
-    console.error(error);
+      .status(200)
+      .json(average);
+  } catch (err: any) {
     res
       .status(500)
-      .json(error.message);
-  }
-};
-
-exports.addExerciseToInterview = async (req: Request, res: Response) => {
-  try {
-    const interview_id = req.params.id;
-    const { solution, answer_text, answer_audio_url, score } = req.body;
-
-    const newExercise = {
-      solution,
-      answer_text,
-      answer_audio_url,
-      score,
-      timestamp: Date.now(),
-    };
-
-    const interview = await Interview.findOneAndUpdate(
-      { _id: interview_id },
-      { $push: { coding_exericses: newExercise } },
-      { new: true }
-    );
-
-    if (!interview) {
-      throw new Error("Exercise not found");
-    }
-    res.status(201).json(newExercise);
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json(error.message);
+      .json(err.message);
   }
 };

@@ -1,5 +1,5 @@
  //FIXME: update Interview
-export type Interview  = {
+ export type Interview  = {
   user_id: string;
   score: number;
   date: Date;
@@ -45,13 +45,13 @@ export interface IUser {
   level: number;
 }
 
-export type UserResponce = {
+export type UserResponse = {
   cloudinary_url: string,
   text: string,
   interview_id: string
 }
 
-export type AssistantResponce = {
+export type AssistantResponse = {
   feedback: string,
   grade: number,
   next_question: string,
