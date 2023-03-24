@@ -10,10 +10,13 @@ import Dashboard from "./Routes/Dashboard";
 import Error from "./Components/Error";
 import Coding from "./Routes/Coding";
 import Interview from "./Routes/Interview";
+import Interviewtemp from './Routes/Interview-temp';
 import PastInterviews from "./Routes/PastInterviews";
 import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Insights from "./Routes/Insights";
+
+
 
 const router = createBrowserRouter([
   {
@@ -41,6 +44,13 @@ const router = createBrowserRouter([
     element: <Interview />,
     errorElement: <Error />,
   },
+
+  {
+    path: "/interviewtemp",
+    element: <Interviewtemp />,
+    errorElement: <Error />,
+  },
+
   {
     path: "/pastinterviews",
     element: <PastInterviews />,
