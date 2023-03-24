@@ -23,7 +23,7 @@ export default function Login() {
 
   return (
     <>
-      <h1 className="app-title">InterviewMate</h1>
+      <h1 className="app-title text-gray-900">Prep'd</h1>
 
       <div className="login-container">
         <div>

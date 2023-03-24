@@ -16,7 +16,7 @@ router.get('/', (req: Request, res: Response) => {
 //user methods
 router.post("/user", userCont.createUser);
 router.get('/get-all-users', userCont.getAllUsers); //for testing purposes
-router.get('/getuser/:id', userCont.getUser);
+router.get('/getuser/:email', userCont.getUser);
 router.delete("/users/:id", userCont.deleteUser);
 router.put("/user/:id", userCont.editUser);
 
@@ -33,7 +33,8 @@ router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
 router.get("/get-all-exercises", exerciseCont.getAllExercises);
 
 //solved problems
-router.get("/problems/:userId", solvedProblemCont.getAllSolvedProblems);
+router.get("/problems/:userId", solvedProblemCont.getSolvedProblems);
+router.get("/get-all-solved", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 // NEW

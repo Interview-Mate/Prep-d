@@ -129,6 +129,7 @@ interface User {
   name: string;
   surname: string;
   level: string;
+  image: string | undefined;
   id?: string;
 }
 
