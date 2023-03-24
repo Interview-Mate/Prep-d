@@ -6,6 +6,7 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
   const [jobLevel, setJobLevel] = useState("");
   const [jobField, setJobField] = useState("");
   const [jobTitle, setJobTitle] = useState("");
+  const [video, setVideo] = useState(true);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,10 +16,12 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
       jobLevel,
       jobField,
       jobTitle,
+      video,
     };
 
     onFormSubmit(formValues);
   };
+console.log(video)
 
   return (
     <div className="interview-form">
@@ -54,6 +57,15 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
           id="job-title"
           value={jobTitle}
           onChange={(event) => setJobTitle(event.target.value)}
+        />
+        <br />
+        <label htmlFor="job-title">Video?</label>
+        <input
+          type="checkbox"
+          id="video"
+          value={video.toString()}
+          checked={video}
+          onChange={(event) => setVideo(event.target.checked)}
         />
         <br />
         <button type="submit">Start Interview</button>

@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from '../Context';
 
-export default function Interviewer ({ message, setIsInterviewerSpeaking }: InterviewerProps) {
+export default function Interviewer ({ message, setIsInterviewerSpeaking, video }: InterviewerProps) {
   const {
     currentUser,
     setCurrentUser,
@@ -30,9 +30,11 @@ export default function Interviewer ({ message, setIsInterviewerSpeaking }: Inte
   }  
 
   useEffect(() => {
-    speakMessage()
-    // synth.addEventListener('voiceschanged', speakMessage);
-    // return () => synth.removeEventListener('voiceschanged', speakMessage);
+    if (video) {
+      speakMessage();
+    } else {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    }
   }, [message]);
   
 

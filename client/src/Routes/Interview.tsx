@@ -21,6 +21,7 @@ export default function Interview() {
     companyName: "Codeworks",
     jobField: "software development",
     jobTitle: "senior developer",
+    video: true,
   });
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -33,13 +34,14 @@ export default function Interview() {
     null
   );
 
-  const newInterview = async () => {
+  const newInterview = async (values:any) => {
+    console.log(formValues)
     const res = await ApiService.createInterview(
       currentUser.id,
-      formValues.jobLevel,
-      formValues.companyName,
-      formValues.jobField,
-      formValues.jobTitle
+      values.jobLevel,
+      values.companyName,
+      values.jobField,
+      values.jobTitle,
     );
     if (res.error) {
       console.log(res.error);
@@ -76,13 +78,14 @@ export default function Interview() {
   };
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
-    // setFormValues(values);
+    setFormValues(values);
+    console.log("values: ", values)
     setFormSubmitted(true);
     setShowInterviewForm(false);
-    await newInterview();
+    await newInterview(values);
   };
 
-  const saveUserResponse = async (audioUrl: string, transcript: string) => {
+  const saveUserResponse = async (audioUrl: string | null, transcript: string) => {
       const res = await ApiService.updateInterview(
         interviewId,
         audioUrl,
@@ -96,8 +99,10 @@ export default function Interview() {
           setQuestionCount((count) => count + 1);
           setQuestion(res);
           // getAnotherQuestion();
+        } 
+        // else {
+        //   getFinalFeedback() - create new method for retrieing final?
         }
-      }
     };
 
   return (
@@ -110,16 +115,16 @@ export default function Interview() {
           <Interviewer
             message={question}
             setIsInterviewerSpeaking={setIsInterviewerSpeaking}
+            video={formValues.video}
           />
           <SpeechToText
             isInterviewerSpeaking={isInterviewerSpeaking}
             onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
+            video={formValues.video}
           />
         </>
       )}
       </div>
-
-
     </>
   )
 }
