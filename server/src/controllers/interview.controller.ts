@@ -8,7 +8,7 @@ console.log("this is the key", process.env.chatGPT_key);
 
 const openai = new OpenAIApi(
   new Configuration({
-    apiKey: "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",
+    apiKey: process.env.chatGPT_key,
   })
 );
 
