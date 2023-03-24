@@ -99,9 +99,9 @@ export default function Dashboard() {
         </div>
 
         <div className="p-4 h-max min-h-max flex flex-col flex: 1">
-          <a href="/interview">
+          <Link to="/interview">
             <img className="dashboard-image" src={Interview}></img>
-          </a>
+          </Link>
 
         </div>
       </div>

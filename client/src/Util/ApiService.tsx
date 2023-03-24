@@ -10,11 +10,15 @@ export const getAllUsers = async () => {
   }
 }
 
-export const getUser = (email: string | undefined) =>
-  fetch(`${BASE_URL}/getuser/${email}`)
-    .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
-    .then((res) => res.json())
-    .catch((err) => err);
+export const getUser = async (email: string | undefined) => {
+  try {
+    const response = await fetch(`${BASE_URL}/getuser/${email}`);
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.error("Error getting user:", error);
+  }
+}
 
 export const createUser = async (newUser: User)=> {
   console.log(newUser);

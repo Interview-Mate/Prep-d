@@ -39,7 +39,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
       // setAuthenticated(true);
       const email = user?.email;
       const receivedUser = await ApiService.getUser(email);
-
       if (receivedUser) {
         setCurrentUser({
           ...currentUser,
@@ -56,6 +55,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Creates user in database
   const handleCreateUser = async (newUser: User) => {
+
     const receivedUser = await ApiService.createUser({
       email: newUser.email,
       name: newUser.name,
