@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:4000";
+const BASE_URL = 'http://localhost:4000';
 import axios from "axios";
 
 export const getAllUsers = async () => {
@@ -11,13 +11,17 @@ export const getAllUsers = async () => {
   }
 }
 
-export const getUser = (email: string | undefined): Promise<any> =>
-  fetch(`${BASE_URL}/getuser/${email}`)
-    .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
-    .then((res) => res.json())
-    .catch((err) => err);
+export const getUser = async (email: string | undefined) => {
+  try {
+    const response = await fetch(`${BASE_URL}/getuser/${email}`);
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.error("Error getting user:", error);
+  }
+}
 
-export const createUser = async (newUser: User): Promise<any> => {
+export const createUser = async (newUser: User)=> {
   console.log(newUser);
   try {
     const response = await fetch(`${BASE_URL}/user`, {
@@ -34,7 +38,23 @@ export const createUser = async (newUser: User): Promise<any> => {
   }
 };
 
-export const getInterview = (id: string): Promise<any[]> =>
+export const updateUser = async (updatedUser: User)=> {
+  try {
+    const response = await fetch(`${BASE_URL}/user/${updatedUser.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedUser),
+    });
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.error("Error updating user:", error);
+  }
+};
+
+export const getInterview = (id: string) =>
   fetch(`${BASE_URL}/interview/${id}`)
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
     .then((res) => res.json())
@@ -45,9 +65,9 @@ export const getInterviews = (id: string) =>
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
     .then((res) => res.json())
     .catch((err) => err);
-
-export const punctuate = async (text: string): Promise<any> => {
-  return fetch(`${BASE_URL}/punctuate`, {
+    
+export const punctuate = async (text: string) => {
+  return fetch (`${BASE_URL}punctuate`, {
     method: "POST",
     body: JSON.stringify({ text }),
     headers: {
@@ -83,8 +103,8 @@ export const retrieveFirstQuestion = async ({ id, role, content }: { id: string,
     .catch((err) => console.log(err));
 }
 
-export const retrieveAnotherQuestion = async (object: object): Promise<any> => {
-  return fetch(`${BASE_URL}/chat-response`, {
+export const retrieveAnotherQuestion = async (object: object) => {
+  return fetch (`${BASE_URL}/chat-response`, {
     method: "POST",
     body: JSON.stringify({ object }),
     headers: {

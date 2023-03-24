@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import axios from "axios";
 import { CloudinaryContext, Video } from "cloudinary-react";
 import * as ApiService from "../Util/ApiService";
-import { Context } from '../Context';
+import { Context } from "../Context";
 
 export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse, video }: SpeechProps) {
   const {
@@ -14,7 +14,9 @@ export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse
   } = useContext(Context) as any;
 
   const [recording, setRecording] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
+    null
+  );
   const [audioClips, setAudioClips] = useState<AudioClip[]>([]);
   const audioChunks = useRef<Blob[]>([]);
   const [currentTranscript, setCurrentTranscript] = useState<string>("");
@@ -92,7 +94,7 @@ export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse
 
       const cloudinaryResponse = await ApiService.postAudio(formData);
       const publicId = cloudinaryResponse.data.public_id;
-      const audioUrl = cloudinaryResponse.data.url
+      const audioUrl = cloudinaryResponse.data.url;
 
       // Add the audio clip to the list of clips
       setAudioClips((prev) => [
@@ -139,17 +141,26 @@ export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse
     <div>
       <h1 className="speech-title">Interviewee</h1>
       <div className="speech-button-container">
-        <button className="speech-button" onClick={startRecording} disabled={recording || isInterviewerSpeaking}>
+        <button
+          className="speech-button"
+          onClick={startRecording}
+          disabled={recording || isInterviewerSpeaking}
+        >
           Record
         </button>
-        <button className="speech-button" onClick={stopRecording} disabled={recording}>
+
+        <button
+          className="speech-button"
+          onClick={stopRecording}
+          disabled={!recording}
+        >
           Stop
         </button>
       </div>
       <h2 className="speech-title">Live Transcription:</h2>
       <p className="speech-text">{currentTranscript}</p>
       <h2 className="speech-title">Previous Audio Clips:</h2>
-      <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME as string}>
+      <CloudinaryContext cloudName="dgjngnjsc">
         {audioClips.map((clip) => (
           <div key={clip.id}>
             <Video publicId={clip.publicId} controls format="mp4" />
