@@ -9,9 +9,9 @@ const animations = ['Man_Clapping','Man_Death','Man_Idle', 'Man_Run'
 , 'Man_Jump','Man_Punch','Man_greeting','Man_talking_2','Man_talking', ] 
 
 
-const Avatar = ({ isPlaying }: { isPlaying: boolean }) => {
+const Avatar = ({isInterviewerSpeaking} : any) => {
 
-  
+  console.log(isInterviewerSpeaking);
   // const model = useLoader(GLTFLoader, 'lib/interview/Male_Suit.gltf');
   const model = useLoader(GLTFLoader, 'lib/interview/Avatarmore.gltf');
   // const model = useLoader(FBXLoader, 'lib/interview/Talking.fbx');
@@ -33,10 +33,10 @@ const Avatar = ({ isPlaying }: { isPlaying: boolean }) => {
     // console.log(actions)
     // actions?.Man_talking?.play();
 
-    if (isPlaying) {
+    if (isInterviewerSpeaking) {
 
-    actions?.Man_greeting?.fadeOut(200);
     actions?.Man_talking?.play();
+    // actions?.Man_talking_2?.play();
     
     }
     else {
@@ -44,7 +44,7 @@ const Avatar = ({ isPlaying }: { isPlaying: boolean }) => {
       actions?.Man_talking?.stop();
       actions?.Man_Idle?.play();
     } 
-  }, [isPlaying]);
+  }, [isInterviewerSpeaking]);
 
 
   return (
@@ -53,7 +53,7 @@ const Avatar = ({ isPlaying }: { isPlaying: boolean }) => {
       
 
       {/* Load the 3D model in scene  */}
-      <object3D position = {[ 0, -4.3 , 0]} >
+      <object3D position = {[ 0, -4. , 0]} >
 
         <primitive object={model.scene} /> 
 

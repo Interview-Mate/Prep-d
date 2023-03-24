@@ -4,10 +4,12 @@ import parseMessage from "./../asset/chatGPTparser"
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from "openai";
 import {config} from "dotenv"
 config();
-
+console.log( 'this is the key', process.env.chatGPT_key)
 
 const openai = new OpenAIApi( new Configuration({
+  
   apiKey: process.env.chatGPT_key,
+  
 }));
 
 exports.getInterviewsByUser = async function (req: Request, res: Response) {

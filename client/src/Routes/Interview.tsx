@@ -11,15 +11,6 @@ import AvatarWebCam from '../Components/Interview/AvatarWebCam';
 
 export default function Interview() {
 
-  // animation setting 
-
-  
-  const [onceAccepted, setOnceAccepted] = useState(false);
-
-  const handleAccept = () => {
-    setOnceAccepted(true);
-  }
-
   
   const {
     currentUser,
@@ -121,8 +112,6 @@ export default function Interview() {
         <Navbar />
 
 
-
-
         {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
               {formSubmitted && (
         <>
@@ -130,7 +119,7 @@ export default function Interview() {
             <div className = 'flex justify-center space-x-1'>
 
                 <UserWebCam/>
-                <AvatarWebCam/>
+                <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking}/>
 
             </div>
           </div>
@@ -150,24 +139,3 @@ export default function Interview() {
     </>
   )
 }
-
-// <div className ='flex flex-col items-center justify-center w-full pt-20'>
-        
-// {onceAccepted ? (
-// <div className = 'flex justify-center space-x-1'>
-
-//     <UserWebCam/>
-//     <AvatarWebCam/>
-
-// </div>
-// ) : (
-//     <div className= 'h-96 m-20'>
-//       <button onClick={handleAccept} className='bg-white text-black rounded-lg px-4 py-2'>
-//         Start Interview
-//       </button>
-//     </div>
-// )}
-
-// <div className = 'flex justify-end gap-5 pt-10'>
-// </div>
-// </div>

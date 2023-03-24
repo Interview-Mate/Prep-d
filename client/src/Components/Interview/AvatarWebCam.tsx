@@ -3,9 +3,9 @@ import Avatar from './Avatar';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
-const AvatarWebCam = () => {
+const AvatarWebCam = ({ isInterviewerSpeaking }: any)  => {
   
-
+  console.log('yes its speaking ' + isInterviewerSpeaking );
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
@@ -13,19 +13,19 @@ const AvatarWebCam = () => {
   const audioElmRef = React.useRef<HTMLAudioElement>(null!);
 
   // for future fetch of audio files 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setAudioUrl(URL.createObjectURL(file));
-  };
+  // const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
+  //   setAudioUrl(URL.createObjectURL(file));
+  // };
 
-  const handlePlay = () => {
-    setIsPlaying(true);
-  }
+  // const handlePlay = () => {
+  //   setIsPlaying(true);
+  // }
 
-  const handlePause = () => {
-    setIsPlaying(false);
-  }
+  // const handlePause = () => {
+  //   setIsPlaying(false);
+  // }
 
 
   return (
@@ -40,24 +40,10 @@ const AvatarWebCam = () => {
       <Canvas camera={{ fov: 10, position: [0, 0, 10] }} >
        <OrbitControls />
        <ambientLight />
-       <Avatar isPlaying={isPlaying}/>
+       <Avatar isInterviewerSpeaking={isInterviewerSpeaking}/>
       </Canvas>
       
-      {/* <div  className='flex justify-end'>
-        <div className='bg-white w-18 flex justify-center'> 
-        <input type="file" accept="audio/*" onChange={onFileChange} />
-        <audio src={audioUrl ?? ""} controls ref={audioElmRef} />
-        </div>
-      </div> */}
     </div>
-         <div> 
-          {/* this might need to change to audio buffer */}
-         <audio src='lib/interview/Man_Talking.mp3'  controls 
-         onPlay={handlePlay} onPause={handlePause}
-        //  ref={audioElmRef}
-         
-         />
-         </div>
 
         </>
   )
@@ -65,3 +51,11 @@ const AvatarWebCam = () => {
 
 export default AvatarWebCam;
 
+// {/* <div> 
+// {/* this might need to change to audio buffer */}
+// <audio src='lib/interview/Man_Talking.mp3'  controls 
+// onPlay={handlePlay} onPause={handlePause}
+// //  ref={audioElmRef}
+
+// />
+// </div> */}

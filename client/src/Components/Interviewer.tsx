@@ -10,6 +10,7 @@ export default function Interviewer ({ message, setIsInterviewerSpeaking }: Inte
     handleGetUser,
     handleCreateUser,
   } = useContext(Context) as any;
+
   const [messages, setMessages] = useState<string[]>([]);
   const synth = window.speechSynthesis;
 
@@ -18,6 +19,10 @@ export default function Interviewer ({ message, setIsInterviewerSpeaking }: Inte
   }
 
   function speakMessage() {
+
+
+    // const utterThis = new SpeechSynthesisUtterance(message + 'I will do all the hand motions and gestures that you told me how to do and I will nail it ');
+    
     const utterThis = new SpeechSynthesisUtterance(message);
     const voices = synth.getVoices();
     utterThis.voice = voices.find((voice) => voice.name === "Google UK English Male") || null;
