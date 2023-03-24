@@ -5,6 +5,7 @@ const exerciseCont = require("./controllers/exercise.controller");
 const solvedProblemCont = require("./controllers/solvedProblem.controller");
 const userCont = require("./controllers/user.controller");
 const puncCont = require ('./controllers/punctuator.controller');
+const textSpeech = require ('./controllers/textSpeech.controller');
 
 import { Request, Response } from "express";
 
@@ -42,6 +43,8 @@ router.get("/get-all-solved", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 router.post("/punctuate", puncCont.punctuate);
+
+router.post("/api/text-to-speech", textSpeech.speechMe);
 
 export default router;
 

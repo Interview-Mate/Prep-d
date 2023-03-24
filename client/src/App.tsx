@@ -19,6 +19,7 @@ import Spinner from './Components/Spinner';
 import { useContext } from 'react';
 import { Context } from './Context';
 import Navbar from './Components/Navbar';
+import TextToSpeech from './Components/TextToSpeech';
 
 function App() {
   const { currentUser, isAuthenticated, isLoading, handleGetUser } = useContext(
@@ -80,6 +81,11 @@ function App() {
     {
       path: '/insights',
       element: <AuthenticationGuard component={Insights} />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/textspeech',
+      element: <AuthenticationGuard component={TextToSpeech} />,
       errorElement: <Error />,
     },
   ]);

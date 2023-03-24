@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from '../Context';
 
-export default function Interviewer ({ message = "this is a test message", setIsInterviewerSpeaking }: InterviewerProps) {
+export default function Interviewer ({ message = "This will be the first interivew question", setIsInterviewerSpeaking }: InterviewerProps) {
   const {
     currentUser,
     setCurrentUser,
@@ -31,7 +31,7 @@ export default function Interviewer ({ message = "this is a test message", setIs
 
   useEffect(() => {
     if (!message) {
-      message = "this is a test message";
+      message = "This will be the first interview question.";
     }
     synth.addEventListener('voiceschanged', speakMessage);
     return () => synth.removeEventListener('voiceschanged', speakMessage);

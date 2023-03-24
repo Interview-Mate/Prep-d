@@ -32,7 +32,6 @@ export default function Interview() {
   const [userAnswer, setUserAnswer] = useState<{ audioUrl: string; transcript: string } | null>(
     null
   );
-  console.log(showInterviewForm)
 
   const newInterview = async () => {
     const res = await ApiService.createInterview(
