@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Context } from '../Context';
 import Navbar from '../Components/Navbar';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Settings() {
   const { handleUpdateUser, user } = useContext(Context) as any;
