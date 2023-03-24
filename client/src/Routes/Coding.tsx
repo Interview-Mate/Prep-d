@@ -93,26 +93,15 @@ function Coding() {
             .map((solvedProblem: SolvedProblem) => solvedProblem.problem_id)
             .includes(problemId)
         ) {
-          setPreviousSolution(
-            solvedProblems.filter(
-              (solvedProblem: SolvedProblem) =>
-                solvedProblem.problem_id === problemId
-            )[0].solution
-          );
+          const previousSolution = solvedProblems.filter(
+            (solvedProblem: SolvedProblem) =>
+              solvedProblem.problem_id === problemId
+          )[0];
           setSolved(true);
-          setRuntime(
-            solvedProblems.filter(
-              (solvedProblem: SolvedProblem) =>
-                solvedProblem.problem_id === problemId
-            )[0].runtime
-          );
-          setSolveTime(
-            solvedProblems.filter(
-              (solvedProblem: SolvedProblem) =>
-                solvedProblem.problem_id === problemId
-            )[0].solveTime
-          );
           setTests(3);
+          setPreviousSolution(previousSolution.solution);
+          setRuntime(previousSolution.runtime);
+          setSolveTime(previousSolution.solveTime);
         }
       } else setProblems(receivedProblems);
 

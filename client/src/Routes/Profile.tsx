@@ -7,12 +7,8 @@ export default function Profile() {
   //do we need to user current user or user from auth0 here
   const {
     currentUser,
-    setCurrentUser,
-    isAuthenticated,
-    handleGetUser,
-    handleCreateUser,
   } = useContext(Context) as any;
-  const { user, isLoading } = useAuth0();
+  const {isLoading } = useAuth0();
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -20,18 +16,15 @@ export default function Profile() {
 
   return (
     <>
-      <div className="h-screen w-full bg-seasalt">
-        <Navbar />
-        {user && (
-          <div className="profile-container">
-            <div className="profile-head">
-              <img src={user.picture} alt={user.name} className="profile-pic" />
-              <div className="profile-title">Hi, {currentUser.name}!</div>
-            </div>
-            <h2>{user.name}</h2>
-
-            <div className="profile-element">
-              <label htmlFor="level">Your level of experience</label>
+      
+      <div className='h-screen w-full bg-seasalt'>
+      <Navbar />
+        {currentUser && (
+          <div className='profile-container'>
+            <div className='profile-title'>Hi, {currentUser.name}!</div>
+            <img src={currentUser.image} alt={currentUser.name} />
+            <div className='profile-element'>
+              <label htmlFor='level'>Your level of experience</label>
               <select
                 id="level"
                 name="level"
