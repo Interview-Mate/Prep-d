@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from '../Context';
 
-export default function Interviewer ({ message = "this is a test message", setIsInterviewerSpeaking }: InterviewerProps) {
+export default function Interviewer ({ message, setIsInterviewerSpeaking }: InterviewerProps) {
   const {
     currentUser,
     setCurrentUser,
@@ -20,7 +20,7 @@ export default function Interviewer ({ message = "this is a test message", setIs
   function speakMessage() {
     const utterThis = new SpeechSynthesisUtterance(message);
     const voices = synth.getVoices();
-    utterThis.voice = voices.find((voice) => voice.name === "Google UK English Female") || null;
+    utterThis.voice = voices.find((voice) => voice.name === "Google UK English Male") || null;
     utterThis.pitch = 1;
     utterThis.rate = 1;
     synth.speak(utterThis);
@@ -30,11 +30,9 @@ export default function Interviewer ({ message = "this is a test message", setIs
   }  
 
   useEffect(() => {
-    if (!message) {
-      message = "this is a test message";
-    }
-    synth.addEventListener('voiceschanged', speakMessage);
-    return () => synth.removeEventListener('voiceschanged', speakMessage);
+    speakMessage()
+    // synth.addEventListener('voiceschanged', speakMessage);
+    // return () => synth.removeEventListener('voiceschanged', speakMessage);
   }, [message]);
   
 
@@ -45,7 +43,7 @@ export default function Interviewer ({ message = "this is a test message", setIs
         <ul>
           {messages.map((message, index) => (
             <li key={index}>
-              {index + 1}. {message}
+               {message}
             </li>
           ))}
         </ul>

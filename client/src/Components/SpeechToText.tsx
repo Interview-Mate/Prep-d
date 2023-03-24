@@ -4,7 +4,7 @@ import { CloudinaryContext, Video } from "cloudinary-react";
 import * as ApiService from "../Util/ApiService";
 import { Context } from '../Context';
 
-export default function SpeechToText({ isInterviewerSpeaking, onAnswerRecorded, onSaveUserResponse, }: SpeechProps) {
+export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse, }: SpeechProps) {
   const {
     currentUser,
     setCurrentUser,
@@ -100,8 +100,7 @@ export default function SpeechToText({ isInterviewerSpeaking, onAnswerRecorded, 
       setCurrentTranscript("");
       audioChunks.current = [];
       setRecording(false);
-      onAnswerRecorded(audioUrl, punctuatedText);
-      onSaveUserResponse();
+      onSaveUserResponse(audioUrl, punctuatedText);
     } catch (error) {
       console.log(error);
     }

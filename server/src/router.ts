@@ -5,6 +5,7 @@ const solvedProblemCont = require ("./controllers/solvedProblem.controller");
 const userCont = require ('./controllers/user.controller');
 const puncCont = require ('./controllers/punctuator.controller');
 //const test = require ('./controllers/test');
+const textSpeech = require ('./controllers/textSpeech.controller');
 
 import { Request, Response } from "express";
 
@@ -25,7 +26,7 @@ router.get("/interview/:id", interviewCont.getInterview);
 router.post("/interview/:userId", interviewCont.newInterview);
 router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
 router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
-router.post('/interview-rating/:id', interviewCont.getInterviewRating)
+// router.post('/interview-rating/:id', interviewCont.getInterviewRating)
 
 
 //exercise methods
@@ -42,5 +43,7 @@ router.post("/punctuate", puncCont.punctuate);
 //outer.post("/test", test.bubu);
 
 
+
+router.post("/api/text-to-speech", textSpeech.speechMe);
 
 export default router;

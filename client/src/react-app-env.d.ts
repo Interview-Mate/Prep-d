@@ -156,8 +156,7 @@ type AudioClip = {
 
 type SpeechProps = {
   isInterviewerSpeaking: boolean;
-  onAnswerRecorded: (audioUrl: string, transcript: string) => void;
-  onSaveUserResponse: () => void;
+  onSaveUserResponse: (audioUrl: string, transcript: string) => void;
 };
 
 type InterviewProps = {
