@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Context } from '../Context';
 import Navbar from '../Components/Navbar';
 import React, { useState } from "react";
@@ -8,6 +8,12 @@ import Interviewer from "../Components/Interviewer";
 import SpeechToText from "../Components/SpeechToText";
 import UserWebCam from '../Components/Interview/UserWebCam'
 import AvatarWebCam from '../Components/Interview/AvatarWebCam';
+import { all } from 'q';
+
+interface LoadingStatus {
+  userWebCam: boolean;
+  avatarWebCam: boolean;
+}
 
 export default function Interview() {
 
@@ -52,6 +58,7 @@ export default function Interview() {
       await getFirstQuestion(res._id);
     }
   };
+
 
   const getFirstQuestion = async (id: string) => {
     const res = await ApiService.retrieveFirstQuestion({
@@ -107,7 +114,6 @@ export default function Interview() {
   return (
     <>
 
-
       <div className='h-screen w-screen bg-seasalt'>
         <Navbar />
 
@@ -118,19 +124,22 @@ export default function Interview() {
           <div className ='flex flex-col items-center justify-center w-full pt-20'>
             <div className = 'flex justify-center space-x-1'>
 
-                <UserWebCam/>
+                <UserWebCam />
                 <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking}/>
 
             </div>
           </div>
-          <Interviewer
-            message={question}
-            setIsInterviewerSpeaking={setIsInterviewerSpeaking}
-          />
+          
           <SpeechToText
             isInterviewerSpeaking={isInterviewerSpeaking}
             onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
           />
+
+          {( <Interviewer
+            message={question}
+            setIsInterviewerSpeaking={setIsInterviewerSpeaking}
+          />)}
+
         </>
       )}
       </div>
