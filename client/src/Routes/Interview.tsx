@@ -81,6 +81,8 @@ export default function Interview() {
     }
   };
 
+  // we need a get final feedback function after question 8
+
   const saveUserResponse = async (audioUrl: string, transcript: string) => {
     if (!audioUrl) {
       setConversation((prevData) => [
@@ -96,7 +98,7 @@ export default function Interview() {
     if (res.error) {
       console.log(res.error);
     } else {
-      if (questionCount < 7) {
+      if (questionCount < 8) {
         setQuestionCount((count) => count + 1);
         nextQuestion(res, formValues);
       }
@@ -125,7 +127,7 @@ export default function Interview() {
             )}
             {!formValues.video && (
               <>
-                <h2 className="speech-title">Interview</h2>
+                <h2 className="speech-title">Chat Interview</h2>
                 <div className="chat-container">
                   {conversation.map((value, index) => (
                     <div

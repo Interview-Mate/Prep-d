@@ -6,7 +6,6 @@ import parseMessage from "./../asset/chatGPTparser";
 import { Configuration, OpenAIApi } from "openai";
 import { config } from "dotenv";
 config();
-console.log("this is the key", process.env.chatGPT_key);
 
 const openai = new OpenAIApi(
   new Configuration({
