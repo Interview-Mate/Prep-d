@@ -21,7 +21,7 @@ const interviewSchema = new mongoose.Schema({
       content: String,
     },
   ],
-    overall_score: Number,
+    overall: [],
   });
 
 

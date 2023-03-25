@@ -2,23 +2,22 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Context } from "../Context";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import Logo from "../Assets/TrialLogo.JPG";
 
 export default function Navbar() {
-  const {
-    currentUser,
-  } = useContext(Context) as any;
-  const { logout, user } = useAuth0();
+  const { currentUser } = useContext(Context) as any;
+  const { logout } = useAuth0();
 
   const navigation = [
     { name: "Dashboard", href: "/dashboard", className: "" },
     { name: "Past Interviews", href: "/pastinterviews", className: "" },
     { name: "Coding Challenges", href: "/codingdashboard", className: "" },
     { name: "Insights", href: "/insights", className: "" },
-    { name: "Cover Letter Builder", href: "/coverletter", className: ""}
+    { name: "Cover Letter Builder", href: "/coverletter", className: "" },
   ];
 
   function classNames(...classes: any[]) {
@@ -45,14 +44,14 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
+                    className="block h-10 w-auto mr-10 lg:hidden"
+                    src={Logo}
+                    alt="Prep'd"
                   />
                   <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
+                    className="hidden h-10 w-auto mr-10 lg:block"
+                    src={Logo}
+                    alt="Prep'd"
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -63,8 +62,8 @@ export default function Navbar() {
                         to={item.href}
                         className={({ isActive }) =>
                           isActive
-                            ? "bg-eerie-black text-white rounded-md px-3 py-2 text-sm font-medium"
-                            : "text-eerie-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-sm font-medium"
+                            ? "bg-eerie-black text-white rounded-md px-3 py-2 text-base font-medium"
+                            : "text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
                         }
                       >
                         {item.name}
@@ -79,17 +78,17 @@ export default function Navbar() {
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  <BellIcon className="h-8 w-8" aria-hidden="true" />
                 </button>
 
                 {/* Profile dropdown */}
                 {currentUser && (
-                  <Menu as='div' className='relative ml-3'>
+                  <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
                         <img
-                          className='h-8 w-8 rounded-full'
+                          className="h-10 w-10 rounded-full"
                           src={currentUser.image}
                           alt={currentUser.name}
                         />
