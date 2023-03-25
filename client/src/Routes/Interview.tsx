@@ -18,6 +18,8 @@ interface LoadingStatus {
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;
 
+  console.log(currentUser)
+
   const [formValues, setFormValues] = useState<InterviewFormValues>({
     jobLevel: "",
     companyName: "",
@@ -132,9 +134,13 @@ export default function Interview() {
                   {conversation.map((value, index) => (
                     <div
                       key={`${value.messageType}-${index}`}
-                      className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"
-                        }`}
+                      className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"}`}
                     >
+                      {value.messageType === "interviewer" ? (
+                        <img src="../Assets/MrBPrep.png" className="avatar" alt="Interviewer Avatar" />
+                      ) : (
+                        <img src={currentUser.image} className="avatar" alt="User Avatar" />
+                      )}
                       <div className="chat-bubble">{value.message}</div>
                     </div>
                   ))}
