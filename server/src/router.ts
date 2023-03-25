@@ -6,6 +6,7 @@ const userCont = require ('./controllers/user.controller');
 const puncCont = require ('./controllers/punctuator.controller');
 //const test = require ('./controllers/test');
 const textSpeech = require ('./controllers/textSpeech.controller');
+const coverLetterCont = require ('./controllers/coverLetter.controller');
 
 import { Request, Response } from "express";
 
@@ -36,6 +37,9 @@ router.get("/get-all-exercises", exerciseCont.getAllExercises);
 router.get("/problems/:userId", solvedProblemCont.getSolvedProblems);
 router.get("/get-all-solved", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
+
+//Cover letter creator
+router.post("/create-cover-letter", coverLetterCont.createCoverLetter);
 
 // NEW
 router.post("/punctuate", puncCont.punctuate);

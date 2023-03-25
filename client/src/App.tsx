@@ -15,12 +15,13 @@ import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
 import Spinner from './Components/Spinner';
-import CVBuilder from './Routes/CVBuilder';
-
+import CoverLetterBuilder from './Routes/CoverLetterBuilder';
+import CodingDashboard from './Routes/CodingDashboard';
 
 import { useContext } from 'react';
 import { Context } from './Context';
 import TextToSpeech from './Components/TextToSpeech';
+
 
 function App() {
   const { currentUser, isAuthenticated, isLoading, handleGetUser } = useContext(
@@ -42,6 +43,11 @@ function App() {
     {
       path: '/dashboard',
       element: <AuthenticationGuard component={Dashboard} />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/codingdashboard',
+      element: <AuthenticationGuard component={CodingDashboard} />,
       errorElement: <Error />,
     },
     {
@@ -90,10 +96,10 @@ function App() {
       errorElement: <Error />,
     },
     {
-      path: '/cvbuilder',
-      element: <AuthenticationGuard component={CVBuilder} />,
+      path: '/coverletter',
+      element: <AuthenticationGuard component={CoverLetterBuilder} />,
       errorElement: <Error />,
-    }
+    },
   ]);
 
   return (
@@ -101,11 +107,10 @@ function App() {
       {isLoading ? (
         <Spinner />
       ) : !isAuthenticated ? (
-        <Login />)
-       : currentUser.name === '' ? (
+        <Login />
+      ) : currentUser.name === '' ? (
         <FirstVisit />
-      )
-       : (
+      ) : (
         <RouterProvider router={router} fallbackElement={<Spinner />} />
       )}
     </div>
