@@ -9,7 +9,7 @@ config();
 
 const openai = new OpenAIApi(
   new Configuration({
-    apiKey: process.env.chatGPT_key,
+    apiKey: "process.env.chatGPT_key",
   })
 );
 
@@ -65,7 +65,7 @@ exports.newInterview = async (req: Request, res: Response) => {
 //? BE => router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
 //sends system prompt to chatGPT => returnts first question from chatGPT
 exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     console.log(process.env.chatGPT_key);
     const interview_id = req.params.id;
@@ -87,9 +87,9 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
       }),
       temperature: 0.5,
     });
-  
+
     let updatedConversation;
-  
+
     if (response.data.choices && response.data.choices[0].message) {
       const message = response.data.choices[0].message;
 
@@ -99,7 +99,7 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
         { new: true }
       );
     }
-    console.log(interview)
+    console.log(interview);
     if (!interview) {
       throw new Error('Interview not found');
     }
@@ -154,7 +154,8 @@ exports.addAnswerToInterview = async (req: Request, res: Response) => {
       );
     }
     //@ts-ignore
-    let followingQuestion = parseMessage(updatedConversation?.conversation[
+    let followingQuestion = parseMessage(
+      updatedConversation?.conversation[
         updatedConversation.conversation.length - 1
       ].content
     ).nextQuestion;
