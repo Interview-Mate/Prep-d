@@ -27,7 +27,8 @@ router.get("/interview/:id", interviewCont.getInterview);
 router.post("/interview/:userId", interviewCont.newInterview);
 router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
 router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
-// router.post('/interview-rating/:id', interviewCont.getInterviewRating)
+
+router.post('/interview-rating/:id', interviewCont.getInterviewRating)
 
 
 //exercise methods

@@ -6,7 +6,6 @@ import parseMessage from "./../asset/chatGPTparser";
 import { Configuration, OpenAIApi } from "openai";
 import { config } from "dotenv";
 config();
-console.log("this is the key", process.env.chatGPT_key);
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -67,7 +66,6 @@ exports.newInterview = async (req: Request, res: Response) => {
 //sends system prompt to chatGPT => returnts first question from chatGPT
 exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
   try {
-    console.log(process.env.chatGPT_key)
     const interview_id = req.params.id;
     const newInteraction = {
       role: req.body.role,
@@ -112,25 +110,27 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
   }
 };
 
-//! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
-//? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
-//adds user answer to DB => returnts next question from chatGPT
-exports.addAnswerToInterview = async (req: Request, res: Response) => {
-  try {
-    const interview_id = req.params.id;
-    const { answer_text, answer_audio_url } = req.body;
-    const userAnswer = answer_text.concat(
-      " Rate my response out of 5 with a comment. Then continue to the next question. return this as a JSON object without plus signs in this format {rating_number: input the rating you gave me as a number , rating_feedback:  the feedback you gave me to the previous question ,next_question: your next question}."
-    );
-    const newInteraction = {
-      role: "user",
-      cloudinary_url: answer_audio_url,
-      content: userAnswer,
-    };
+function addHintForChatGPT (inp:String){
+  let suffix = ' Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format {rating_number: input the rating you gave me as a number, rating_feedback: the feedback you gave me to the previous question ,next_question: your next question}.'
+  return inp.concat(suffix)
+}
+
+    //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
+    //? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
+    //adds user answer to DB => returnts next question from chatGPT
+    exports.addAnswerToInterview = async (req: Request, res: Response) => {
+      try {
+        const interview_id = req.params.id;
+        const { answer_text, answer_audio_url } = req.body;
+        const newInteraction = {
+          role: "user",
+          cloudinary_url: answer_audio_url,
+          content: answer_text,
+        };
 
     const interview = await Interview.findOneAndUpdate(
       { _id: interview_id },
-      { $push: { conversation: newInteraction } },
+      { $push: { conversation: newInteraction} },
       { new: true }
     );
 
@@ -138,7 +138,9 @@ exports.addAnswerToInterview = async (req: Request, res: Response) => {
       model: "gpt-3.5-turbo",
       //@ts-ignore
       messages: interview.conversation.map((x) => {
-        return { role: x.role, content: x.content };
+        return {
+          role: x.role,
+          content: x.role == 'user' ? addHintForChatGPT(x.content) : x.content };
       }),
       temperature: 0.5,
     });
@@ -169,27 +171,78 @@ exports.addAnswerToInterview = async (req: Request, res: Response) => {
   }
 };
 
-// exports.getInterviewRating = async (req: Request, res: Response) => {
-//   try {
-//     let id = req.params.id;
-//     let result = await Interview.findById(id);
-//       if (!result) {
-//         throw new Error("Interview not found");
-//       }
-//         //@ts-ignore
-//         let grades : any = result.conversation
-//         //@ts-ignore
-//         .map(x => parseMessage(x.content).rating ?? 0)
-//         .filter (x => x !== 0 )
-//       let len = grades.length
 
-//       let average = grades.reduce((acc: Number, curr: any): Number => (acc + curr)) / grades.length
-//     res
-//       .status(200)
-//       .json(average);
-//   } catch (err: any) {
-//     res
-//       .status(500)
-//       .json(err.message);
-//   }
-// };
+
+exports.getInterviewRating = async (req: Request, res: Response) => {
+  try {
+    let id = req.params.id;
+    let result = await Interview.findById(id);
+      if (!result) {
+        throw new Error("Interview not found");
+      }
+      result.conversation.shift();
+      console.log(result.conversation)
+
+    let entireConversation : any = result.conversation
+      .map(x => {
+
+        if(x.role === "user"){
+          return {
+            interviewee: x.content
+          }
+        }
+        if(x.role === "assistant"){
+          let out;
+          try{
+            //@ts-ignore
+            out = JSON.parse(x.content).next_question;
+          } catch {
+            out = x.content;
+          }
+          return {
+            interviewer: out //parseMessage(x.content)?.nextQuestion || x.content;
+          }
+        }
+        if(!x.role ){
+          throw new Error (`Message ${x} is missing the \'role \' property`)
+        }
+      })
+
+ let jsons = entireConversation.map(x => JSON.stringify(x))
+
+  let askForFeedback = `You are an interviewer, who just interviewed someone for a job at ${result.company || 'a certain company'}. It is for a ${result.title || 'mid level'} position in the field of ${result.field || 'software development'}. Provide a rating out of 5 for the candidate's responses and give a general feedback on the interview, including suggestions on how the candidate could improve their performance in future.
+  Return this as a JSON object (without any '+' sign), in the following format: {overall_number: input the rating you gave to the interview as a number, overall_feedback: the feedback you gave to the interview,
+    suggestions: how could the candidate improve  }.
+    The interview, as an array of JSONS, went like this: ${jsons}
+  `
+  const response = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages:
+    [{ role: 'system',
+      content : askForFeedback
+  }],
+    temperature: 0.5,
+  });
+
+  let finalFeedback ;
+  if (response.data.choices && response.data.choices[0].message ){
+    const message = response.data.choices[0].message.content;
+
+  finalFeedback =  await Interview.findOneAndUpdate(
+    { _id: id },
+    { $push: { overall: message } },
+    { new: true }
+    );
+  }
+
+
+
+     console.log(finalFeedback)
+    res.status(200).json(response.data.choices[0].message?.content);
+    // res.status(200).json(askForFeedback);
+
+  } catch (err: any) {
+    res.status(500).json(err.message);
+  }
+}
+
