@@ -22,7 +22,7 @@ export default function Settings() {
     if (formJson.image.name !== '') {
       const formData = new FormData();
       formData.append('file', formJson.image);
-      formData.append('upload_preset', 'interviewMate');
+      formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET as string);
       const POST_URL = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`;
       const response = await fetch(`${POST_URL}`, {
         method: 'POST',
