@@ -138,7 +138,7 @@ export default function Settings() {
             <div>
               <button
                 type='submit'
-                className='group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                className='w-full bg-african-violet-900 hover:opacity-75 active:opacity-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
               >
                 Save
               </button>
