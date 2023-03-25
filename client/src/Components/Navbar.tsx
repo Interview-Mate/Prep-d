@@ -44,12 +44,12 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="block h-8 w-auto mr-10 lg:hidden"
+                    className="block h-10 w-auto mr-10 lg:hidden"
                     src={Logo}
                     alt="Prep'd"
                   />
                   <img
-                    className="hidden h-8 w-auto mr-10 lg:block"
+                    className="hidden h-10 w-auto mr-10 lg:block"
                     src={Logo}
                     alt="Prep'd"
                   />
@@ -78,7 +78,7 @@ export default function Navbar() {
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  <BellIcon className="h-8 w-8" aria-hidden="true" />
                 </button>
 
                 {/* Profile dropdown */}
@@ -88,7 +88,7 @@ export default function Navbar() {
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
                         <img
-                          className="h-8 w-8 rounded-full"
+                          className="h-10 w-10 rounded-full"
                           src={currentUser.image}
                           alt={currentUser.name}
                         />

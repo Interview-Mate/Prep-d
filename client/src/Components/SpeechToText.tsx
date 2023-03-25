@@ -1,8 +1,12 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import * as ApiService from "../Util/ApiService";
 import { Context } from "../Context";
 
-export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse, video }: SpeechProps) {
+export default function SpeechToText({
+  isInterviewerSpeaking,
+  onSaveUserResponse,
+  video,
+}: SpeechProps) {
   const {
     currentUser,
     setCurrentUser,
@@ -58,44 +62,44 @@ export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse
   const turnOffAudioInput = () => {
     speechRecognition.current.stop();
     mediaRecorder?.stop();
-  }
+  };
 
   const punctuateText = async (currentTranscript: string) => {
     const response = await ApiService.punctuate(currentTranscript);
     const punctuatedText: string = response.punctuatedText;
-    return punctuatedText
-  }
+    return punctuatedText;
+  };
 
   const createAudioFile = async () => {
     const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
     const id = Math.random().toString(36).substr(2, 9);
     const formData = new FormData();
     formData.append("file", audioBlob);
-    formData.append("upload_preset", "j1mgzp8n");
-    return formData
-  }
+    formData.append("upload_preset", "geixym3t");
+    return formData;
+  };
 
   const postAudioFile = async (formData: any) => {
     const cloudinaryResponse = await ApiService.postAudio(formData);
-    return cloudinaryResponse
-  }
+    return cloudinaryResponse;
+  };
 
   const stopRecording = async () => {
-    turnOffAudioInput()
-    const punctuatedText = await punctuateText(currentTranscript)
-    const formData  = await createAudioFile()
-    const audioFile = await postAudioFile(formData)
+    turnOffAudioInput();
+    const punctuatedText = await punctuateText(currentTranscript);
+    const formData = await createAudioFile();
+    const audioFile = await postAudioFile(formData);
     const audioUrl = audioFile.data.url;
     audioChunks.current = [];
     setRecording(false);
     onSaveUserResponse(audioUrl, punctuatedText);
-    setCurrentTranscript("")
+    setCurrentTranscript("");
   };
 
   const onTextSubmit = async () => {
     onSaveUserResponse(null, currentTranscript);
     setCurrentTranscript("");
-  }
+  };
 
   if (!video) {
     return (
@@ -109,8 +113,9 @@ export default function SpeechToText({ isInterviewerSpeaking, onSaveUserResponse
             disabled={isInterviewerSpeaking}
           />
           <button
-            className={`chat-send-button ${isInterviewerSpeaking ? "disabled" : ""
-              }`}
+            className={`chat-send-button ${
+              isInterviewerSpeaking ? "disabled" : ""
+            }`}
             onClick={onTextSubmit}
             disabled={isInterviewerSpeaking}
           >
