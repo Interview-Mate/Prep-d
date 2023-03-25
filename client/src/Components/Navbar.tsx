@@ -16,7 +16,7 @@ export default function Navbar() {
   const navigation = [
     { name: "Dashboard", href: "/dashboard", className: "" },
     { name: "Past Interviews", href: "/pastinterviews", className: "" },
-    { name: "Coding Challenges", href: "/dashboard", className: "" },
+    { name: "Coding Challenges", href: "/codingdashboard", className: "" },
     { name: "Insights", href: "/insights", className: "" },
     { name: "Cover Letter Builder", href: "/coverletter", className: ""}
   ];

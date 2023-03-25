@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
-import CVBuilderForm from './CVBuilder/CoverLetterBuilderForm';
-import CVBuilderText from './CVBuilder/CoverLetterBuilderText';
+import CVBuilderForm from './CoverLetterBuilder/CoverLetterBuilderForm';
+import CVBuilderText from './CoverLetterBuilder/CoverLetterBuilderText';
 import * as ApiService from '../Util/ApiService';
 
 const CoverLetter = () => {
@@ -14,12 +14,16 @@ const CoverLetter = () => {
     street: 'Examplestr. 8',
     zipCode: '12345',
     city: 'Berlin',
-    workExperience: 'I have worked as a backend developer for 2 years.',
+    workExperience:
+      'I have worked as a backend developer for 2 years. I have focused on the development of microservices and REST APIs.',
+    qualification: 'MSc in Computer Science',
+    position: 'Senior',
     jobTitle: 'Software Engineer',
     company: 'Google',
-    startDate: '01.01.2020',
-    description: 'Senior backend developer',
+    startDate: '01.05.2023',
+    description: 'Backend developer',
     keywords: [
+      'Agile',
       'Leadership',
       'Project Management',
       'Teamwork',
@@ -41,9 +45,9 @@ const CoverLetter = () => {
   const generatePDF = async () => {
     setLoading(true);
     const coverLetterRequest = {
-      firstName: CoverLetterData.firstName,
-      lastName: CoverLetterData.lastName,
       workExperience: CoverLetterData.workExperience,
+      qualification: CoverLetterData.qualification,
+      position: CoverLetterData.position,
       jobTitle: CoverLetterData.jobTitle,
       company: CoverLetterData.company,
       startDate: CoverLetterData.startDate,
@@ -64,22 +68,30 @@ const CoverLetter = () => {
   return (
     <div className='h-screen w-screen bg-seasalt'>
       <Navbar />
-      
-      <div className='flex flex-row h-full'>
-        <CVBuilderForm
-          CoverLetterData={CoverLetterData}
-          setCoverLetterData={setCoverLetterData}
-          generatePDF={generatePDF}
-        />
-        {loading && (
-        <div className='w-full h-full flex justify-center items-center'>
-          <div className='flex flex-col justify-center items-center'>
-            <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900'></div>
-            <p className='mt-10 text-2xl font-bold'>Generating cover letter...</p>
-          </div>
+
+      <div className='flex flex-row h-full w-full'>
+        <div className='w-1/4 bg-black'>
+          <CVBuilderForm
+            CoverLetterData={CoverLetterData}
+            setCoverLetterData={setCoverLetterData}
+            generatePDF={generatePDF}
+          />
         </div>
-      )}
-        {showPDF && <CVBuilderText CoverLetterData={CoverLetterData} />}
+        <div className='w-3/4'>
+          {loading && (
+            <div className='w-full h-full flex justify-center items-center'>
+              <div className='flex flex-col justify-center items-center'>
+                <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900'></div>
+                <p className='mt-10 text-2xl font-bold'>
+                  Generating cover letter...
+                </p>
+              </div>
+            </div>
+          )}
+          {showPDF && !loading && (
+            <CVBuilderText CoverLetterData={CoverLetterData} />
+          )}
+        </div>
       </div>
     </div>
   );

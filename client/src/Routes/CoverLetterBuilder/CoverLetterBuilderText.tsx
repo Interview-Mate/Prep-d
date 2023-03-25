@@ -44,9 +44,9 @@ Font.register({
 function CoverLetterBuilderText({ CoverLetterData }: any) {
   const { firstName, lastName, email, phoneNumber, street, city, zipCode, textBody } =
     CoverLetterData;
-
+// center the text in the middle of the page
   return (
-    <div>
+    <div className='flex justify-center'>
       <PDFViewer style={{ width: '700px', height: '700px' }}>
         <Document>
           <Page size='A4' style={styles.page}>

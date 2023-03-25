@@ -113,13 +113,16 @@ const Insights = () => {
     <div className="h-screen w-screen bg-seasalt">
       <Navbar />
       <div className="p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out">
-        <h1 className="text-2xl text-center text-pink-500 font-bold">
-          Insights
-        </h1>
         <div
           className="border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
           style={{ background: "rgba(252, 252, 252, 1)" }}
         >
+          {solvedProblems.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full">
+              <h1 className="text-2xl font-bold">You have not solved any problems yet</h1>
+              <h2 className="text-xl mt-5">Solve some problems to see your progress</h2>
+            </div>
+          )}
           {solvedProblems.length !== 0 && usersAverageSolveTime !== 0 && (
             <div className="flex flex-row items-center justify-center h-full">
               <div className="flex flex-col items-center justify-center w-1/4">

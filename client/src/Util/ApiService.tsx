@@ -66,7 +66,7 @@ export const getInterviews = (id: string) =>
     .catch((err) => err);
 
 export const punctuate = async (text: string) => {
-  return fetch(`${BASE_URL}punctuate`, {
+  return fetch(`${BASE_URL}/punctuate`, {
     method: 'POST',
     body: JSON.stringify({ text }),
     headers: {

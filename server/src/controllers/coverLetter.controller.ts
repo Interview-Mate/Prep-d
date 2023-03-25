@@ -13,26 +13,17 @@ const openai = new OpenAIApi(
 
 exports.createCoverLetter = async (req: Request, res: Response) => {
   try {
-    // const coverLetter = await CoverLetter.create(req.body);
-    // const prompt = {
-    //   role: req.body,
-    //   content: req.body.content,
-    // };
-    console.log(
-      `Create a cover letter me based following information: ${JSON.stringify(
-        req.body
-      )}`
-    );
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Create a cover letter me based following information: ${JSON.stringify(
+      prompt: `Create the text body of a cover letter based on following information, address the hiring manager as such, and exclude any closing at the end of the letter: ${JSON.stringify(
         req.body
       )}`,
-      temperature: 0.9,
-      max_tokens: 200,
+      temperature: 1,
+      max_tokens: 350,
     });
-    console.log(response.data.choices[0].text);
-    res.status(201).json(response.data.choices[0].text);
+   
+    const text = response.data.choices[0].text?.replace(/\b(\w+)\s+regards\b/i, '$1').replace(/(best regards|kind regards|sincerely|regards|[Your Name]|your name)\s*,/gi, '').replace(/\[.*?\]/g, '');
+    res.status(201).json(text);
   } catch (err: any) {
     res.status(403).json(err.message);
   }
