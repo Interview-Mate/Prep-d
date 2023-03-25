@@ -1,15 +1,15 @@
 //@ts-nocheck
 
-import Interview from "../models/interview";
-import { Request, Response } from "express";
-import parseMessage from "./../asset/chatGPTparser";
-import { Configuration, OpenAIApi } from "openai";
-import { config } from "dotenv";
+import Interview from '../models/interview';
+import { Request, Response } from 'express';
+import parseMessage from './../asset/chatGPTparser';
+import { Configuration, OpenAIApi } from 'openai';
+import { config } from 'dotenv';
 config();
 
 const openai = new OpenAIApi(
   new Configuration({
-    apiKey: process.env.chatGPT_key,
+    apiKey: "process.env.chatGPT_key",
   })
 );
 
@@ -20,7 +20,7 @@ exports.getInterviewsByUser = async function (req: Request, res: Response) {
       date: -1,
     });
     if (interviews.length < 1) {
-      throw new Error("No previous interviews found");
+      throw new Error('No previous interviews found');
     }
     res.status(200).json(interviews);
   } catch (err: any) {
@@ -33,7 +33,7 @@ exports.getInterview = async (req: Request, res: Response) => {
     let id = req.params.id;
     let result = await Interview.findById(id);
     if (!result) {
-      throw new Error("Interview not found");
+      throw new Error('Interview not found');
     }
     res.status(200).json(result);
   } catch (err: any) {
@@ -53,7 +53,7 @@ exports.newInterview = async (req: Request, res: Response) => {
       title: req.body.title,
       conversation: [],
     });
-    console.log("Interview created");
+    console.log('Interview created');
     res.status(201).json(interview);
   } catch (err: any) {
     console.log(err);
@@ -65,6 +65,7 @@ exports.newInterview = async (req: Request, res: Response) => {
 //? BE => router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
 //sends system prompt to chatGPT => returnts first question from chatGPT
 exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
+  console.log(req.body);
   try {
     const interview_id = req.params.id;
     const newInteraction = {
@@ -78,7 +79,7 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
       { new: true }
     );
     const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: 'gpt-3.5-turbo',
       //@ts-ignore
       messages: interview.conversation.map((x) => {
         return { role: x.role, content: x.content };
@@ -97,8 +98,9 @@ exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
         { new: true }
       );
     }
+    console.log(interview);
     if (!interview) {
-      throw new Error("Interview not found");
+      throw new Error('Interview not found');
     }
     res
       .status(201)
@@ -135,7 +137,7 @@ function addHintForChatGPT (inp:String){
     );
 
     const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: 'gpt-3.5-turbo',
       //@ts-ignore
       messages: interview.conversation.map((x) => {
         return {
@@ -154,15 +156,23 @@ function addHintForChatGPT (inp:String){
         { new: true }
       );
     }
-
+    //@ts-ignore
     let followingQuestion = parseMessage(
       updatedConversation?.conversation[
         updatedConversation.conversation.length - 1
       ].content
     ).nextQuestion;
 
+    if (
+      followingQuestion.toLowerCase().includes('error') ||
+      followingQuestion.toLowerCase().includes('json')
+    ) {
+      followingQuestion =
+        "Sorry, I didn't understand that. Could you please rephrase your answer?";
+    }
+
     if (!interview) {
-      throw new Error("Interview not found");
+      throw new Error('Interview not found');
     }
     res.status(201).json(followingQuestion);
   } catch (error: any) {

@@ -23,24 +23,23 @@ export default function Interview() {
     companyName: "",
     jobField: "",
     jobTitle: "",
+    video: true,
   });
 
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [interviewId, setInterviewId] = useState("");
   const [questionCount, setQuestionCount] = useState(0);
-  const [question, setQuestion] = useState("");
-  // const [interviewData, setInterviewData] = useState<
-  //   Array<{
-  //     question: string;
-  //     answer: { audioUrl: string; transcript: string };
-  //   }>
-  // >([]);
+  const [videoQuestion, setVideoQuestion] = useState("");
+  const [conversation, setConversation] = useState<Message[]>([]);
   const [isInterviewerSpeaking, setIsInterviewerSpeaking] = useState(false);
-  // const [userAnswer, setUserAnswer] = useState<{
-  //   audioUrl: string;
-  //   transcript: string;
-  // } | null>(null);
+
+  const handleFormSubmit = async (values: InterviewFormValues) => {
+    setFormValues(values);
+    setFormSubmitted(true);
+    setShowInterviewForm(false);
+    await newInterview(values);
+  };
 
   const newInterview = async (values: InterviewFormValues) => {
     const res = await ApiService.createInterview(
@@ -50,37 +49,47 @@ export default function Interview() {
       values.jobField,
       values.jobTitle
     );
-    console.log(res);
     if (res.error) {
       console.log(res.error);
     } else {
       setInterviewId(res._id);
-      await getFirstQuestion(res._id, values);
+      await getQuestion(res._id, values);
     }
   };
 
-  const getFirstQuestion = async (id: string, values: InterviewFormValues) => {
-    const res = await ApiService.retrieveFirstQuestion({
+  const getQuestion = async (id: string, values: InterviewFormValues) => {
+    const res = await ApiService.retrieveQuestion({
       id: id,
       role: "system",
       content: `You are an interviewer, interviewing someone for a job at ${values.companyName}. It is for a ${values.jobLevel} position in the field of ${values.jobField}. Begin by asking an introductory question.`,
     });
-    console.log(res);
     if (res.error) {
       console.log(res.error);
     } else {
-      setQuestion(res);
+      nextQuestion(res, values);
     }
   };
 
-  const handleFormSubmit = async (values: InterviewFormValues) => {
-    setFormValues(values);
-    setFormSubmitted(true);
-    setShowInterviewForm(false);
-    await newInterview(values);
+  const nextQuestion = (res: string, values: InterviewFormValues) => {
+    if (values.video === true) {
+      setVideoQuestion(res);
+    } else {
+      setConversation((prevData) => [
+        ...prevData,
+        { message: res, messageType: "interviewer" },
+      ]);
+    }
   };
 
+  // we need a get final feedback function after question 8
+
   const saveUserResponse = async (audioUrl: string, transcript: string) => {
+    if (!audioUrl) {
+      setConversation((prevData) => [
+        ...prevData,
+        { message: transcript, messageType: "user" },
+      ]);
+    }
     const res = await ApiService.updateInterview(
       interviewId,
       audioUrl,
@@ -89,10 +98,9 @@ export default function Interview() {
     if (res.error) {
       console.log(res.error);
     } else {
-      // setInterviewData((prevData) => [...prevData, { question, answer: userAnswer }]);
-      if (questionCount < 7) {
+      if (questionCount < 8) {
         setQuestionCount((count) => count + 1);
-        setQuestion(res);
+        nextQuestion(res, formValues);
       }
     }
   };
@@ -101,30 +109,44 @@ export default function Interview() {
     <>
       <div className="h-screen w-screen bg-seasalt">
         <Navbar />
-
         {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
         {formSubmitted && (
           <>
-            <div className="flex flex-col items-center justify-center w-full pt-20">
-              <div className="flex justify-center space-x-1">
-                <UserWebCam />
-                <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking} />
+            {formValues.video && (
+              <div className='flex flex-col items-center justify-center w-full pt-20'>
+                <div className='flex justify-center space-x-1'>
+                  <UserWebCam />
+                  <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking} video={formValues.video} />
+                </div>
+                <Interviewer
+                  videoQuestion={videoQuestion}
+                  setIsInterviewerSpeaking={setIsInterviewerSpeaking}
+                  video={formValues.video}
+                />
               </div>
-            </div>
+            )}
+            {!formValues.video && (
+              <>
+                <h2 className="speech-title">Chat Interview</h2>
+                <div className="chat-container">
+                  {conversation.map((value, index) => (
+                    <div
+                      key={`${value.messageType}-${index}`}
+                      className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"
+                        }`}
+                    >
+                      <div className="chat-bubble">{value.message}</div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
 
             <SpeechToText
               isInterviewerSpeaking={isInterviewerSpeaking}
-              onSaveUserResponse={(audioUrl: any, transcript: any) =>
-                saveUserResponse(audioUrl, transcript)
-              }
+              onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
+              video={formValues.video}
             />
-
-            {
-              <Interviewer
-                message={question}
-                setIsInterviewerSpeaking={setIsInterviewerSpeaking}
-              />
-            }
           </>
         )}
       </div>

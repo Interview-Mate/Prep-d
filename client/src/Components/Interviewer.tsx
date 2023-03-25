@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from '../Context';
 
-export default function Interviewer ({ message, setIsInterviewerSpeaking }: InterviewerProps) {
+export default function Interviewer ({ videoQuestion, setIsInterviewerSpeaking, video }: InterviewerProps) {
   const {
     currentUser,
     setCurrentUser,
@@ -11,7 +11,6 @@ export default function Interviewer ({ message, setIsInterviewerSpeaking }: Inte
     handleCreateUser,
   } = useContext(Context) as any;
 
-  const [messages, setMessages] = useState<string[]>([]);
   const synth = window.speechSynthesis;
 
   function handleIsSpeaking() {
@@ -19,11 +18,8 @@ export default function Interviewer ({ message, setIsInterviewerSpeaking }: Inte
   }
 
   function speakMessage() {
-
-
     // const utterThis = new SpeechSynthesisUtterance(message + 'I will do all the hand motions and gestures that you told me how to do and I will nail it ');
-    
-    const utterThis = new SpeechSynthesisUtterance(message);
+    const utterThis = new SpeechSynthesisUtterance(videoQuestion);
     const voices = synth.getVoices();
     utterThis.voice = voices.find((voice) => voice.name === "Google UK English Male") || null;
     utterThis.pitch = 1;
@@ -31,7 +27,6 @@ export default function Interviewer ({ message, setIsInterviewerSpeaking }: Inte
     synth.speak(utterThis);
     handleIsSpeaking();
     utterThis.onend = () => setIsInterviewerSpeaking(false);
-    setMessages((prevMessages) => [...prevMessages, message]);
   }  
 
   function delaySpeakMessage() {
@@ -39,25 +34,14 @@ export default function Interviewer ({ message, setIsInterviewerSpeaking }: Inte
   }
 
   useEffect(() => {
-
-    delaySpeakMessage();
-    // speakMessage()
-    // synth.addEventListener('voiceschanged', speakMessage);
-    // return () => synth.removeEventListener('voiceschanged', speakMessage);
-  }, [message]);
+      delaySpeakMessage();
+  }, [videoQuestion]);
   
 
   return (
     <>
-      <h1 className="speech-title">Interviewer</h1>
       <div className="speech-text">
-        <ul>
-          {messages.map((message, index) => (
-            <li key={index}>
-               {message}
-            </li>
-          ))}
-        </ul>
+          {videoQuestion}
       </div>
     </>
   )
