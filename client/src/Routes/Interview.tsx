@@ -8,6 +8,7 @@ import Interviewer from "../Components/Interviewer";
 import SpeechToText from "../Components/SpeechToText";
 import UserWebCam from "../Components/Interview/UserWebCam";
 import AvatarWebCam from "../Components/Interview/AvatarWebCam";
+import MrBPrep from '../Assets/MrBPrep.png';
 import { all } from "q";
 
 interface LoadingStatus {
@@ -137,7 +138,7 @@ export default function Interview() {
                       className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"}`}
                     >
                       {value.messageType === "interviewer" ? (
-                        <img src="../Assets/MrBPrep.png" className="avatar" alt="Interviewer Avatar" />
+                        <img src={MrBPrep} className="avatar" alt="Interviewer Avatar" />
                       ) : (
                         <img src={currentUser.image} className="avatar" alt="User Avatar" />
                       )}
