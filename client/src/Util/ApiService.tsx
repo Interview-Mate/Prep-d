@@ -96,7 +96,7 @@ export const createInterview = async (
     .catch((err) => console.log(err));
 };
 
-export const retrieveFirstQuestion = async ({
+export const retrieveQuestion = async ({
   id,
   role,
   content,
