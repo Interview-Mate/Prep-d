@@ -138,15 +138,17 @@ interface InterviewFormValues {
   companyName: string;
   jobField: string;
   jobTitle: string;
+  video: boolean;
 }
 
 type InterviewerProps = {
-  message?: string;
+  videoQuestion: string;
   setIsInterviewerSpeaking: (value: boolean) => void;
+  video: boolean;
 };
 
 type InterviewFormProps = {
-  onFormSubmit: (values: { companyName: string; jobLevel: string; jobField: string; jobTitle: string }) => void;
+  onFormSubmit: (values: { companyName: string; jobLevel: string; jobField: string; jobTitle: string; video: boolean; }) => void;
 };
 
 type AudioClip = {
@@ -157,7 +159,8 @@ type AudioClip = {
 
 type SpeechProps = {
   isInterviewerSpeaking: boolean;
-  onSaveUserResponse: (audioUrl: string, transcript: string) => void;
+  onSaveUserResponse: (audioUrl: string | null, transcript: string) => void;
+  video: boolean;
 };
 
 type InterviewProps = {
@@ -174,3 +177,7 @@ type Result = {
   error: string | null;
 };
 
+interface Message {
+  message: string;
+  messageType: "interviewer" | "user";
+}

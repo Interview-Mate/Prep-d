@@ -9,7 +9,6 @@ export default function TextToSpeech() {
 
   const convertToSpeech = async () => {
     const response = await axios.post("http://localhost:4000/api/text-to-speech", { text });
-   console.log("RESPONSE: ", response)
     const audioContent = response.data.audioContent.data;
     const audioBlob = new Blob([audioContent], { type: 'audio/mp3' })
     const formData = new FormData();

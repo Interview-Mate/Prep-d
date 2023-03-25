@@ -1,4 +1,5 @@
 const BASE_URL = 'http://localhost:4000';
+import axios from "axios";
 
 export const getAllUsers = async () => {
   try {
@@ -95,7 +96,7 @@ export const createInterview = async (
     .catch((err) => console.log(err));
 };
 
-export const retrieveFirstQuestion = async ({
+export const retrieveQuestion = async ({
   id,
   role,
   content,
@@ -144,7 +145,20 @@ export const updateInterview = async (
     .catch((err) => console.log(err));
 };
 
-//TODO move cloudinary upload here
+export const postAudio = async (formData: any): Promise<any> => {  
+  try {
+    const response = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response
+  } catch (error) {
+    console.log('Error submitting to Cloudinary', error);
+  }
+}
 
 export const saveSolvedProblem = async (solvedProblem: SolvedProblem) => {
   try {
