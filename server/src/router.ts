@@ -23,7 +23,7 @@ router.put("/user/:id", userCont.editUser);
 
 //interview methods
 router.get("/get-all-interviews/:userId", interviewCont.getInterviewsByUser);
-router.get("/interview/:id", interviewCont.getInterview);
+router.get("/interview/:id", interviewCont.getInterviewByInterviewId);
 router.post("/interview/:userId", interviewCont.newInterview);
 router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
 router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
