@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { Context } from "../Context";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import Logo from "../Assets/TrialLogo.JPG";
+import Logo from "../Assets/TrialLogo.png";
 import Arrow from "../Assets/down-arrow.png";
 
 export default function Navbar() {
