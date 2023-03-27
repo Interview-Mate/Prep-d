@@ -56,15 +56,26 @@ code {
 
 .dashboard-image {
   border-radius: 20px;
-  margin: 40px;
-  max-width: 35vw;
 }
 
 .dashboard-container {
-  align-items: center;
   display: flex;
   justify-content: space-evenly;
   margin: 40px auto;
+}
+
+.dashboard-elements {
+  align-items: stretch;
+  border-radius: 20px;
+  display: flex;
+  flex: 1;
+  /* justify-content: stretch; */
+  max-width: 35vw;
+}
+
+.dashboard-subtitles {
+  font-size: 25px;
+  text-align: center;
 }
 
 .profile-container {
@@ -124,7 +135,7 @@ code {
 }
 
 .speech-button {
-  color:white;
+  color: white;
   background-color: red;
   font-size: 1.3rem;
   font-weight: 500;
@@ -141,7 +152,7 @@ code {
 
 .chat-container {
   overflow-y: scroll;
-  max-height: 70vh; 
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -217,78 +228,78 @@ code {
 }
 
 .interview-form {
-max-width: 600px;
-margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .form-title {
-font-size: 1.5rem;
-font-weight: 700;
-margin: 30px;
-text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 30px;
+  text-align: center;
 }
 
 .form {
-display: flex;
-flex-direction: column;
-padding: 30px;
-background-color: #fff;
-border-radius: 10px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-label {
-display: block;
-font-size: 1rem;
-font-weight: 600;
-margin-bottom: 10px;
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .form-input {
-padding: 10px;
-border-radius: 5px;
-border: 1px solid #ddd;
-font-size: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
 }
 
 .form-checkbox {
-margin-right: 10px;
+  margin-right: 10px;
 }
 
 .form-submit {
-background-color: #007aff;
-color: #fff;
-border: none;
-border-radius: 5px;
-padding: 10px 20px;
-font-size: 1rem;
-font-weight: 600;
-cursor: pointer;
-transition: background-color 0.2s;
+  background-color: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .form-submit:hover {
-background-color: #0063cc;
+  background-color: #0063cc;
 }
 
 .form-cancel {
-background-color: #ddd;
-color: #333;
-border: none;
-border-radius: 5px;
-padding: 10px 20px;
-font-size: 1rem;
-font-weight: 600;
-cursor: pointer;
-transition: background-color 0.2s;
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .form-cancel:hover {
-background-color: #c2c2c2;
+  background-color: #c2c2c2;
 }
 
 .form-actions {

@@ -148,7 +148,7 @@ export const updateInterview = async (
 export const postAudio = async (formData: any): Promise<any> => {
   try {
     const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+      `https://api.cloudinary.com/v1_1/dljhj1szz/auto/upload`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },

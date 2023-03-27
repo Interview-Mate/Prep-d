@@ -19,7 +19,7 @@ export default function TextToSpeech() {
     formData.append("file", audioBlob, `${id}.mp3`);
     formData.append("upload_preset", "geixym3t");
     const cloudinaryResponse = await axios.post(
-      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+      `https://api.cloudinary.com/v1_1/dljhj1szz/auto/upload`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -47,9 +47,7 @@ export default function TextToSpeech() {
           <audio controls src={audioUrl} />
         </div>
       )}
-      <CloudinaryContext
-        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
-      >
+      <CloudinaryContext cloudName="dljhj1szz">
         {audioClips.map((clip) => (
           <div key={clip.id}>
             <Video publicId={clip.publicId} controls format="mp3" />

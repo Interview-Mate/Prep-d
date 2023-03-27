@@ -37,7 +37,7 @@ const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
   return dashboard ? (
     <div
       className={
-        "text-right border border-teal-600 rounded-2xl text-lg p-10 h-max min-h-max flex flex-col bg-eerie-black text-white"
+        "text-right border border-teal-600 rounded-2xl text-lg p-10 flex flex-col flex-1 justify-center bg-eerie-black text-white"
       }
     >
       <Link

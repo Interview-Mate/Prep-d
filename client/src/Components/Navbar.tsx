@@ -13,7 +13,6 @@ export default function Navbar() {
   const { logout } = useAuth0();
 
   const navigation = [
-    { name: "Dashboard", href: "/dashboard", className: "" },
     { name: "Past Interviews", href: "/pastinterviews", className: "" },
     { name: "Coding Challenges", href: "/codingdashboard", className: "" },
     { name: "Insights", href: "/insights", className: "" },
@@ -43,16 +42,20 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="block h-10 w-auto mr-10 lg:hidden"
-                    src={Logo}
-                    alt="Prep'd"
-                  />
-                  <img
-                    className="hidden h-10 w-auto mr-10 lg:block"
-                    src={Logo}
-                    alt="Prep'd"
-                  />
+                  <Link to="/dashboard">
+                    <img
+                      className="block h-10 w-auto mr-10 lg:hidden"
+                      src={Logo}
+                      alt="Prep'd"
+                    />
+                  </Link>
+                  <Link to="/dashboard">
+                    <img
+                      className="hidden h-10 w-auto mr-10 lg:block"
+                      src={Logo}
+                      alt="Prep'd"
+                    />
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">

@@ -8,10 +8,14 @@ export default function Dashboard() {
     <div className="h-screen w-screen bg-seasalt">
       <Navbar />
       <div className="dashboard-container">
-        <div className="h-max min-h-max flex flex-col flex: 1">
+        <div className="dashboard-subtitles">Train your coding skills</div>
+        <div className="dashboard-subtitles">Practise live interviewing</div>
+      </div>
+      <div className="dashboard-container">
+        <div className="dashboard-elements">
           <ProblemList dashboard={true} />
         </div>
-        <div className="h-max min-h-max flex flex-col flex: 1">
+        <div className="dashboard-elements">
           <Link to="/interview">
             <img className="dashboard-image" src={Interview}></img>
           </Link>
