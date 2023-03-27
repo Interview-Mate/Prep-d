@@ -161,6 +161,7 @@ type SpeechProps = {
   isInterviewerSpeaking: boolean;
   onSaveUserResponse: (audioUrl: string | null, transcript: string) => void;
   video: boolean;
+  interviewEnd;
 };
 
 type InterviewProps = {

@@ -8,6 +8,7 @@ import Interviewer from "../Components/Interviewer";
 import SpeechToText from "../Components/SpeechToText";
 import UserWebCam from "../Components/Interview/UserWebCam";
 import AvatarWebCam from "../Components/Interview/AvatarWebCam";
+import MrBPrep from '../Assets/MrBPrep.png';
 import { all } from "q";
 
 interface LoadingStatus {
@@ -17,6 +18,8 @@ interface LoadingStatus {
 
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;
+
+  console.log(currentUser)
 
   const [formValues, setFormValues] = useState<InterviewFormValues>({
     jobLevel: "",
@@ -33,6 +36,7 @@ export default function Interview() {
   const [videoQuestion, setVideoQuestion] = useState("");
   const [conversation, setConversation] = useState<Message[]>([]);
   const [isInterviewerSpeaking, setIsInterviewerSpeaking] = useState(false);
+  const [interviewEnd, setInterviewEnd] = useState(false)
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
     setFormValues(values);
@@ -81,7 +85,26 @@ export default function Interview() {
     }
   };
 
-  // we need a get final feedback function after question 8
+  const finalComment = (res: string, values: InterviewFormValues) => {
+    if (values.video === true) {
+      setVideoQuestion(res);
+    } else {
+      setConversation((prevData) => [
+        ...prevData,
+        { message: res, messageType: "interviewer" },
+      ]);
+    }
+  }
+
+  const endInterview = async (res: string, formValues: InterviewFormValues) => {
+    const result = await ApiService.endInterview(interviewId);
+    if (result.error) {
+      console.log(result.error);
+    } else {
+      setInterviewEnd(true)
+      finalComment(result, formValues)
+  }
+};
 
   const saveUserResponse = async (audioUrl: string, transcript: string) => {
     if (!audioUrl) {
@@ -101,6 +124,8 @@ export default function Interview() {
       if (questionCount < 8) {
         setQuestionCount((count) => count + 1);
         nextQuestion(res, formValues);
+      } else {
+        endInterview(res, formValues)
       }
     }
   };
@@ -132,9 +157,13 @@ export default function Interview() {
                   {conversation.map((value, index) => (
                     <div
                       key={`${value.messageType}-${index}`}
-                      className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"
-                        }`}
+                      className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"}`}
                     >
+                      {value.messageType === "interviewer" ? (
+                        <img src={MrBPrep} className="avatar" alt="Interviewer Avatar" />
+                      ) : (
+                        <img src={currentUser.image} className="avatar" alt="User Avatar" />
+                      )}
                       <div className="chat-bubble">{value.message}</div>
                     </div>
                   ))}
@@ -146,6 +175,7 @@ export default function Interview() {
               isInterviewerSpeaking={isInterviewerSpeaking}
               onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
               video={formValues.video}
+              interviewEnd={interviewEnd}
             />
           </>
         )}

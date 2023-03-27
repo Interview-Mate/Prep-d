@@ -318,3 +318,11 @@ background-color: #c2c2c2;
   background-color: #999;
   cursor: not-allowed;
 }
+
+.avatar {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
