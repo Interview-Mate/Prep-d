@@ -77,7 +77,7 @@ export default function SpeechToText({
     const formData = new FormData();
     formData.append("file", audioBlob);
     formData.append(
-      "upload_preset", "j1mgzp8n"
+      "upload_preset", "prepdproject"
     );
     return formData;
   };

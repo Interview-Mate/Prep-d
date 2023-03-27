@@ -132,11 +132,12 @@ export const retrieveAnotherQuestion = async (object: object) => {
 export const updateInterview = async (
   interview_id: string,
   answer_audio_url: string,
-  answer_text: string
+  answer_text: string,
+  question_count: number
 ): Promise<any> => {
   return fetch(`${BASE_URL}/interview/${interview_id}/questions`, {
     method: "PUT",
-    body: JSON.stringify({ answer_audio_url, answer_text }),
+    body: JSON.stringify({ answer_audio_url, answer_text, question_count }),
     headers: {
       "Content-Type": "application/json",
     },
@@ -144,12 +145,12 @@ export const updateInterview = async (
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
-
+ 
 export const endInterview = async (
   interview_id: string,
 ): Promise<any> => {
   return fetch(`${BASE_URL}/interview-rating/${interview_id}`, {
-    method: "PUT",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },

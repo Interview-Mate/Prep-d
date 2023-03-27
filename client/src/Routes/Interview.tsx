@@ -8,7 +8,7 @@ import Interviewer from "../Components/Interviewer";
 import SpeechToText from "../Components/SpeechToText";
 import UserWebCam from "../Components/Interview/UserWebCam";
 import AvatarWebCam from "../Components/Interview/AvatarWebCam";
-import MrBPrep from '../Assets/MrBPrep.png';
+import MrBPrep from "../Assets/MrBPrep.png";
 import { all } from "q";
 
 interface LoadingStatus {
@@ -19,7 +19,7 @@ interface LoadingStatus {
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;
 
-  console.log(currentUser)
+  console.log(currentUser);
 
   const [formValues, setFormValues] = useState<InterviewFormValues>({
     jobLevel: "",
@@ -32,11 +32,11 @@ export default function Interview() {
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [interviewId, setInterviewId] = useState("");
-  const [questionCount, setQuestionCount] = useState(0);
+  const [questionCount, setQuestionCount] = useState(1);
   const [videoQuestion, setVideoQuestion] = useState("");
   const [conversation, setConversation] = useState<Message[]>([]);
   const [isInterviewerSpeaking, setIsInterviewerSpeaking] = useState(false);
-  const [interviewEnd, setInterviewEnd] = useState(false)
+  const [interviewEnd, setInterviewEnd] = useState(false);
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
     setFormValues(values);
@@ -75,6 +75,7 @@ export default function Interview() {
   };
 
   const nextQuestion = (res: string, values: InterviewFormValues) => {
+    console.log("res in nextquestion", res);
     if (values.video === true) {
       setVideoQuestion(res);
     } else {
@@ -85,48 +86,59 @@ export default function Interview() {
     }
   };
 
-  const finalComment = (res: string, values: InterviewFormValues) => {
-    if (values.video === true) {
-      setVideoQuestion(res);
-    } else {
-      setConversation((prevData) => [
-        ...prevData,
-        { message: res, messageType: "interviewer" },
-      ]);
-    }
-  }
+  // const finalComment = (res: string, values: InterviewFormValues) => {
+  //   console.log("res in final comment", res);
+  //   if (values.video === true) {
+  //     setVideoQuestion(res);
+  //   } else {
+  //     setConversation((prevData) => [
+  //       ...prevData,
+  //       { message: "that concludes the interview", messageType: "interviewer" },
+  //     ]);
+  //   }
+  // };
 
   const endInterview = async (res: string, formValues: InterviewFormValues) => {
-    const result = await ApiService.endInterview(interviewId);
-    if (result.error) {
-      console.log(result.error);
-    } else {
-      setInterviewEnd(true)
-      finalComment(result, formValues)
-  }
-};
+    // //save previous reply from user
+    // //robot to reply 'that concludes interview"
+    // //save the rating as a variable
+
+    // console.log("in end interview");
+    // finalComment(res, formValues);
+    // console.log("res in endInterview", res);
+    // // const result = await ApiService.endInterview(interviewId);
+    // // console.log("result of end interview", result)
+    // // if (result.error) {
+    // //   console.log(result.error);
+    // // } else {
+    // //   setInterviewEnd(true);
+    // // }
+    // setInterviewEnd(true);
+  };
 
   const saveUserResponse = async (audioUrl: string, transcript: string) => {
-    if (!audioUrl) {
-      setConversation((prevData) => [
-        ...prevData,
-        { message: transcript, messageType: "user" },
-      ]);
-    }
-    const res = await ApiService.updateInterview(
-      interviewId,
-      audioUrl,
-      transcript
-    );
-    if (res.error) {
-      console.log(res.error);
-    } else {
-      if (questionCount < 8) {
+    try {
+      if (!audioUrl) {
+        setConversation((prevData) => [
+          ...prevData,
+          { message: transcript, messageType: "user" },
+        ]);
+      }
+      const res = await ApiService.updateInterview(
+        interviewId,
+        audioUrl,
+        transcript,
+        questionCount
+      );
+
+      if (questionCount < 4) {
         setQuestionCount((count) => count + 1);
         nextQuestion(res, formValues);
       } else {
         endInterview(res, formValues)
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -138,10 +150,13 @@ export default function Interview() {
         {formSubmitted && (
           <>
             {formValues.video && (
-              <div className='flex flex-col items-center justify-center w-full pt-20'>
-                <div className='flex justify-center space-x-1'>
+              <div className="flex flex-col items-center justify-center w-full pt-20">
+                <div className="flex justify-center space-x-1">
                   <UserWebCam />
-                  <AvatarWebCam isInterviewerSpeaking={isInterviewerSpeaking} video={formValues.video} />
+                  <AvatarWebCam
+                    isInterviewerSpeaking={isInterviewerSpeaking}
+                    video={formValues.video}
+                  />
                 </div>
                 <Interviewer
                   videoQuestion={videoQuestion}
@@ -157,12 +172,24 @@ export default function Interview() {
                   {conversation.map((value, index) => (
                     <div
                       key={`${value.messageType}-${index}`}
-                      className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"}`}
+                      className={`chat-message ${
+                        value.messageType === "interviewer"
+                          ? "interviewer"
+                          : "user"
+                      }`}
                     >
                       {value.messageType === "interviewer" ? (
-                        <img src={MrBPrep} className="avatar" alt="Interviewer Avatar" />
+                        <img
+                          src={MrBPrep}
+                          className="avatar"
+                          alt="Interviewer Avatar"
+                        />
                       ) : (
-                        <img src={currentUser.image} className="avatar" alt="User Avatar" />
+                        <img
+                          src={currentUser.image}
+                          className="avatar"
+                          alt="User Avatar"
+                        />
                       )}
                       <div className="chat-bubble">{value.message}</div>
                     </div>
@@ -170,13 +197,16 @@ export default function Interview() {
                 </div>
               </>
             )}
-
-            <SpeechToText
-              isInterviewerSpeaking={isInterviewerSpeaking}
-              onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}
-              video={formValues.video}
-              interviewEnd={interviewEnd}
-            />
+            {!interviewEnd && (
+              <SpeechToText
+                isInterviewerSpeaking={isInterviewerSpeaking}
+                onSaveUserResponse={(audioUrl: any, transcript: any) =>
+                  saveUserResponse(audioUrl, transcript)
+                }
+                video={formValues.video}
+                interviewEnd={interviewEnd}
+              />
+            )}
           </>
         )}
       </div>
