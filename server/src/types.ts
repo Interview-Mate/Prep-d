@@ -1,10 +1,12 @@
- //FIXME: update Interview
  export type Interview  = {
   user_id: string;
-  score: number;
+  company: string;
+  field: string;
+  title: string,
   date: Date;
+  conversation: any [];
   cloudinary_url: string;
-  questions: Question[] ;
+  overall: any[] ;
 };
 
 export type Question = {

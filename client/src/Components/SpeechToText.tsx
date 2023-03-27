@@ -6,6 +6,7 @@ export default function SpeechToText({
   isInterviewerSpeaking,
   onSaveUserResponse,
   video,
+  interviewEnd,
 }: SpeechProps) {
   const {
     currentUser,
