@@ -9,7 +9,7 @@ config();
 
 const openai = new OpenAIApi(
   new Configuration({
-    apiKey: "process.env.chatGPT_key",
+    apiKey: process.env.chatGPT_key,
   })
 );
 
