@@ -15,13 +15,13 @@ const CoverLetter = () => {
     zipCode: '12345',
     city: 'Berlin',
     workExperience:
-      'I have worked as a backend developer for 2 years. I have focused on the development of microservices and REST APIs.',
-    qualification: 'MSc in Computer Science',
-    position: 'Senior',
+      'I can center a div.',
+    qualification: 'Codeworks graduate',
+    position: 'Junior',
     jobTitle: 'Software Engineer',
     company: 'Google',
-    startDate: '01.05.2023',
-    description: 'Backend developer',
+    startDate: '2023-05-01',
+    description: 'Full stack web developer',
     keywords: [
       'Agile',
       'Leadership',
@@ -45,6 +45,8 @@ const CoverLetter = () => {
   const generatePDF = async () => {
     setLoading(true);
     const coverLetterRequest = {
+      firstName: CoverLetterData.firstName,
+      lastName: CoverLetterData.lastName,
       workExperience: CoverLetterData.workExperience,
       qualification: CoverLetterData.qualification,
       position: CoverLetterData.position,

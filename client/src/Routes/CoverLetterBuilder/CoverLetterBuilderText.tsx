@@ -65,10 +65,10 @@ function CoverLetterBuilderText({ CoverLetterData }: any) {
                   {textBody}
                 </Text>
               </View>
-              <Text style={styles.body}>Best regards,</Text>
+              {/* <Text style={styles.body}>Best regards,</Text>
               <Text style={styles.body}>
                 {firstName} {lastName}
-              </Text>
+              </Text> */}
             </View>
           </Page>
         </Document>

@@ -3,6 +3,9 @@ import { useEffect } from 'react';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthenticationGuard } from './Components/AuthenticationGuard';
+import { useContext } from 'react';
+import { Context } from './Context';
+import TextToSpeech from './Components/TextToSpeech';
 
 import FirstVisit from './Components/FirstVisit';
 import Login from './Routes/Login';
@@ -14,13 +17,12 @@ import PastInterviews from './Routes/PastInterviews';
 import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
+import InterviewInsights from './Routes/InterviewInsights';
 import Spinner from './Components/Spinner';
 import CoverLetterBuilder from './Routes/CoverLetterBuilder';
 import CodingDashboard from './Routes/CodingDashboard';
 
-import { useContext } from 'react';
-import { Context } from './Context';
-import TextToSpeech from './Components/TextToSpeech';
+
 
 
 function App() {
@@ -88,6 +90,11 @@ function App() {
     {
       path: '/insights',
       element: <AuthenticationGuard component={Insights} />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/interviewinsights',
+      element: <AuthenticationGuard component={InterviewInsights} />,
       errorElement: <Error />,
     },
     {
