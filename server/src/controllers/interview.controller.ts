@@ -9,11 +9,11 @@ config();
 
 const openai = new OpenAIApi(
   new Configuration({
-    apiKey: "process.env.chatGPT_key",
+    apiKey: process.env.chatGPT_key,
   })
 );
 
-exports.getInterviewsByUser = async function (req: Request, res: Response) {
+const getInterviewsByUser = async function (req: Request, res: Response) {
   try {
     const userId = req.params.userId;
     const interviews = await Interview.find({ user_id: userId }).sort({
@@ -28,7 +28,7 @@ exports.getInterviewsByUser = async function (req: Request, res: Response) {
   }
 };
 
-exports.getInterview = async (req: Request, res: Response) => {
+const getInterview = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
@@ -43,7 +43,7 @@ exports.getInterview = async (req: Request, res: Response) => {
 
 //! FE => createInterview - url/:userID => (userId, level, company, field, title)
 //? BE => router.post("/interview/:userId", interviewCont.newInterview);
-exports.newInterview = async (req: Request, res: Response) => {
+ const newInterview = async (req: Request, res: Response) => {
   try {
     let interview = await Interview.create({
       user_id: req.params.userId,
@@ -64,7 +64,7 @@ exports.newInterview = async (req: Request, res: Response) => {
 //! FE => retrieveAnotherQuestion - url/chat-response => (object)
 //? BE => router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
 //sends system prompt to chatGPT => returnts first question from chatGPT
-exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
+const getQuestionFromChatGPT = async (req: Request, res: Response) => {
   console.log(req.body);
   try {
     const interview_id = req.params.id;
@@ -120,7 +120,7 @@ function addHintForChatGPT (inp:String){
     //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
     //? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
     //adds user answer to DB => returnts next question from chatGPT
-    exports.addAnswerToInterview = async (req: Request, res: Response) => {
+const addAnswerToInterview = async (req: Request, res: Response) => {
       try {
         const interview_id = req.params.id;
         const { answer_text, answer_audio_url } = req.body;
@@ -183,7 +183,7 @@ function addHintForChatGPT (inp:String){
 
 
 
-exports.getInterviewRating = async (req: Request, res: Response) => {
+const getInterviewRating = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
@@ -256,3 +256,4 @@ exports.getInterviewRating = async (req: Request, res: Response) => {
   }
 }
 
+export {getInterviewsByUser,getInterview, newInterview, addAnswerToInterview , getQuestionFromChatGPT, getInterviewRating};
