@@ -1,7 +1,7 @@
 import Exercise from '../models/exercise';
 import { Request, Response } from 'express';
 
-exports.getAllExercises = async (req: Request, res: Response) => {
+const getAllExercises = async (req: Request, res: Response) => {
   try {
     const allExercises = await Exercise.find();
     res.status(200).json(allExercises);
@@ -11,7 +11,7 @@ exports.getAllExercises = async (req: Request, res: Response) => {
   }
 };
 
-exports.getExercise = async (req: Request, res: Response) => {
+const getExercise = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const result = await Exercise.findById(id);
@@ -24,12 +24,4 @@ exports.getExercise = async (req: Request, res: Response) => {
   }
 };
 
-exports.getAllExercises = async (req: Request, res: Response) => {
-  try {
-    const allExercises = await Exercise.find();
-    res.status(200).json(allExercises);
-  } catch (err) {
-    console.log(err);
-    res.json(err).status(500);
-  }
-};
+export {getAllExercises, getExercise }
