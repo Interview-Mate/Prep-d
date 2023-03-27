@@ -1,7 +1,11 @@
 import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, ScrollControls } from '@react-three/drei';
+import { Office3D } from '../Components/landingPage/Office3D'
+
+
+
 export default function Login3D() {
 
 const model = useLoader(GLTFLoader, 'lib/landingPage/OfficeRoom.gltf');
@@ -11,17 +15,11 @@ return (
   
     <>
     <Canvas >
-      <OrbitControls/>
-      <ambientLight/>
-      <mesh>
-        {/* Load the 3D model in scene  */}
-        <object3D position = {[ 0, 0 , 0]} >
-
-          <primitive object={model.scene} /> 
-
-        </object3D>
-
-      </mesh>
+      <OrbitControls enableZoom={false}/>
+      <ambientLight intensity={1}/>
+      <ScrollControls pages={3} damping={0.25} >
+        <Office3D /> 
+      </ScrollControls>
     </Canvas>
 
     </>
