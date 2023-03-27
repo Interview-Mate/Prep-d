@@ -153,6 +153,8 @@ const addAnswerToInterview = async (req: Request, res: Response) => {
     if (response.data.choices && response.data.choices[0].message) {
       const message = response.data.choices[0].message;
 
+      console.log('Unparsed Message', message);
+      console.log('Parsed Message', parseMessage(message.content));
       updatedConversation = await Interview.findOneAndUpdate(
         { _id: interview_id },
         { $push: { conversation: message } },
@@ -165,14 +167,6 @@ const addAnswerToInterview = async (req: Request, res: Response) => {
         updatedConversation.conversation.length - 1
       ].content
     ).nextQuestion;
-
-    if (
-      followingQuestion.toLowerCase().includes("error") ||
-      followingQuestion.toLowerCase().includes("json")
-    ) {
-      followingQuestion =
-        "Sorry, I didn't understand that. Could you please rephrase your answer?";
-    }
 
     if (!interview) {
       throw new Error("Interview not found");

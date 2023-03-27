@@ -16,6 +16,7 @@ export default function Navbar() {
   const navigation = [
     { name: "Past Interviews", href: "/pastinterviews", className: "" },
     { name: "Insights", href: "/insights", className: "" },
+    { name: "Cover Letter Builder", href: "/coverletterbuilder", className: "" },
   ];
 
   function classNames(...classes: any[]) {

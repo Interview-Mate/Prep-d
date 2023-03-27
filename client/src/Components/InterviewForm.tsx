@@ -33,6 +33,7 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
           <input
             type="text"
             id="company-name"
+            required
             value={companyName}
             onChange={(event) => setCompanyName(event.target.value)}
             className="form-input"
@@ -44,6 +45,7 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
           </label>
           <input
             type="text"
+            required
             id="job-level"
             value={jobLevel}
             onChange={(event) => setJobLevel(event.target.value)}
@@ -56,6 +58,7 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
           </label>
           <input
             type="text"
+            required
             id="job-field"
             value={jobField}
             onChange={(event) => setJobField(event.target.value)}
@@ -68,6 +71,7 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
           </label>
           <input
             type="text"
+            required
             id="job-title"
             value={jobTitle}
             onChange={(event) => setJobTitle(event.target.value)}

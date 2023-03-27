@@ -36,26 +36,33 @@ const InterviewInsights = () => {
   const { currentUser } = useContext(Context) as any;
   const [interviews, setInterviews] = useState<Interview[]>([]);
   const [ratings, setRatings] = useState<number[]>([]);
+  const [overallRatings, setOverallRatings] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const interviews = await getInterviews(currentUser.id);
       setInterviews(interviews);
-
-      const filteredRatings = interviews.flatMap(
-        (interview: { conversation: any[] }) =>
-          interview.conversation
-            .filter((message: { role: string }) => message.role === 'assistant')
-            .slice(1)
-            .map((message: { content: any }) => {
-              const { content } = message;
-              return isJsonString(content)
-                ? JSON.parse(content).rating_number
-                : null;
-            })
-            .filter((rating: null) => rating !== null)
-      );
-      setRatings(filteredRatings);
+      let filteredRatings: number[] = [];
+      if (interviews.length > 0) {
+        filteredRatings = interviews.flatMap(
+          (interview: { conversation: any[] }) =>
+            interview.conversation
+              .filter(
+                (message: { role: string }) => message.role === 'assistant'
+              )
+              .slice(1)
+              .map((message: { content: any }) => {
+                const { content } = message;
+                return isJsonString(content)
+                  ? JSON.parse(content).rating_number
+                  : null;
+              })
+              .filter((rating: null) => rating !== null)
+        );
+        setRatings(filteredRatings);
+        const overall = interviews.flatMap((interview) => interview.overall);
+        setOverallRatings(overall);
+      }
     };
     fetchData();
   }, []);
@@ -126,6 +133,15 @@ const InterviewInsights = () => {
                     {Math.round(
                       ratings.reduce((acc, curr) => acc + curr, 0) /
                         ratings.length
+                    )}
+                  </h3>
+                )}
+                <h2 className='text-sm mt-5'>Average overall rating</h2>
+                {overallRatings && (
+                  <h3 className='text-sm font-bold'>
+                    {Math.round(
+                      overallRatings.reduce((acc, curr) => acc + curr, 0) /
+                        overallRatings.length
                     )}
                   </h3>
                 )}

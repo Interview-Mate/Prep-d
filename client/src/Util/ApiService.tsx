@@ -234,3 +234,33 @@ export const createCoverLetter = async (coverLetterRequest: any) => {
     console.error("Error creating cover letter:", error);
   }
 };
+
+export const reviewPdfCoverLetter = async (pdf: FormData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-pdf-review`, {
+      method: "POST",
+      body: pdf,
+    });
+    const text = await response.json();
+    return text;
+  }
+  catch (error) {
+    console.error("Error reviewing cover letter:", error);
+  }
+};
+
+export const reviewTextCoverLetter = async (coverLetterRequest: any) => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-text-review`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(coverLetterRequest),
+    });
+    const receivedCoverLetter = await response.json();
+    return receivedCoverLetter;
+  } catch (error) {
+    console.error("Error reviewing cover letter:", error);
+  }
+}

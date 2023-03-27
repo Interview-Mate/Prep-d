@@ -27,7 +27,7 @@ export default function PastInterviews() {
     <>
       <div>
         <Navbar />
-        {pastInterviews ? (
+        {pastInterviews.length > 0 ? (
           // (
           //   expandedID && expandedInterview ? (
           //     <PastInterview

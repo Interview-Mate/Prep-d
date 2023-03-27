@@ -11,6 +11,7 @@ import FirstVisit from './Components/FirstVisit';
 import Login from './Routes/Login';
 import Dashboard from './Routes/Dashboard';
 import Error from './Components/Error';
+import CodingDashboard from './Routes/CodingDashboard';
 import Coding from './Routes/Coding';
 import Interview from './Routes/Interview';
 import PastInterviews from './Routes/PastInterviews';
@@ -20,7 +21,8 @@ import Insights from './Routes/Insights';
 import InterviewInsights from './Routes/InterviewInsights';
 import Spinner from './Components/Spinner';
 import CoverLetterBuilder from './Routes/CoverLetterBuilder';
-import CodingDashboard from './Routes/CodingDashboard';
+import CoverLetterReviewer from './Routes/CoverLetterReviewer';
+
 
 
 
@@ -103,8 +105,13 @@ function App() {
       errorElement: <Error />,
     },
     {
-      path: '/coverletter',
+      path: '/coverletterbuilder',
       element: <AuthenticationGuard component={CoverLetterBuilder} />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/coverletterreviewer',
+      element: <AuthenticationGuard component={CoverLetterReviewer} />,
       errorElement: <Error />,
     },
   ]);

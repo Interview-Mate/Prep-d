@@ -43,6 +43,8 @@ router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 //Cover letter creator
 router.post("/create-cover-letter", coverLetterCont.createCoverLetter);
+router.post("/get-pdf-review", coverLetterCont.getTextReview);
+router.post("/get-text-review", coverLetterCont.getPdfReview);
 
 // NEW
 router.post("/punctuate", puncCont.punctuate);
