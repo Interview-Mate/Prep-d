@@ -59,7 +59,6 @@ export default function Navbar() {
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
-                      {/* <span className="sr-only">Open user menu</span> */}
                       Interview Practice
                       <img
                         src={Arrow}
@@ -129,7 +128,6 @@ export default function Navbar() {
                     <Menu as="div" className="relative ml-3">
                       <div>
                         <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
-                          {/* <span className="sr-only">Open user menu</span> */}
                           Useful Tools
                           <img
                             src={Arrow}
@@ -192,7 +190,6 @@ export default function Navbar() {
                   <BellIcon className="h-8 w-8" aria-hidden="true" />
                 </button>
 
-                {/* Profile dropdown */}
                 {currentUser && (
                   <Menu as="div" className="relative ml-3">
                     <div>
@@ -241,7 +238,6 @@ export default function Navbar() {
                             </Link>
                           )}
                         </Menu.Item>
-
                         <Menu.Item>
                           {({ active }) => (
                             <a

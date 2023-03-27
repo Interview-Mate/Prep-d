@@ -19,7 +19,6 @@ code {
 }
 
 .app-title {
-  /* color: white; */
   font-size: 2.25rem;
   font-weight: 700;
   margin: 30px;
@@ -352,4 +351,28 @@ code {
   height: 30px;
   border-radius: 50%;
   margin-right: 10px;
+}
+
+.past-interview {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  padding: 30px;
+  width: 60%;
+}
+
+.left-convo {
+  text-align: left;
+}
+
+.right-convo {
+  text-align: right;
+}
+
+.left-convo,
+.right-convo {
+  margin: 10px;
 }
