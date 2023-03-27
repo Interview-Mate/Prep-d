@@ -11,7 +11,6 @@ import Exercise from "../models/exercise"
 async function populateExerciseCollection () {
   try {
     await Exercise.deleteMany({});
-
     await Exercise.insertMany([{
       name: 'Simple Addition',
       description:

@@ -2,7 +2,7 @@
 import { dbConnection } from './models/index.models';
 import Exercise from './models/exercise';
 import populateExerciseCollection from './asset/seedScript';
-import {app} from './index'
+import app from "./index";
 
 import dotenv from 'dotenv';
 dotenv.config()
