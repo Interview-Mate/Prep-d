@@ -6,7 +6,7 @@ export default function SpeechToText({
   isInterviewerSpeaking,
   onSaveUserResponse,
   video,
-  interviewEnd
+  interviewEnd,
 }: SpeechProps) {
   const {
     currentUser,
@@ -76,9 +76,7 @@ export default function SpeechToText({
     const id = Math.random().toString(36).substr(2, 9);
     const formData = new FormData();
     formData.append("file", audioBlob);
-    formData.append(
-      "upload_preset", "j1mgzp8n"
-    );
+    formData.append("upload_preset", "geixym3t");
     return formData;
   };
 

@@ -86,8 +86,8 @@ type SolvedProblem = {
   problem_id: string | undefined;
   solution: string | undefined;
   runtime: number;
-  solveTime: number
-  score: number,
+  solveTime: number;
+  score: number;
   __v?: number;
   _id?: string;
 };
@@ -148,7 +148,13 @@ type InterviewerProps = {
 };
 
 type InterviewFormProps = {
-  onFormSubmit: (values: { companyName: string; jobLevel: string; jobField: string; jobTitle: string; video: boolean; }) => void;
+  onFormSubmit: (values: {
+    companyName: string;
+    jobLevel: string;
+    jobField: string;
+    jobTitle: string;
+    video: boolean;
+  }) => void;
 };
 
 type AudioClip = {
@@ -181,4 +187,14 @@ type Result = {
 interface Message {
   message: string;
   messageType: "interviewer" | "user";
+}
+
+interface Interview {
+  _id: string;
+  date: Date;
+  company: string;
+  conversation: Array;
+  field: string;
+  title: string;
+  // video: boolean;
 }
