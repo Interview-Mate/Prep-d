@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Context } from '../Context';
+import { Context } from "../Context";
 
 export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
   const [companyName, setCompanyName] = useState("");
@@ -24,7 +24,7 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
 
   return (
     <div className="interview-form">
-      <h2 className="form-title">Practice Interviews</h2>
+      <h2 className="form-title">Live Interviews</h2>
       <form onSubmit={handleSubmit} className="form">
         <div className="form-group">
           <label htmlFor="company-name" className="form-label">
@@ -87,7 +87,11 @@ export default function InterviewForm({ onFormSubmit }: InterviewFormProps) {
               onChange={(event) => setVideo(event.target.checked)}
               className="form-checkbox"
             />
-            {video && <span className="form-checkbox-message">(You will be recorded for your training purposes)</span>}
+            {video && (
+              <span className="form-checkbox-message">
+                (You will be recorded for your training purposes)
+              </span>
+            )}
           </div>
         </div>
 

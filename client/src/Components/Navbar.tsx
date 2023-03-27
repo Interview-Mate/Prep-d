@@ -6,18 +6,16 @@ import { useContext } from "react";
 import { Context } from "../Context";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import Logo from "../Assets/TrialLogo.JPG";
+import Logo from "../Assets/TrialLogo.png";
+import Arrow from "../Assets/down-arrow.png";
 
 export default function Navbar() {
   const { currentUser } = useContext(Context) as any;
   const { logout } = useAuth0();
 
   const navigation = [
-    { name: "Dashboard", href: "/dashboard", className: "" },
     { name: "Past Interviews", href: "/pastinterviews", className: "" },
-    { name: "Coding Challenges", href: "/codingdashboard", className: "" },
     { name: "Insights", href: "/insights", className: "" },
-    { name: "Cover Letter Builder", href: "/coverletter", className: "" },
   ];
 
   function classNames(...classes: any[]) {
@@ -43,17 +41,74 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="block h-10 w-auto mr-10 lg:hidden"
-                    src={Logo}
-                    alt="Prep'd"
-                  />
-                  <img
-                    className="hidden h-10 w-auto mr-10 lg:block"
-                    src={Logo}
-                    alt="Prep'd"
-                  />
+                  <Link to="/dashboard">
+                    <img
+                      className="block h-10 w-auto mr-10 lg:hidden"
+                      src={Logo}
+                      alt="Prep'd"
+                    />
+                  </Link>
+                  <Link to="/dashboard">
+                    <img
+                      className="hidden h-10 w-auto mr-10 lg:block"
+                      src={Logo}
+                      alt="Prep'd"
+                    />
+                  </Link>
                 </div>
+                <Menu as="div" className="relative ml-3">
+                  <div>
+                    <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
+                      Interview Practice
+                      <img
+                        src={Arrow}
+                        style={{
+                          display: "inline",
+                          marginLeft: 5,
+                          maxWidth: 20,
+                        }}
+                      />
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to="/codingdashboard"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                          >
+                            Coding Challenges
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to="/interview"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                          >
+                            Live Interviews
+                          </Link>
+                        )}
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
@@ -69,6 +124,60 @@ export default function Navbar() {
                         {item.name}
                       </NavLink>
                     ))}
+
+                    <Menu as="div" className="relative ml-3">
+                      <div>
+                        <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
+                          Useful Tools
+                          <img
+                            src={Arrow}
+                            style={{
+                              display: "inline",
+                              marginLeft: 5,
+                              maxWidth: 20,
+                            }}
+                          />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/coverletter"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Cover Letter Builder
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Resume Builder
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
                   </div>
                 </div>
               </div>
@@ -81,7 +190,6 @@ export default function Navbar() {
                   <BellIcon className="h-8 w-8" aria-hidden="true" />
                 </button>
 
-                {/* Profile dropdown */}
                 {currentUser && (
                   <Menu as="div" className="relative ml-3">
                     <div>
@@ -130,7 +238,6 @@ export default function Navbar() {
                             </Link>
                           )}
                         </Menu.Item>
-
                         <Menu.Item>
                           {({ active }) => (
                             <a

@@ -19,7 +19,6 @@ code {
 }
 
 .app-title {
-  /* color: white; */
   font-size: 2.25rem;
   font-weight: 700;
   margin: 30px;
@@ -56,15 +55,26 @@ code {
 
 .dashboard-image {
   border-radius: 20px;
-  margin: 40px;
-  max-width: 35vw;
 }
 
 .dashboard-container {
-  align-items: center;
   display: flex;
   justify-content: space-evenly;
   margin: 40px auto;
+}
+
+.dashboard-elements {
+  align-items: stretch;
+  border-radius: 20px;
+  display: flex;
+  flex: 1;
+  /* justify-content: stretch; */
+  max-width: 35vw;
+}
+
+.dashboard-subtitles {
+  font-size: 25px;
+  text-align: center;
 }
 
 .profile-container {
@@ -113,7 +123,7 @@ code {
   color: rgba(38, 38, 38, 1);
   font-size: 1.3rem;
   font-weight: 500;
-  margin: 30px;
+  margin: 20px;
   text-align: center;
 }
 
@@ -124,7 +134,7 @@ code {
 }
 
 .speech-button {
-  color:white;
+  color: white;
   background-color: red;
   font-size: 1.3rem;
   font-weight: 500;
@@ -137,6 +147,191 @@ code {
 
 .speech-button:disabled {
   background-color: #999999;
+}
+
+.interview-form {
+max-width: 600px;
+margin: 0 auto;
+}
+
+.form {
+  max-width: 500px;
+}
+
+.form,
+.challenges-container {
+  margin: 0 auto;
+}
+
+.challenges-container {
+  max-width: 600px;
+}
+
+.form-title,
+.challenges-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 30px;
+  text-align: center;
+}
+
+.challenges-div,
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+padding: 30px;
+background-color: rgb(252,252,252);
+border-radius: 10px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.challenges-div {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.form-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  width: 80%;
+  background-color: rgb(248,247,249);
+}
+
+.form-checkbox {
+margin-right: 10px;
+color:rgb(84, 134, 135);
+}
+
+.form-checkbox:hover {
+background-color: rgb(201, 139, 185);
+}
+
+.form-submit {
+background-color:rgb(84, 134, 135);
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 10px 20px;
+font-size: 1rem;
+font-weight: 600;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.form-submit:hover {
+  background-color: #0063cc;
+}
+
+.form-cancel {
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.form-cancel:hover {
+  background-color: #c2c2c2;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.form-button {
+  background-color:rgb(84, 134, 135);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-right: 10px;
+  padding: 10px 20px;
+  transition: background-color 0.2s;
+}
+
+.form-button:hover {
+  background-color: rgb(201, 139, 185);
+}
+
+.form-button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.avatar {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.past-interview {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  padding: 30px;
+  width: 60%;
+}
+
+.left-convo {
+  text-align: left;
+}
+
+.right-convo {
+  text-align: right;
+}
+
+.left-convo,
+.right-convo {
+  margin: 15px 0;
+}
+
+.past-interview-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.avatar-user {
+  margin-left: 10px;
+}
+
+/* .past-interview-head {
+  margin: 0;
+} */
+
+.avatar-interviewer {
+  margin-bottom: 2px;
 }
 
 .chat-container {
@@ -159,11 +354,15 @@ code {
 }
 
 .chat-message.interviewer {
-  align-items: flex-start;
+  align-items: flex-end;
+  flex-direction: row;
+  margin-left: 10px;
 }
 
 .chat-message.user {
   align-items: flex-end;
+  flex-direction: row-reverse;
+  margin-right: 10px;
 }
 
 .chat-bubble {
@@ -180,7 +379,8 @@ code {
 
 .chat-bubble.user {
   border-bottom-right-radius: 0px;
-  background-color: #dcf8c6;
+  background-color: rgb(84, 134, 135);
+  color: rgb(248, 247, 249);
 }
 
 .chat-input-container {
@@ -200,15 +400,15 @@ code {
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem;
-  background-color: #007aff;
-  color: white;
+  background-color:rgb(84, 134, 135);
+  color: rgb(248, 247, 249);
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .chat-send-button:hover:not(.disabled) {
-  background-color: #0056b3;
+  background-color: rgb(201, 139, 185);
 }
 
 .chat-send-button.disabled {
@@ -216,105 +416,28 @@ code {
   cursor: not-allowed;
 }
 
-.interview-form {
-max-width: 600px;
-margin: 0 auto;
+.chat-typing {
+  position: absolute;
+  top: 120px;
+  font-style: italic;
+  z-index: 1;
 }
 
-.form-title {
-font-size: 1.5rem;
-font-weight: 700;
-margin: 30px;
-text-align: center;
-}
-
-.form {
-display: flex;
-flex-direction: column;
-padding: 30px;
-background-color: #fff;
-border-radius: 10px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-margin-bottom: 20px;
-}
-
-.form-label {
-display: block;
-font-size: 1rem;
-font-weight: 600;
-margin-bottom: 10px;
-}
-
-.form-input {
-padding: 10px;
-border-radius: 5px;
-border: 1px solid #ddd;
-font-size: 1rem;
-}
-
-.form-checkbox {
-margin-right: 10px;
-}
-
-.form-submit {
-background-color: #007aff;
-color: #fff;
-border: none;
-border-radius: 5px;
-padding: 10px 20px;
-font-size: 1rem;
-font-weight: 600;
-cursor: pointer;
-transition: background-color 0.2s;
-}
-
-.form-submit:hover {
-background-color: #0063cc;
-}
-
-.form-cancel {
-background-color: #ddd;
-color: #333;
-border: none;
-border-radius: 5px;
-padding: 10px 20px;
-font-size: 1rem;
-font-weight: 600;
-cursor: pointer;
-transition: background-color 0.2s;
-}
-
-.form-cancel:hover {
-background-color: #c2c2c2;
-}
-
-.form-actions {
+.interviewer-header {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
-.form-button {
-  background-color: #007aff;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  margin-right: 10px;
-  padding: 10px 20px;
-  transition: background-color 0.2s;
+.speech-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.form-button:hover {
-  background-color: #0062cc;
+.speech-title {
+  margin-left: 1rem;
 }
 
-.form-button:disabled {
-  background-color: #999;
-  cursor: not-allowed;
-}
+
