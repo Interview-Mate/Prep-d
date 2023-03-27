@@ -9,7 +9,7 @@ export default function Dashboard() {
       <Navbar />
       <div className="dashboard-container">
         <div className="dashboard-subtitles">Train your coding skills</div>
-        <div className="dashboard-subtitles">Practise live interviewing</div>
+        <div className="dashboard-subtitles">Practice live interviewing</div>
       </div>
       <div className="dashboard-container">
         <div className="dashboard-elements">

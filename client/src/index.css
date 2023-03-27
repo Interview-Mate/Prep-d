@@ -227,18 +227,21 @@ code {
   cursor: not-allowed;
 }
 
-.interview-form {
+.interview-form,
+.challenges-container {
   max-width: 600px;
   margin: 0 auto;
 }
 
-.form-title {
+.form-title,
+.challenges-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 30px;
   text-align: center;
 }
 
+.challenges-div,
 .form {
   display: flex;
   flex-direction: column;
@@ -246,6 +249,11 @@ code {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.challenges-div {
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 
 .form-group {

@@ -73,67 +73,62 @@ const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
     </div>
   ) : (
     <>
-      <div
-        className={
-          "text-center border border-teal-600 rounded-2xl text-lg p-10 h-max min-h-max flex flex-col bg-eerie-black text-white"
-        }
-      >
-        <Link
-          to={"/codingtest/level/" + "beginner"}
-          className="hover:opacity-50 active:opacity-75"
-        >
-          Work on <span className="font-bold">beginner</span> challenges
-        </Link>
-        <Link
-          to={"/codingtest/level/" + "intermediate"}
-          className="hover:opacity-50 active:opacity-75"
-        >
-          Work on <span className="font-bold">intermediate</span> challenges
-        </Link>
-        <Link
-          to={"/codingtest/level/" + "advanced"}
-          className="hover:opacity-50 active:opacity-75"
-        >
-          Work on <span className="font-bold">advanced</span> challenges
-        </Link>
-        <Link
-          to={"/codingtest/level/" + "expert"}
-          className="hover:opacity-50 active:opacity-75"
-        >
-          Work on <span className="font-bold">expert</span> challenges
-        </Link>
-        <Link
-          to={"/codingtest/level/" + "all"}
-          className="hover:opacity-50 active:opacity-75"
-        >
-          Work on <span className="font-bold">all</span> challenges
-        </Link>
-      </div>
-      <div
-        className={
-          "text-center border border-teal-600 rounded-2xl text-lg p-10 h-max min-h-max flex flex-col bg-eerie-black text-white"
-        }
-      >
-        {problems.map((problem) => (
+      <h2 className="challenges-title">Coding Challenges</h2>
+      <div className="challenges-container">
+        <div className="challenges-div">
           <Link
-            to={"/codingtest/" + problem._id}
-            key={problem._id}
+            to={"/codingtest/level/" + "beginner"}
             className="hover:opacity-50 active:opacity-75"
           >
-            {problem.name}{" "}
-            <span className="border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5">
-              {level[problem.level]}
-            </span>
-            <span className="border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5">
-              {lang[problem.language]}
-            </span>
-            {solvedIds.includes(problem._id) && (
-              <span className="border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5">
-                Solved
-              </span>
-            )}
+            Work on <span className="font-bold">beginner</span> challenges
           </Link>
-        ))}
+          <Link
+            to={"/codingtest/level/" + "intermediate"}
+            className="hover:opacity-50 active:opacity-75"
+          >
+            Work on <span className="font-bold">intermediate</span> challenges
+          </Link>
+          <Link
+            to={"/codingtest/level/" + "advanced"}
+            className="hover:opacity-50 active:opacity-75"
+          >
+            Work on <span className="font-bold">advanced</span> challenges
+          </Link>
+          <Link
+            to={"/codingtest/level/" + "expert"}
+            className="hover:opacity-50 active:opacity-75"
+          >
+            Work on <span className="font-bold">expert</span> challenges
+          </Link>
+          <Link
+            to={"/codingtest/level/" + "all"}
+            className="hover:opacity-50 active:opacity-75"
+          >
+            Work on <span className="font-bold">all</span> challenges
+          </Link>
+        </div>
+        <div className="challenges-div">
+          {problems.map((problem) => (
+            <Link
+              to={"/codingtest/" + problem._id}
+              key={problem._id}
+              className="hover:opacity-50 active:opacity-75"
+            >
+              {problem.name}{" "}
+              <span className="border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5">
+                {level[problem.level]}
+              </span>
+              <span className="border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5">
+                {lang[problem.language]}
+              </span>
+              {solvedIds.includes(problem._id) && (
+                <span className="border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5">
+                  Solved
+                </span>
+              )}
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );
