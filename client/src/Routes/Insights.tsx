@@ -51,7 +51,7 @@ const Insights = () => {
   }, []);
 
   useEffect(() => {
-    if(!allSolvedProblems.length) return;
+    if (!allSolvedProblems.length) return;
 
     setUsersAverageSolveTime(
       solvedProblems.reduce((acc, curr) => acc + curr.solveTime, 0) /
@@ -62,8 +62,6 @@ const Insights = () => {
       allSolvedProblems.reduce((acc, curr) => acc + curr.solveTime, 0) /
         allSolvedProblems.length
     );
-
-    
   }, [allSolvedProblems]);
 
   ChartJS.register(
@@ -112,6 +110,7 @@ const Insights = () => {
   return (
     <div className="h-screen w-screen bg-seasalt">
       <Navbar />
+      <h2 className="form-title">Insights</h2>
       <div className="p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out">
         <div
           className="border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
@@ -119,8 +118,12 @@ const Insights = () => {
         >
           {solvedProblems.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full">
-              <h1 className="text-2xl font-bold">You have not solved any problems yet</h1>
-              <h2 className="text-xl mt-5">Solve some problems to see your progress</h2>
+              <h1 className="text-2xl font-bold">
+                You have not solved any problems yet
+              </h1>
+              <h2 className="text-xl mt-5">
+                Solve some problems to see your progress
+              </h2>
             </div>
           )}
           {solvedProblems.length !== 0 && usersAverageSolveTime !== 0 && (

@@ -19,7 +19,6 @@ code {
 }
 
 .app-title {
-  /* color: white; */
   font-size: 2.25rem;
   font-weight: 700;
   margin: 30px;
@@ -56,15 +55,26 @@ code {
 
 .dashboard-image {
   border-radius: 20px;
-  margin: 40px;
-  max-width: 35vw;
 }
 
 .dashboard-container {
-  align-items: center;
   display: flex;
   justify-content: space-evenly;
   margin: 40px auto;
+}
+
+.dashboard-elements {
+  align-items: stretch;
+  border-radius: 20px;
+  display: flex;
+  flex: 1;
+  /* justify-content: stretch; */
+  max-width: 35vw;
+}
+
+.dashboard-subtitles {
+  font-size: 25px;
+  text-align: center;
 }
 
 .profile-container {
@@ -124,7 +134,7 @@ code {
 }
 
 .speech-button {
-  color:white;
+  color: white;
   background-color: red;
   font-size: 1.3rem;
   font-weight: 500;
@@ -139,19 +149,117 @@ code {
   background-color: #999999;
 }
 
+.chat-container {
+  overflow-y: scroll;
+  max-height: 70vh; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.chat-message.interviewer {
+  align-items: flex-start;
+}
+
+.chat-message.user {
+  align-items: flex-end;
+}
+
+.chat-bubble {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  max-width: 80%;
+}
+
+.chat-bubble.interviewer {
+  border-bottom-left-radius: 0px;
+  background-color: #efefef;
+}
+
+.chat-bubble.user {
+  border-bottom-right-radius: 0px;
+  background-color: #dcf8c6;
+}
+
+.chat-input-container {
+  display: flex;
+  margin: 1rem;
+}
+
+.chat-input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.chat-send-button {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: #007aff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.chat-send-button:hover:not(.disabled) {
+  background-color: #0056b3;
+}
+
+.chat-send-button.disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
 .interview-form {
 max-width: 600px;
 margin: 0 auto;
 }
 
-.form-title {
-font-size: 1.5rem;
-font-weight: 700;
-margin: 30px;
-text-align: center;
+.form {
+  max-width: 500px;
 }
 
+.form,
+.challenges-container {
+  margin: 0 auto;
+}
+
+.challenges-container {
+  max-width: 600px;
+}
+
+.form-title,
+.challenges-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 30px;
+  text-align: center;
+}
+
+.challenges-div,
 .form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 display: flex;
 flex-direction: column;
 padding: 30px;
@@ -160,23 +268,29 @@ border-radius: 10px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.challenges-div {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
 .form-group {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-label {
-display: block;
-font-size: 1rem;
-font-weight: 600;
-margin-bottom: 10px;
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .form-input {
-padding: 10px;
-border-radius: 5px;
-border: 1px solid #ddd;
-font-size: 1rem;
-background-color: rgb(248,247,249);
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  width: 80%;
+  background-color: rgb(248,247,249);
 }
 
 .form-checkbox {
@@ -201,23 +315,23 @@ transition: background-color 0.2s;
 }
 
 .form-submit:hover {
-background-color: #0063cc;
+  background-color: #0063cc;
 }
 
 .form-cancel {
-background-color: #ddd;
-color: #333;
-border: none;
-border-radius: 5px;
-padding: 10px 20px;
-font-size: 1rem;
-font-weight: 600;
-cursor: pointer;
-transition: background-color 0.2s;
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .form-cancel:hover {
-background-color: #c2c2c2;
+  background-color: #c2c2c2;
 }
 
 .form-actions {
@@ -254,6 +368,30 @@ background-color: #c2c2c2;
   height: 30px;
   border-radius: 50%;
   margin-right: 10px;
+}
+
+.past-interview {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  padding: 30px;
+  width: 60%;
+}
+
+.left-convo {
+  text-align: left;
+}
+
+.right-convo {
+  text-align: right;
+}
+
+.left-convo,
+.right-convo {
+  margin: 10px;
 }
 
 .avatar-user {
