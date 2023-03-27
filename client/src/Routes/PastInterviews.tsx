@@ -25,8 +25,6 @@ export default function PastInterviews() {
     })();
   }, []);
 
-  console.log(pastInterviews);
-
   return (
     <>
       <div>

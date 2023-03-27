@@ -374,5 +374,14 @@ code {
 
 .left-convo,
 .right-convo {
-  margin: 10px;
+  margin: 15px 0;
 }
+
+.past-interview-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .past-interview-head {
+  margin: 0;
+} */
