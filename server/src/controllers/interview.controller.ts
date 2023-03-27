@@ -12,14 +12,14 @@ const openai = new OpenAIApi(
   })
 );
 
-exports.getInterviewsByUser = async function (req: Request, res: Response) {
+const getInterviewsByUser = async function (req: Request, res: Response) {
   try {
     const userId = req.params.userId;
     const interviews = await Interview.find({ user_id: userId }).sort({
       date: -1,
     });
     if (interviews.length < 1) {
-      throw new Error("No previous interviews found");
+      throw new Error('No previous interviews found');
     }
     res.status(200).json(interviews);
   } catch (err: any) {
@@ -27,12 +27,12 @@ exports.getInterviewsByUser = async function (req: Request, res: Response) {
   }
 };
 
-exports.getInterview = async (req: Request, res: Response) => {
+const getInterviewByInterviewId = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
     if (!result) {
-      throw new Error("Interview not found");
+      throw new Error('Interview not found');
     }
     res.status(200).json(result);
   } catch (err: any) {
@@ -42,7 +42,7 @@ exports.getInterview = async (req: Request, res: Response) => {
 
 //! FE => createInterview - url/:userID => (userId, level, company, field, title)
 //? BE => router.post("/interview/:userId", interviewCont.newInterview);
-exports.newInterview = async (req: Request, res: Response) => {
+ const newInterview = async (req: Request, res: Response) => {
   try {
     let interview = await Interview.create({
       user_id: req.params.userId,
@@ -63,7 +63,7 @@ exports.newInterview = async (req: Request, res: Response) => {
 //! FE => retrieveAnotherQuestion - url/chat-response => (object)
 //? BE => router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
 //sends system prompt to chatGPT => returnts first question from chatGPT
-exports.getQuestionFromChatGPT = async (req: Request, res: Response) => {
+const getQuestionFromChatGPT = async (req: Request, res: Response) => {
   try {
     const interview_id = req.params.id;
     const newInteraction = {
@@ -118,21 +118,18 @@ function addHintForChatGPT(inp: String) {
   return inp.concat(suffix);
 }
 
-//! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
-//? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
-//adds user answer to DB => returnts next question from chatGPT
-exports.addAnswerToInterview = async (req: Request, res: Response) => {
-  try {
-    const interview_id = req.params.id;
-    const { answer_text, answer_audio_url } = req.body;
-    const userAnswer = answer_text.concat(
-      " Rate my response out of 5 with a comment. Then continue to the next question. return this as a JSON object without plus signs in this format {rating_number: input the rating you gave me as a number , rating_feedback:  the feedback you gave me to the previous question ,next_question: your next question}."
-    );
-    const newInteraction = {
-      role: "user",
-      cloudinary_url: answer_audio_url,
-      content: answer_text,
-    };
+    //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
+    //? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
+    //adds user answer to DB => returnts next question from chatGPT
+const addAnswerToInterview = async (req: Request, res: Response) => {
+      try {
+        const interview_id = req.params.id;
+        const { answer_text, answer_audio_url } = req.body;
+        const newInteraction = {
+          role: "user",
+          cloudinary_url: answer_audio_url,
+          content: answer_text,
+        };
 
     const interview = await Interview.findOneAndUpdate(
       { _id: interview_id },
@@ -211,7 +208,7 @@ function checkContent(objInConversation) {
   }
 }
 
-exports.getInterviewRating = async (req: Request, res: Response) => {
+const getInterviewRating = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
@@ -260,30 +257,4 @@ exports.getInterviewRating = async (req: Request, res: Response) => {
   }
 };
 
-exports.getInterviewsByUser = async function (req: Request, res: Response) {
-  try {
-    const userId = req.params.userId;
-    const interviews = await Interview.find({ user_id: userId }).sort({
-      date: -1,
-    });
-    if (interviews.length < 1) {
-      throw new Error("No previous interviews found");
-    }
-    res.status(200).json(interviews);
-  } catch (err: any) {
-    res.status(500).json(err.message);
-  }
-};
-
-exports.getInterviewByInterviewId = async (req: Request, res: Response) => {
-  try {
-    let id = req.params.id;
-    let result = await Interview.findById(id);
-    if (!result) {
-      throw new Error("Interview not found");
-    }
-    res.status(200).json(result);
-  } catch (err: any) {
-    res.status(500).json(err.message);
-  }
-};
+export {getInterviewsByUser, getInterviewByInterviewId, newInterview, addAnswerToInterview , getQuestionFromChatGPT, getInterviewRating};

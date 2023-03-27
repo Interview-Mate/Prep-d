@@ -1,17 +1,7 @@
 import User from '../models/user';
 import { Request, Response } from 'express';
 
-//DB TEST:
-// User.insertMany(new User({
-//   "name": "John",
-//   "surname": "Doe",
-//   "username": "jd",
-//   "email": "jd@asd.com",
-//   "password": "123123",
-//   "level": "intermediate"
-// }));
-
-exports.getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = async (req: Request, res: Response) => {
   try {
     let allUsers = await User.find();
     res.status(200).json(allUsers);
@@ -21,7 +11,7 @@ exports.getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-exports.createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response) => {
   try {
     const user = await User.create(req.body);
     console.log('User created', user);
@@ -31,7 +21,7 @@ exports.createUser = async (req: Request, res: Response) => {
   }
 };
 
-exports.getUser = async (req: Request, res: Response) => {
+const getUser = async (req: Request, res: Response) => {
   try {
     const email = req.params.email;
     const existingUser = await User.find({ email: email });
@@ -44,7 +34,7 @@ exports.getUser = async (req: Request, res: Response) => {
   }
 };
 
-exports.editUser = async (req: Request, res: Response) => {
+const editUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const user = await User.findByIdAndUpdate(id, req.body, {
@@ -56,7 +46,7 @@ exports.editUser = async (req: Request, res: Response) => {
   }
 };
 
-exports.deleteUser = async (req: Request, res: Response) => {
+const deleteUser = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     const user = await User.deleteOne({ _id: id });
@@ -65,3 +55,6 @@ exports.deleteUser = async (req: Request, res: Response) => {
     res.status(500).json(err.message);
   }
 };
+
+
+export {createUser, getAllUsers, getUser, deleteUser, editUser}
