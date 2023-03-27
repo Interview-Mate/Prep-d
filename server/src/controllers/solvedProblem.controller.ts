@@ -30,7 +30,7 @@ const addSolvedProblem = async (req: Request, res: Response) => {
           new: true,
         }
       );
-      console.log('Solution added');
+      console.log('Solution updated');
       res.status(201).json(updated);
     } else {
       let problem = await SolvedProblem.create({

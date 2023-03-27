@@ -27,7 +27,7 @@ const getInterviewsByUser = async function (req: Request, res: Response) {
   }
 };
 
-const getInterview = async (req: Request, res: Response) => {
+const getInterviewByInterviewId = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
@@ -252,4 +252,4 @@ const getInterviewRating = async (req: Request, res: Response) => {
   }
 }
 
-export {getInterviewsByUser,getInterview, newInterview, addAnswerToInterview , getQuestionFromChatGPT, getInterviewRating};
+export {getInterviewsByUser, getInterviewByInterviewId, newInterview, addAnswerToInterview , getQuestionFromChatGPT, getInterviewRating};
