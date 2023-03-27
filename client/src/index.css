@@ -149,83 +149,6 @@ code {
   background-color: #999999;
 }
 
-.chat-container {
-  overflow-y: scroll;
-  max-height: 70vh; 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 20px;
-}
-
-.chat-message {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-  width: 100%;
-}
-
-.chat-message.interviewer {
-  align-items: flex-start;
-}
-
-.chat-message.user {
-  align-items: flex-end;
-}
-
-.chat-bubble {
-  background-color: #fff;
-  border-radius: 20px;
-  padding: 10px 20px;
-  max-width: 80%;
-}
-
-.chat-bubble.interviewer {
-  border-bottom-left-radius: 0px;
-  background-color: #efefef;
-}
-
-.chat-bubble.user {
-  border-bottom-right-radius: 0px;
-  background-color: #dcf8c6;
-}
-
-.chat-input-container {
-  display: flex;
-  margin: 1rem;
-}
-
-.chat-input {
-  flex-grow: 1;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-.chat-send-button {
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  background-color: #007aff;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.chat-send-button:hover:not(.disabled) {
-  background-color: #0056b3;
-}
-
-.chat-send-button.disabled {
-  background-color: #999;
-  cursor: not-allowed;
-}
-
 .interview-form {
 max-width: 600px;
 margin: 0 auto;
@@ -391,12 +314,21 @@ transition: background-color 0.2s;
 
 .left-convo,
 .right-convo {
-  margin: 10px;
+  margin: 15px 0;
+}
+
+.past-interview-head {
+  display: flex;
+  justify-content: space-between;
 }
 
 .avatar-user {
   margin-left: 10px;
 }
+
+/* .past-interview-head {
+  margin: 0;
+} */
 
 .avatar-interviewer {
   margin-bottom: 2px;
@@ -507,3 +439,5 @@ transition: background-color 0.2s;
 .speech-title {
   margin-left: 1rem;
 }
+
+
