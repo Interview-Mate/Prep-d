@@ -7,8 +7,6 @@ import PastInterview from "../Components/PastInterview";
 
 export default function PastInterviews() {
   const { currentUser } = useContext(Context) as any;
-  console.log(currentUser.id);
-
   const [pastInterviews, setPastInterviews] = useState<Interview[]>([]);
 
   useEffect(() => {
@@ -30,13 +28,28 @@ export default function PastInterviews() {
       <div>
         <Navbar />
         {pastInterviews ? (
+          // (
+          //   expandedID && expandedInterview ? (
+          //     <PastInterview
+          //       key={expandedID}
+          //       interview={expandedInterview}
+          //       expandInterview={expandInterview}
+          //       expanded={true}
+          //     />
+          //   ) :
           pastInterviews.map(
             (interview) =>
               interview.conversation.length > 2 && (
-                <PastInterview key={interview._id} interview={interview} />
+                <PastInterview
+                  key={interview._id}
+                  interview={interview}
+                  // expandInterview={expandInterview}
+                  // expand={expand}
+                />
               )
           )
         ) : (
+          // )
           <div>
             You have not taken any interviews yet, fancy giving it a try?
           </div>
