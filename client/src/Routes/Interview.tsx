@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Context } from "../Context";
 import Navbar from "../Components/Navbar";
 import { useState } from "react";
@@ -19,8 +19,6 @@ interface LoadingStatus {
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;
 
-  console.log(currentUser)
-
   const [formValues, setFormValues] = useState<InterviewFormValues>({
     jobLevel: "",
     companyName: "",
@@ -37,6 +35,13 @@ export default function Interview() {
   const [conversation, setConversation] = useState<Message[]>([]);
   const [isInterviewerSpeaking, setIsInterviewerSpeaking] = useState(false);
   const [interviewEnd, setInterviewEnd] = useState(false)
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [conversation]);
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
     setFormValues(values);
@@ -46,6 +51,7 @@ export default function Interview() {
   };
 
   const newInterview = async (values: InterviewFormValues) => {
+    setIsInterviewerSpeaking(true);
     const res = await ApiService.createInterview(
       currentUser.id,
       values.jobLevel,
@@ -82,6 +88,7 @@ export default function Interview() {
         ...prevData,
         { message: res, messageType: "interviewer" },
       ]);
+      setIsInterviewerSpeaking(false);
     }
   };
 
@@ -103,15 +110,16 @@ export default function Interview() {
     } else {
       setInterviewEnd(true)
       finalComment(result, formValues)
-  }
-};
+    }
+  };
 
   const saveUserResponse = async (audioUrl: string, transcript: string) => {
     if (!audioUrl) {
       setConversation((prevData) => [
         ...prevData,
         { message: transcript, messageType: "user" },
-      ]);
+      ])
+      setIsInterviewerSpeaking(true);
     }
     const res = await ApiService.updateInterview(
       interviewId,
@@ -152,25 +160,36 @@ export default function Interview() {
             )}
             {!formValues.video && (
               <>
-                <h2 className="speech-title">Chat Interview</h2>
-                <div className="chat-container">
+                <div className="interviewer-header">
+                  <div className="speech-title-container">
+                    <img src={MrBPrep} className="avatar avatar-interviewer" alt="Interviewer Avatar" />
+                    <h2 className="speech-title">Mr B. Prep'd</h2>
+                    {isInterviewerSpeaking && (<p className="chat-typing">...is typing</p>)}
+                  </div>
+                </div>
+                <div className="chat-container" ref={chatContainerRef}>
                   {conversation.map((value, index) => (
                     <div
                       key={`${value.messageType}-${index}`}
                       className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"}`}
                     >
-                      {value.messageType === "interviewer" ? (
-                        <img src={MrBPrep} className="avatar" alt="Interviewer Avatar" />
-                      ) : (
-                        <img src={currentUser.image} className="avatar" alt="User Avatar" />
+                      {value.messageType === "interviewer" && (
+                        <>
+                          <img src={MrBPrep} className="avatar avatar-interviewer" alt="Interviewer Avatar" />
+                          <div className="chat-bubble interviewer">{value.message}</div>
+                        </>
                       )}
-                      <div className="chat-bubble">{value.message}</div>
+                      {value.messageType === "user" && (
+                        <>
+                          <img src={currentUser.image} className="avatar avatar-user" alt="User Avatar" />
+                          <div className="chat-bubble user">{value.message}</div>
+                        </>
+                      )}
                     </div>
                   ))}
                 </div>
               </>
             )}
-
             <SpeechToText
               isInterviewerSpeaking={isInterviewerSpeaking}
               onSaveUserResponse={(audioUrl: any, transcript: any) => saveUserResponse(audioUrl, transcript)}

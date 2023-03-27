@@ -17,9 +17,9 @@ export default function TextToSpeech() {
     const formData = new FormData();
     const id = Math.random().toString(36).substr(2, 9);
     formData.append("file", audioBlob, `${id}.mp3`);
-    formData.append("upload_preset", "geixym3t");
+    formData.append("upload_preset", `${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}`);
     const cloudinaryResponse = await axios.post(
-      `https://api.cloudinary.com/v1_1/dljhj1szz/auto/upload`,
+      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
