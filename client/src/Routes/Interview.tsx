@@ -8,6 +8,7 @@ import Interviewer from "../Components/Interviewer";
 import SpeechToText from "../Components/SpeechToText";
 import UserWebCam from "../Components/Interview/UserWebCam";
 import AvatarWebCam from "../Components/Interview/AvatarWebCam";
+import InterviewFeedback from "../Components/InterviewFeedback";
 import MrBPrep from "../Assets/MrBPrep.png";
 import { all } from "q";
 
@@ -37,7 +38,10 @@ export default function Interview() {
   const [conversation, setConversation] = useState<Message[]>([]);
   const [isInterviewerSpeaking, setIsInterviewerSpeaking] = useState(false);
   const [interviewEnd, setInterviewEnd] = useState(false);
-  const [interviewResult, setInterviewResult] = useState("");
+  const [interviewFeedback, setInterviewFeedback] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const [suggestions, setSuggestions] = useState("");
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
     setFormValues(values);
@@ -93,11 +97,12 @@ export default function Interview() {
       nextQuestion(res, formValues);
       console.log("res in endInterview", res);
       const result = await ApiService.endInterview(interviewId);
-      const resultObj = JSON.parse(result)
+      const resultObj = JSON.parse(result);
       console.log("result of end interview", resultObj);
       setInterviewEnd(true);
-      console.log("the rating is", resultObj.overall_feedback)
-      setInterviewResult(resultObj.overall_feedback);
+      setRating(resultObj.overall_number);
+      setFeedback(resultObj.overall_feedback);
+      setSuggestions(resultObj.suggestions);
     } catch (error) {
       console.log(error);
     }
@@ -133,6 +138,7 @@ export default function Interview() {
     <>
       <div className="h-screen w-screen bg-seasalt">
         <Navbar />
+        {!interviewFeedback && (<>
         {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
         {formSubmitted && (
           <>
@@ -194,12 +200,20 @@ export default function Interview() {
                 interviewEnd={interviewEnd}
               />
             ) : (
-              <div>
-                <h2>Interview Rating:</h2>
-                <p>{interviewResult}</p>
+              <div className='flex items-center justify-center'>
+                <button className="bg-african-violet-900 text-white font-bold py-2 px-4 rounded" onClick={() => setInterviewFeedback(true)}>
+                  View Rating and Feedback
+                </button>
               </div>
             )}
+            
           </>
+        )}</>)}{interviewFeedback && (
+          <InterviewFeedback
+            rating={rating}
+            feedback={feedback}
+            suggestions={suggestions}
+          />
         )}
       </div>
     </>
