@@ -14,6 +14,9 @@ const openai = new OpenAIApi(
 
 const getInterviewsByUser = async function (req: Request, res: Response) {
   try {
+    if(req.params.userId.length !== 24){
+      throw new Error ('The user ID is either missing or invalid.')
+    }
     const userId = req.params.userId;
     const interviews = await Interview.find({ user_id: userId }).sort({
       date: -1,
@@ -43,7 +46,11 @@ const getInterviewByInterviewId = async (req: Request, res: Response) => {
 //! FE => createInterview - url/:userID => (userId, level, company, field, title)
 //? BE => router.post("/interview/:userId", interviewCont.newInterview);
  const newInterview = async (req: Request, res: Response) => {
+
   try {
+    if(req.params.userId.length !== 24){
+      throw new Error ('The user ID is either missing or invalid.')
+    }
     let interview = await Interview.create({
       user_id: req.params.userId,
       level: req.body.level,
@@ -55,7 +62,6 @@ const getInterviewByInterviewId = async (req: Request, res: Response) => {
     console.log("Interview created");
     res.status(201).json(interview);
   } catch (err: any) {
-    console.log(err);
     res.status(500).json(err.message);
   }
 };
@@ -117,14 +123,14 @@ function addHintForChatGPT (inp:String, question_count: number){
   {rating_number: input the rating you gave me as a number,
     rating_feedback: the feedback you gave me to the previous question,
     next_question: your next question}.`
-    
+
     return inp.concat(suffix)
   } else {
     suffix = ` Rate my response out of 5 with a comment. Then conclude the interview with a statement. Return this as a JSON object without plus signs in this format:
   {rating_number: input the rating you gave me as a number,
     rating_feedback: the feedback you gave me to the previous question,
     next_question: instead of a question, provide your conclusion}.`
-    
+
     return inp.concat(suffix)
   }
 }
@@ -222,7 +228,7 @@ const getInterviewRating = async (req: Request, res: Response) => {
         throw new Error("Interview not found");
       }
       result.conversation.shift();
-      
+
 
     let entireConversation: any = result.conversation.map((x) =>
       checkContent(x)

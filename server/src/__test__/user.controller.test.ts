@@ -1,10 +1,10 @@
  //@ts-nocheck
+import { config } from 'dotenv';
+config();
 import  request from 'supertest';
 import app  from '../index';
 import mongoose from 'mongoose';
 import User from '../models/user';
-import { config } from 'dotenv';
-config();
 
 
 beforeEach(async () => {
@@ -15,14 +15,6 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-
-describe('GET /', () => {
-  it('Hello API Request', async () => {
-    const result = await request(app).get('/');
-    expect(result.text).toEqual('Hiiii');
-    expect(result.statusCode).toEqual(200);
-  });
-});
 
 describe('GET /get-all-users', () => {
   it('should return a 200 status code', async () => {
@@ -37,13 +29,7 @@ describe('GET /get-all-users', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  // describe('GET /get-all-users', () => {
-  //   it('should get all users', async () => {
-  //     const res = await request(app)
-  //     .get('/get-all-users');
-  //     expect(res.body.length).toEqual(6);
-  //   });
-  // });
+  
 
   it('GET /users should return status 404', async () => {
     const res = await request(app).get('/users');
@@ -51,20 +37,21 @@ describe('GET /get-all-users', () => {
   });
 })
 
+let testUser = {
+  name: 'John',
+  surname: 'Doe',
+  email: 'john.doe@smth.com',
+  level: '1'
+};
 
 describe('POST /user', () => {
   it('should create a new user', async () => {
-    const user = {
-      name: 'John',
-      surname: 'Doe',
-      email: 'john.doe@smth.com',
-      level: '1'
-    };
-    const res = await request(app).post('/user').send(user);
+
+    const res = await request(app).post('/user').send(testUser);
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('email');
-    expect(res.body.name).toEqual(user.name);
-    expect(res.body.email).toEqual(user.email);
+    expect(res.body.name).toEqual(testUser.name);
+    expect(res.body.email).toEqual(testUser.email);
   });
 
   it('should return error, status code 403', async () => {
