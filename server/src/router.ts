@@ -5,7 +5,7 @@ import * as solvedProblemCont  from  "./controllers/solvedProblem.controller";
 import * as userCont  from  './controllers/user.controller';
 import * as puncCont  from  './controllers/punctuator.controller';
 import * as textSpeech  from  './controllers/textSpeech.controller';
-import * as coverLetterCont  from  './controllers/coverLetter.controller';
+import * as applicationCont  from  './controllers/application.controller';
 
 import { Request, Response } from "express";
 
@@ -42,9 +42,10 @@ router.get("/get-all-solved", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 //Cover letter creator
-router.post("/create-cover-letter", coverLetterCont.createCoverLetter);
-router.post("/get-text-review", coverLetterCont.getTextReview);
-router.post("/get-pdf-review", coverLetterCont.getPdfReview);
+router.post("/create-cover-letter", applicationCont.createCoverLetter);
+router.post("/create-resume", applicationCont.createResume);
+router.post("/get-text-review", applicationCont.getTextReview);
+router.post("/get-pdf-review", applicationCont.getPdfReview);
 
 // NEW
 router.post("/punctuate", puncCont.punctuate);

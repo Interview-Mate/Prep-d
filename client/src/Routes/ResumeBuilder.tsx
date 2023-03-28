@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
-import CVBuilderForm from './CoverLetterBuilder/CoverLetterBuilderForm';
-import CVBuilderText from './CoverLetterBuilder/CoverLetterBuilderText';
+import ResumeBuilderForm from './ResumeBuilder/ResumeBuilderForm';
+import ResumeBuilderText from './ResumeBuilder/ResumeBuilderText';
 import * as ApiService from '../Util/ApiService';
 import Spinner from '../Components/Spinner';
 
-const CoverLetterBuilder = () => {
+const ResumeBuilder = () => {
   const [showPDF, setShowPDF] = useState(false);
-  const [CoverLetterData, setCoverLetterData] = useState({
+  const [ResumeData, setResumeData] = useState({
     firstName: 'Darian',
     lastName: 'Piro',
     email: 'darian@piro.com',
@@ -15,7 +15,8 @@ const CoverLetterBuilder = () => {
     street: 'Examplestr. 8',
     zipCode: '12345',
     city: 'Berlin',
-    workExperience: 'I can center a div.',
+    workExperience:
+      'I can center a div.',
     qualification: 'Codeworks graduate',
     position: 'Junior',
     jobTitle: 'Software Engineer',
@@ -44,28 +45,28 @@ const CoverLetterBuilder = () => {
 
   const generatePDF = async () => {
     setLoading(true);
-    const coverLetterRequest = {
-      firstName: CoverLetterData.firstName,
-      lastName: CoverLetterData.lastName,
-      workExperience: CoverLetterData.workExperience,
-      qualification: CoverLetterData.qualification,
-      position: CoverLetterData.position,
-      jobTitle: CoverLetterData.jobTitle,
-      company: CoverLetterData.company,
-      startDate: CoverLetterData.startDate,
-      description: CoverLetterData.description,
-      selectedKeywords: CoverLetterData.selectedKeywords,
+    const ResumeRequest = {
+      firstName: ResumeData.firstName,
+      lastName: ResumeData.lastName,
+      workExperience: ResumeData.workExperience,
+      qualification: ResumeData.qualification,
+      position: ResumeData.position,
+      jobTitle: ResumeData.jobTitle,
+      company: ResumeData.company,
+      startDate: ResumeData.startDate,
+      description: ResumeData.description,
+      selectedKeywords: ResumeData.selectedKeywords,
     };
-    const response = await ApiService.createCoverLetter(coverLetterRequest);
-    setCoverLetterData({ ...CoverLetterData, textBody: response });
+    const response = await ApiService.createResume(ResumeRequest);
+    setResumeData({ ...ResumeData, textBody: response });
   };
 
   useEffect(() => {
-    if (CoverLetterData.textBody !== '') {
+    if (ResumeData.textBody !== '') {
       setShowPDF(true);
       setLoading(false);
     }
-  }, [CoverLetterData]);
+  }, [ResumeData]);
 
   return (
     <div className='h-screen w-screen bg-seasalt'>
@@ -73,9 +74,9 @@ const CoverLetterBuilder = () => {
 
       <div className='flex flex-row h-full w-full'>
         <div className='w-1/4 bg-black'>
-          <CVBuilderForm
-            CoverLetterData={CoverLetterData}
-            setCoverLetterData={setCoverLetterData}
+          <ResumeBuilderForm
+            ResumeData={ResumeData}
+            setResumeData={setResumeData}
             generatePDF={generatePDF}
           />
         </div>
@@ -84,12 +85,14 @@ const CoverLetterBuilder = () => {
             <div className='w-full h-full flex justify-center items-center'>
               <div className='flex flex-col justify-center items-center'>
                 <Spinner />
-                <p className='mt-10 text-2xl font-bold'>Generating...</p>
+                <p className='mt-10 text-2xl font-bold'>
+                  Generating...
+                </p>
               </div>
             </div>
           )}
           {showPDF && !loading && (
-            <CVBuilderText CoverLetterData={CoverLetterData} />
+            <ResumeBuilderText ResumeData={ResumeData} />
           )}
         </div>
       </div>
@@ -97,4 +100,4 @@ const CoverLetterBuilder = () => {
   );
 };
 
-export default CoverLetterBuilder;
+export default ResumeBuilder;

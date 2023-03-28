@@ -53,6 +53,20 @@ const createCoverLetter = async (req: Request, res: Response) => {
   }
 };
 
+const createResume = async (req: Request, res: Response) => {
+  try {
+    const response = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: `Create a resume based on following information: Position: ${req.body.position}, job title: ${req.body.jobTitle}, company: ${req.body.company}, start date: ${req.body.startDate}(write the date in a more appropriate way), description: ${req.body.description}. My work experience is: ${req.body.workExperience}, my qualifications: ${req.body.qualification}. Include following keywords at appropriate points: ${req.body.selectedKeywords}. Address the hiring manager as such. Close the letter with following name: ${req.body.firstName} ${req.body.lastName}.`,
+      temperature: 1,
+      max_tokens: 350,
+    });
+    res.status(201).json(response.data.choices[0].text);
+  } catch (err: any) {
+    res.status(403).json(err.message);
+  }
+};
+
 const getPdfReview = async (req: Request | any, res: Response) => {
   try {
     let text;
@@ -102,6 +116,7 @@ const improveCoverLetter = async (req: Request, res: Response) => {
 
 export {
   createCoverLetter,
+  createResume,
   getPdfReview,
   getTextReview,
   improveCoverLetter,

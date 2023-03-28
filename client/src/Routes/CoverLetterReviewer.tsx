@@ -218,8 +218,8 @@ const CoverLetterReviewer = () => {
       ) : (
         <div className="flex flex-col items-center justify-center">
           <Spinner />
-          <h2 className="mt-5 text-center text-2xl font-bold tracking-tight ">
-            Analyzing
+          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight ">
+            Analyzing...
           </h2>
         </div>
       )}
