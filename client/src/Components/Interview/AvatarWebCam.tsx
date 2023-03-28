@@ -9,24 +9,7 @@ const AvatarWebCam = ({ isInterviewerSpeaking }: any)  => {
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
-  // for the future input of audio files 
   const audioElmRef = React.useRef<HTMLAudioElement>(null!);
-
-  // for future fetch of audio files 
-  // const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (!file) return;
-  //   setAudioUrl(URL.createObjectURL(file));
-  // };
-
-  // const handlePlay = () => {
-  //   setIsPlaying(true);
-  // }
-
-  // const handlePause = () => {
-  //   setIsPlaying(false);
-  // }
-
 
   return (
 
@@ -50,12 +33,3 @@ const AvatarWebCam = ({ isInterviewerSpeaking }: any)  => {
 }
 
 export default AvatarWebCam;
-
-// {/* <div> 
-// {/* this might need to change to audio buffer */}
-// <audio src='lib/interview/Man_Talking.mp3'  controls 
-// onPlay={handlePlay} onPause={handlePause}
-// //  ref={audioElmRef}
-
-// />
-// </div> */}

@@ -3,25 +3,25 @@ import { useEffect } from 'react';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthenticationGuard } from './Components/AuthenticationGuard';
+import { useContext } from 'react';
+import { Context } from './Context';
+import TextToSpeech from './Components/TextToSpeech';
 
 import FirstVisit from './Components/FirstVisit';
 import Login from './Routes/Login';
 import Dashboard from './Routes/Dashboard';
 import Error from './Components/Error';
+import CodingDashboard from './Routes/CodingDashboard';
 import Coding from './Routes/Coding';
 import Interview from './Routes/Interview';
 import PastInterviews from './Routes/PastInterviews';
 import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
+import InterviewInsights from './Routes/InterviewInsights';
 import Spinner from './Components/Spinner';
 import CoverLetterBuilder from './Routes/CoverLetterBuilder';
-import CodingDashboard from './Routes/CodingDashboard';
-
-import { useContext } from 'react';
-import { Context } from './Context';
-import TextToSpeech from './Components/TextToSpeech';
-
+import CoverLetterReviewer from './Routes/CoverLetterReviewer';
 
 function App() {
   const { currentUser, isAuthenticated, isLoading, handleGetUser } = useContext(
@@ -91,13 +91,23 @@ function App() {
       errorElement: <Error />,
     },
     {
+      path: '/interviewinsights',
+      element: <AuthenticationGuard component={InterviewInsights} />,
+      errorElement: <Error />,
+    },
+    {
       path: '/textspeech',
       element: <AuthenticationGuard component={TextToSpeech} />,
       errorElement: <Error />,
     },
     {
-      path: '/coverletter',
+      path: '/coverletterbuilder',
       element: <AuthenticationGuard component={CoverLetterBuilder} />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/coverletterreviewer',
+      element: <AuthenticationGuard component={CoverLetterReviewer} />,
       errorElement: <Error />,
     },
   ]);
@@ -105,7 +115,9 @@ function App() {
   return (
     <div className='App'>
       {isLoading ? (
-        <Spinner />
+        <div className='mt-96'>
+          <Spinner />
+        </div>
       ) : !isAuthenticated ? (
         <Login />
       ) : currentUser.name === '' ? (

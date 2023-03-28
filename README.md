@@ -42,6 +42,10 @@ chatGPT_key=xxx
 
 From the root folder, `cd` into the `/server` folder and run `npm i` in order to install all dependencies.
 
+Open 'node_modules/pdf-parse/index.js'
+Change line 6 to:
+let isDebugMode = false;
+
 Once this is done, run `npm start` to initiate the server on port 4000.
 
 ### Front End

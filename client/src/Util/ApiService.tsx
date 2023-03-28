@@ -54,17 +54,37 @@ export const updateUser = async (updatedUser: User) => {
   }
 };
 
-export const getInterview = (id: string) =>
-  fetch(`${BASE_URL}/interview/${id}`)
-    .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
-    .then((res) => res.json())
-    .catch((err) => err);
+// export const getInterview = (id: string) =>
+//   fetch(`${BASE_URL}/interview/${id}`)
+//     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
+//     .then((res) => res.json())
+//     .catch((err) => err);
 
-export const getInterviews = (id: string) =>
-  fetch(`${BASE_URL}/get-all-interviews/${id}`)
-    .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
-    .then((res) => res.json())
-    .catch((err) => err);
+// export const getInterviews = (id: string) =>
+//   fetch(`${BASE_URL}/get-all-interviews/${id}`)
+//     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
+//     .then((res) => res.json())
+//     .catch((err) => err);
+
+export const getInterview = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/interview/${id}`);
+    const interview = await response.json();
+    return interview;
+  } catch (error) {
+    console.error("Error getting interview:", error);
+  }
+};
+
+export const getInterviews = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-all-interviews/${id}`);
+    const interviews = await response.json();
+    return interviews;
+  } catch (error) {
+    console.error("Error getting interviews:", error);
+  }
+};
 
 export const punctuate = async (text: string) => {
   return fetch(`${BASE_URL}/punctuate`, {
@@ -145,11 +165,9 @@ export const updateInterview = async (
     .catch((err) => console.log(err));
 };
 
-export const endInterview = async (
-  interview_id: string,
-): Promise<any> => {
+export const endInterview = async (interview_id: string): Promise<any> => {
   return fetch(`${BASE_URL}/interview-rating/${interview_id}`, {
-    method: "PUT",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
@@ -234,3 +252,51 @@ export const createCoverLetter = async (coverLetterRequest: any) => {
     console.error("Error creating cover letter:", error);
   }
 };
+
+export const reviewPdfCoverLetter = async (pdf: FormData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-pdf-review`, {
+      method: "POST",
+      body: pdf,
+    });
+    const review = await response.json();
+    return review;
+  }
+  catch (error) {
+    console.error("Error reviewing cover letter:", error);
+  }
+};
+
+export const reviewTextCoverLetter = async (coverLetterRequest: string) => {
+  console.log("coverLetterRequest", coverLetterRequest);
+  try {
+    const response = await fetch(`${BASE_URL}/get-text-review`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({text: coverLetterRequest}),
+    }
+    );
+    const review = await response.json();
+    return review;
+  } catch (error) {
+    console.error("Error reviewing cover letter:", error);
+  }
+}
+
+export const improveCoverLetter = async (coverLetterRequest: any) => {
+  try {
+    const response = await fetch(`${BASE_URL}/improve-cover-letter`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(coverLetterRequest),
+    });
+    const receivedCoverLetter = await response.json();
+    return receivedCoverLetter;
+  } catch (error) {
+    console.error("Error improving cover letter:", error);
+  }
+}

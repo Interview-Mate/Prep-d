@@ -3,7 +3,8 @@ import axios from "axios";
 import { Request, Response } from "express";
 import FormData from "form-data";
 
-require('dotenv').config();
+import { config } from 'dotenv';
+config();
 
 interface TextToSpeechRequestBody {
   text: string;
@@ -17,7 +18,7 @@ const client = new textToSpeech.TextToSpeechClient({
   keyFilename: "./auth.json",
 });
 
-exports.speechMe = async (req: Request, res: Response) => {
+const speechMe = async (req: Request, res: Response) => {
   const { text } = req.body as TextToSpeechRequestBody;
   const request = {
     input: { text },
@@ -29,3 +30,5 @@ exports.speechMe = async (req: Request, res: Response) => {
   console.log(response)
   res.status(200).send(response);
 };
+
+export {speechMe}

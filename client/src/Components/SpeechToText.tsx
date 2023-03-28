@@ -76,7 +76,10 @@ export default function SpeechToText({
     const id = Math.random().toString(36).substr(2, 9);
     const formData = new FormData();
     formData.append("file", audioBlob);
-    formData.append("upload_preset", `${process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET}`);
+    formData.append(
+      "upload_preset",
+      process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+    );
     return formData;
   };
 
@@ -129,9 +132,9 @@ export default function SpeechToText({
 
   return (
     <div>
-      <div className="speech-button-container">
+      <div className="flex items-center justify-center">
         <button
-          className="speech-button"
+          className="w-fit py-2 px-4 mr-5 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium disabled:bg-eerie-black disabled:text-seasalt"
           onClick={startRecording}
           disabled={recording || isInterviewerSpeaking}
         >
@@ -139,7 +142,7 @@ export default function SpeechToText({
         </button>
 
         <button
-          className="speech-button"
+          className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium disabled:bg-eerie-black disabled:text-seasalt"
           onClick={stopRecording}
           disabled={!recording}
         >
