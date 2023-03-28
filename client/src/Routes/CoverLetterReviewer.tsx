@@ -82,7 +82,7 @@ const CoverLetterReviewer = () => {
       <Navbar />
       {!loading ? (
         <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className=" h-full p-10 space-y-8 bg-white rounded-md shadow">
+          <div className="w-5/6 max-w-md h-full p-10 space-y-8 bg-white rounded-md shadow">
             {review === "" && !loading && (
               <div className="max-w-md">
                 <div>

@@ -112,7 +112,7 @@ const Insights = () => {
     <div>
       <Navbar />
       <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm">
-        <div className="w-fit	  p-10 space-y-8 bg-white rounded-lg shadow ">
+        <div className="w-fit p-10 space-y-8 bg-white rounded-lg shadow">
           <h2 className="text-center text-xl mb-5 font-bold">
             Coding Insights
           </h2>
