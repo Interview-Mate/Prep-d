@@ -86,7 +86,7 @@ const CoverLetterReviewer = () => {
             {review === "" && !loading && (
               <div className="max-w-md">
                 <div>
-                  <h2 className="text-center text-3xl font-bold tracking-tight ">
+                  <h2 className='text-center text-xl mb-5 font-bold tracking-tight'>
                     Analyze your cover letter
                   </h2>
                 </div>
@@ -184,9 +184,9 @@ const CoverLetterReviewer = () => {
                 )}
               </div>
             )}
-            {review !== "" && !loading && (
-              <div className="max-w-xl flex flex-col items-center justify-center">
-                <h2 className="text-center text-xl m-5 font-bold tracking-tight ">
+            {review !== '' && !loading && (
+              <div className='max-w-xl flex flex-col items-center justify-center'>
+                <h2 className='text-center text-xl mb-5 font-bold tracking-tight'>
                   Review
                 </h2>
                 <div className="flex flex-col items-center justify-center text-sm">
