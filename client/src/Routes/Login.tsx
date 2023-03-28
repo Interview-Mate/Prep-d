@@ -28,11 +28,23 @@ export default function Login() {
 
   return (
     <>
-    <div className="flex login-container">
-      <div className=" m-10 w-full h-full">
+    <div className="flex login-container ">
+      <div className=" m-10 w-full h-full z-0 ">
         <Login3D />
       </div>
-    
+      {!isAuthenticated && (
+    <div className="login-button z-10">
+      <button className="login-span" onClick={() => loginWithRedirect()}>
+        <div className="z-20">
+          <LockClosedIcon
+            // className="h-5 text-african-violet-400 "
+            aria-hidden="true"
+          />
+          Sign in
+        </div>
+      </button>
+    </div>
+  )}
 
     </div>
     </>
