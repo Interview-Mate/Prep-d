@@ -33,10 +33,6 @@ export default function PastInterview({ interview }: { interview: Interview }) {
     return true;
   }
 
-  const expandInterview = () => {
-    setExpand((prev) => !prev);
-  };
-
   return (
     <div className="past-interview">
       <div className="past-interview-head">
