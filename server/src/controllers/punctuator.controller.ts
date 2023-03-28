@@ -8,7 +8,7 @@ const punctuate = async (req: Request, res: Response) => {
     const punctuatedText = response.data;
     res.json({ punctuatedText });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

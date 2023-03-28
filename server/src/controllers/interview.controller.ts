@@ -1,11 +1,11 @@
 //@ts-nocheck
+import { config } from 'dotenv';
+config();
 
 import Interview from '../models/interview';
 import { Request, Response } from 'express';
 import parseMessage from './../asset/chatGPTparser';
 import { Configuration, OpenAIApi } from 'openai';
-import { config } from 'dotenv';
-config();
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -15,6 +15,9 @@ const openai = new OpenAIApi(
 
 const getInterviewsByUser = async function (req: Request, res: Response) {
   try {
+    if(req.params.userId.length !== 24){
+      throw new Error ('The user ID is either missing or invalid.')
+    }
     const userId = req.params.userId;
     const interviews = await Interview.find({ user_id: userId }).sort({
       date: -1,
@@ -44,7 +47,11 @@ const getInterview = async (req: Request, res: Response) => {
 //! FE => createInterview - url/:userID => (userId, level, company, field, title)
 //? BE => router.post("/interview/:userId", interviewCont.newInterview);
  const newInterview = async (req: Request, res: Response) => {
+
   try {
+    if(req.params.userId.length !== 24){
+      throw new Error ('The user ID is either missing or invalid.')
+    }
     let interview = await Interview.create({
       user_id: req.params.userId,
       level: req.body.level,
@@ -56,7 +63,6 @@ const getInterview = async (req: Request, res: Response) => {
     console.log('Interview created');
     res.status(201).json(interview);
   } catch (err: any) {
-    console.log(err);
     res.status(500).json(err.message);
   }
 };

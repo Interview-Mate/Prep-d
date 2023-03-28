@@ -4,10 +4,14 @@ import { Request, Response } from 'express';
 const getAllExercises = async (req: Request, res: Response) => {
   try {
     const allExercises = await Exercise.find();
-    res.status(200).json(allExercises);
-  } catch (err) {
+     res
+      .status(200)
+      .json(allExercises);
+  } catch (err: any) {
     console.log(err);
-    res.json(err).status(500);
+    res
+      .status(500)
+      .json(err.message);
   }
 };
 
@@ -18,9 +22,13 @@ const getExercise = async (req: Request, res: Response) => {
     if (!result) {
       throw new Error('Exercise not found');
     }
-    res.json(result).status(200);
+    res
+      .status(200)
+      .json(result);
   } catch (err: any) {
-    res.status(500).json(err.message);
+    res
+      .status(500)
+      .json(err.message);
   }
 };
 

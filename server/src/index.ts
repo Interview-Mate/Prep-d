@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Express } from 'express';
 import cors from 'cors';
 import router from './router';
@@ -6,7 +8,6 @@ import mongoSanitize from 'express-mongo-sanitize';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
-dotenv.config();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,

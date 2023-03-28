@@ -1,9 +1,10 @@
+import { config } from 'dotenv';
+config();
+
 import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
 
 import { Configuration, OpenAIApi } from 'openai';
-import { config } from 'dotenv';
-config();
 
 const openai = new OpenAIApi(
   new Configuration({
