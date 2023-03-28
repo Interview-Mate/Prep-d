@@ -68,7 +68,6 @@ code {
   border-radius: 20px;
   display: flex;
   flex: 1;
-  /* justify-content: stretch; */
   max-width: 35vw;
 }
 
@@ -150,8 +149,8 @@ code {
 }
 
 .interview-form {
-max-width: 600px;
-margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .form {
@@ -183,12 +182,12 @@ margin: 0 auto;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-display: flex;
-flex-direction: column;
-padding: 30px;
-background-color: rgb(252,252,252);
-border-radius: 10px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: rgb(252, 252, 252);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .challenges-div {
@@ -213,28 +212,28 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
   font-size: 1rem;
   width: 80%;
-  background-color: rgb(248,247,249);
+  background-color: rgb(248, 247, 249);
 }
 
 .form-checkbox {
-margin-right: 10px;
-color:rgb(84, 134, 135);
+  margin-right: 10px;
+  color: #4fbbbd;
 }
 
 .form-checkbox:hover {
-background-color: rgb(201, 139, 185);
+  background-color: rgb(201, 139, 185);
 }
 
 .form-submit {
-background-color:rgb(84, 134, 135);
-color: #fff;
-border: none;
-border-radius: 5px;
-padding: 10px 20px;
-font-size: 1rem;
-font-weight: 600;
-cursor: pointer;
-transition: background-color 0.2s;
+  background-color: #4fbbbd;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .form-submit:hover {
@@ -264,7 +263,7 @@ transition: background-color 0.2s;
 }
 
 .form-button {
-  background-color:rgb(84, 134, 135);
+  background-color: #4fbbbd;
   border: none;
   border-radius: 5px;
   color: white;
@@ -305,30 +304,40 @@ transition: background-color 0.2s;
 }
 
 .left-convo {
-  text-align: left;
+  float: left;
 }
 
 .right-convo {
-  text-align: right;
+  float: right;
 }
 
 .left-convo,
 .right-convo {
+  background-color: #f8f7f9ff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block;
   margin: 15px 0;
+  max-width: 95%;
+  padding: 5px;
 }
 
 .past-interview-head {
   display: flex;
+  font-size: 20px;
+  font-weight: bold;
   justify-content: space-between;
+}
+
+.past-interview-body-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .avatar-user {
   margin-left: 10px;
 }
-
-/* .past-interview-head {
-  margin: 0;
-} */
 
 .avatar-interviewer {
   margin-bottom: 2px;
@@ -336,7 +345,7 @@ transition: background-color 0.2s;
 
 .chat-container {
   overflow-y: scroll;
-  max-height: 70vh; 
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -379,7 +388,7 @@ transition: background-color 0.2s;
 
 .chat-bubble.user {
   border-bottom-right-radius: 0px;
-  background-color: rgb(84, 134, 135);
+  background-color: #4fbbbd;
   color: rgb(248, 247, 249);
 }
 
@@ -400,7 +409,7 @@ transition: background-color 0.2s;
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem;
-  background-color:rgb(84, 134, 135);
+  background-color: #4fbbbd;
   color: rgb(248, 247, 249);
   font-weight: bold;
   cursor: pointer;
@@ -439,5 +448,3 @@ transition: background-color 0.2s;
 .speech-title {
   margin-left: 1rem;
 }
-
-

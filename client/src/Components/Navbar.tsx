@@ -58,10 +58,11 @@ export default function Navbar() {
                 </div>
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
+                    <Menu.Button className="text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
                       Interview Practice
                       <img
                         src={Arrow}
+                        alt="Arrow down"
                         style={{
                           display: "inline",
                           marginLeft: 5,
@@ -118,7 +119,7 @@ export default function Navbar() {
                         className={({ isActive }) =>
                           isActive
                             ? "bg-eerie-black text-white rounded-md px-3 py-2 text-base font-medium"
-                            : "text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
+                            : "text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
                         }
                       >
                         {item.name}
@@ -127,10 +128,11 @@ export default function Navbar() {
 
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
+                        <Menu.Button className="text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
                           Useful Tools
                           <img
                             src={Arrow}
+                            alt="Arrow down"
                             style={{
                               display: "inline",
                               marginLeft: 5,

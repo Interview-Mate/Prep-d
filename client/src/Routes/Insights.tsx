@@ -111,9 +111,9 @@ const Insights = () => {
     <div className="h-screen w-screen bg-seasalt">
       <Navbar />
       <h2 className="form-title">Insights</h2>
-      <div className="p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out">
+      <div className="p-20 h-4/5 w-full transition duration-200 ease-in-out">
         <div
-          className="border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
+          className="shadow-md rounded-lg mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
           style={{ background: "rgba(252, 252, 252, 1)" }}
         >
           {solvedProblems.length === 0 && (
@@ -129,18 +129,18 @@ const Insights = () => {
           {solvedProblems.length !== 0 && usersAverageSolveTime !== 0 && (
             <div className="flex flex-row items-center justify-center h-full">
               <div className="flex flex-col items-center justify-center w-1/4">
-                <h2 className="text-sm ">Completed challenges:</h2>
-                <h3 className="text-sm font-bold">{solvedProblems.length}</h3>
-                <h2 className="text-sm mt-5">Score:</h2>
+                <h2 className="text-base ">Completed challenges:</h2>
+                <h3 className="text-base font-bold">{solvedProblems.length}</h3>
+                <h2 className="text-base mt-5">Score:</h2>
 
-                <h3 className="text-sm font-bold">
+                <h3 className="text-base font-bold">
                   {solvedProblems.reduce(
                     (acc, curr) => acc + curr.exercise!.level,
                     0
                   ) * 100}
                 </h3>
-                <h2 className="text-sm mt-5">Your level: </h2>
-                <h3 className="text-sm font-bold">
+                <h2 className="text-base mt-5">Your level: </h2>
+                <h3 className="text-base font-bold">
                   {
                     level[
                       Math.round(
@@ -152,18 +152,18 @@ const Insights = () => {
                     ]
                   }
                 </h3>
-                <h2 className="text-sm mt-5">Average solve time:</h2>
+                <h2 className="text-base mt-5">Average solve time:</h2>
                 {usersAverageSolveTime && (
-                  <h3 className="text-sm font-bold">
+                  <h3 className="text-base font-bold">
                     {prettifyTime(usersAverageSolveTime)}
                   </h3>
                 )}
 
-                <h2 className="text-sm mt-5">
+                <h2 className="mt-5 text-center">
                   Your solve time compared to the average:
                 </h2>
                 {usersAverageSolveTime && allAverageSolveTimes && (
-                  <h3 className="text-sm font-bold">
+                  <h3 className="text-base font-bold">
                     {usersAverageSolveTime < allAverageSolveTimes ? (
                       <span className="text-green-500">
                         {prettifyTime(

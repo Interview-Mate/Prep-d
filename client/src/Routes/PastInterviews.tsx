@@ -27,29 +27,15 @@ export default function PastInterviews() {
     <>
       <div>
         <Navbar />
-        {pastInterviews ? (
-          // (
-          //   expandedID && expandedInterview ? (
-          //     <PastInterview
-          //       key={expandedID}
-          //       interview={expandedInterview}
-          //       expandInterview={expandInterview}
-          //       expanded={true}
-          //     />
-          //   ) :
+        <h2 className="form-title">Your Past Interviews</h2>
+        {pastInterviews.length > 0 ? (
           pastInterviews.map(
             (interview) =>
               interview.conversation.length > 2 && (
-                <PastInterview
-                  key={interview._id}
-                  interview={interview}
-                  // expandInterview={expandInterview}
-                  // expand={expand}
-                />
+                <PastInterview key={interview._id} interview={interview} />
               )
           )
         ) : (
-          // )
           <div>
             You have not taken any interviews yet, fancy giving it a try?
           </div>
