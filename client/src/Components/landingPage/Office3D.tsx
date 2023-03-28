@@ -28,18 +28,6 @@ export function Office3D(): JSX.Element {
     tl.current = gsap.timeline();
 
 
-    // tl.current.to(
-    //   entireRoom.current.position,
-    //   {
-    //     duration: 0.5,
-    //     x:0,
-    //     y:-3,
-    //     z:-2.5,
-    //     ease:'power2.out'
-    //   },
-    //   0
-    // );
-
     tl.current.from(
       entireRoom.current.position,
       {
@@ -182,6 +170,3 @@ export function Office3D(): JSX.Element {
 }
 
 useGLTF.preload('lib/landingPage/OfficeRoom.gltf')
-
-
-// position= {[0, -2.5, -3]}
