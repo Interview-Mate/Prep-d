@@ -1,4 +1,5 @@
 import { mongoose } from './index.models';
+import { Interview } from '../types';
 
 const interviewSchema = new mongoose.Schema({
   user_id: {

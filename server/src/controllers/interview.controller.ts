@@ -1,11 +1,10 @@
 //@ts-nocheck
-import { config } from 'dotenv';
+import Interview from "../models/interview";
+import { Request, Response } from "express";
+import parseMessage from "./../asset/chatGPTparser";
+import { Configuration, OpenAIApi } from "openai";
+import { config } from "dotenv";
 config();
-
-import Interview from '../models/interview';
-import { Request, Response } from 'express';
-import parseMessage from './../asset/chatGPTparser';
-import { Configuration, OpenAIApi } from 'openai';
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -31,7 +30,7 @@ const getInterviewsByUser = async function (req: Request, res: Response) {
   }
 };
 
-const getInterview = async (req: Request, res: Response) => {
+const getInterviewByInterviewId = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
@@ -60,7 +59,7 @@ const getInterview = async (req: Request, res: Response) => {
       title: req.body.title,
       conversation: [],
     });
-    console.log('Interview created');
+    console.log("Interview created");
     res.status(201).json(interview);
   } catch (err: any) {
     res.status(500).json(err.message);
@@ -71,7 +70,6 @@ const getInterview = async (req: Request, res: Response) => {
 //? BE => router.post('/chat-response/:id', interviewCont.getQuestionFromChatGPT)
 //sends system prompt to chatGPT => returnts first question from chatGPT
 const getQuestionFromChatGPT = async (req: Request, res: Response) => {
-  console.log(req.body);
   try {
     const interview_id = req.params.id;
     const newInteraction = {
@@ -85,7 +83,7 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
       { new: true }
     );
     const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
       //@ts-ignore
       messages: interview.conversation.map((x) => {
         return { role: x.role, content: x.content };
@@ -106,7 +104,7 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
     }
     console.log(interview);
     if (!interview) {
-      throw new Error('Interview not found');
+      throw new Error("Interview not found");
     }
     res
       .status(201)
@@ -118,67 +116,78 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
   }
 };
 
-function addHintForChatGPT (inp:String){
-  let suffix = ' Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format {rating_number: input the rating you gave me as a number, rating_feedback: the feedback you gave me to the previous question ,next_question: your next question}.'
-  return inp.concat(suffix)
+function addHintForChatGPT (inp:String, question_count: number){
+  let suffix
+  if (question_count < 3) {
+    suffix = ` Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format:
+  {rating_number: input the rating you gave me as a number,
+    rating_feedback: the feedback you gave me to the previous question,
+    next_question: your next question}.`
+
+    return inp.concat(suffix)
+  } else {
+    suffix = ` Rate my response out of 5 with a comment. Then conclude the interview with a statement. Return this as a JSON object without plus signs in this format:
+  {rating_number: input the rating you gave me as a number,
+    rating_feedback: the feedback you gave me to the previous question,
+    next_question: instead of a question, provide your conclusion}.`
+
+    return inp.concat(suffix)
+  }
 }
 
-    //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
-    //? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
-    //adds user answer to DB => returnts next question from chatGPT
-const addAnswerToInterview = async (req: Request, res: Response) => {
-      try {
-        const interview_id = req.params.id;
-        const { answer_text, answer_audio_url } = req.body;
-        const newInteraction = {
-          role: "user",
-          cloudinary_url: answer_audio_url,
-          content: answer_text,
-        };
+//! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
+//? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
+//adds user answer to DB => returnts next question from chatGPT
+const addAnswerToInterview = async (req: Request, res: Response, question_count: number) => {
+  try {
+    const interview_id = req.params.id;
+    const { answer_text, answer_audio_url, question_count } = req.body;
+    const newInteraction = {
+      role: "user",
+      cloudinary_url: answer_audio_url,
+      content: answer_text,
+    };
 
     const interview = await Interview.findOneAndUpdate(
       { _id: interview_id },
-      { $push: { conversation: newInteraction} },
+      { $push: { conversation: newInteraction } },
       { new: true }
     );
 
+
+
     const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
       //@ts-ignore
       messages: interview.conversation.map((x) => {
         return {
           role: x.role,
-          content: x.role == 'user' ? addHintForChatGPT(x.content) : x.content };
+          content: x.role == 'user' ? addHintForChatGPT(x.content, question_count) : x.content };
       }),
       temperature: 0.5,
     });
+
     let updatedConversation;
     if (response.data.choices && response.data.choices[0].message) {
       const message = response.data.choices[0].message;
 
+      console.log('Unparsed Message', message);
+      console.log('Parsed Message', parseMessage(message.content));
       updatedConversation = await Interview.findOneAndUpdate(
         { _id: interview_id },
         { $push: { conversation: message } },
         { new: true }
       );
     }
-    //@ts-ignore
+
     let followingQuestion = parseMessage(
       updatedConversation?.conversation[
         updatedConversation.conversation.length - 1
       ].content
     ).nextQuestion;
 
-    if (
-      followingQuestion.toLowerCase().includes('error') ||
-      followingQuestion.toLowerCase().includes('json')
-    ) {
-      followingQuestion =
-        "Sorry, I didn't understand that. Could you please rephrase your answer?";
-    }
-
     if (!interview) {
-      throw new Error('Interview not found');
+      throw new Error("Interview not found");
     }
     res.status(201).json(followingQuestion);
   } catch (error: any) {
@@ -187,7 +196,29 @@ const addAnswerToInterview = async (req: Request, res: Response) => {
   }
 };
 
-
+function checkContent(objInConversation) {
+  if (objInConversation.role === "user") {
+    return {
+      interviewee: objInConversation.content,
+    };
+  }
+  if (objInConversation.role === "assistant") {
+    let out;
+    try {
+      out = JSON.parse(objInConversation.content).next_question;
+    } catch {
+      out = objInConversation.content;
+    }
+    return {
+      interviewer: out,
+    };
+  }
+  if (!objInConversation.role) {
+    throw new Error(
+      `Message ${objInConversation} is missing the \'role \' property`
+    );
+  }
+}
 
 const getInterviewRating = async (req: Request, res: Response) => {
   try {
@@ -197,69 +228,45 @@ const getInterviewRating = async (req: Request, res: Response) => {
         throw new Error("Interview not found");
       }
       result.conversation.shift();
-      console.log(result.conversation)
 
-    let entireConversation : any = result.conversation
-      .map(x => {
 
-        if(x.role === "user"){
-          return {
-            interviewee: x.content
-          }
-        }
-        if(x.role === "assistant"){
-          let out;
-          try{
-            //@ts-ignore
-            out = JSON.parse(x.content).next_question;
-          } catch {
-            out = x.content;
-          }
-          return {
-            interviewer: out //parseMessage(x.content)?.nextQuestion || x.content;
-          }
-        }
-        if(!x.role ){
-          throw new Error (`Message ${x} is missing the \'role \' property`)
-        }
-      })
-
- let jsons = entireConversation.map(x => JSON.stringify(x))
-
-  let askForFeedback = `You are an interviewer, who just interviewed someone for a job at ${result.company || 'a certain company'}. It is for a ${result.title || 'mid level'} position in the field of ${result.field || 'software development'}. Provide a rating out of 5 for the candidate's responses and give a general feedback on the interview, including suggestions on how the candidate could improve their performance in future.
-  Return this as a JSON object (without any '+' sign), in the following format: {overall_number: input the rating you gave to the interview as a number, overall_feedback: the feedback you gave to the interview,
-    suggestions: how could the candidate improve  }.
-    The interview, as an array of JSONS, went like this: ${jsons}
-  `
-  const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
-    messages:
-    [{ role: 'system',
-      content : askForFeedback
-  }],
-    temperature: 0.5,
-  });
-
-  let finalFeedback ;
-  if (response.data.choices && response.data.choices[0].message ){
-    const message = response.data.choices[0].message.content;
-
-  finalFeedback =  await Interview.findOneAndUpdate(
-    { _id: id },
-    { $push: { overall: message } },
-    { new: true }
+    let entireConversation: any = result.conversation.map((x) =>
+      checkContent(x)
     );
-  }
 
+    let jsons = entireConversation.map((x) => JSON.stringify(x));
 
+    let askForFeedback = `You are an interviewer, who just interviewed someone for a job at ${
+      result.company || "a certain company"
+    }. It is for a ${result.title || "mid level"} position in the field of ${
+      result.field || "software development"
+    }. Provide a rating out of 5 for the candidate's responses and give a general feedback on the interview, including suggestions on how the candidate could improve their performance in future.
+    Return this as a JSON object (without any '+' sign), in the following format: {overall_number: input the rating you gave to the interview as a number, overall_feedback: the feedback you gave to the interview,
+      suggestions: how could the candidate improve  }.
+      The interview, as an array of JSONS, went like this: ${jsons}
+    `;
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "system", content: askForFeedback }],
+      temperature: 0.5,
+    });
 
-     console.log(finalFeedback)
+    let finalFeedback;
+    if (response.data.choices && response.data.choices[0].message) {
+      const message = response.data.choices[0].message.content;
+
+      finalFeedback = await Interview.findOneAndUpdate(
+        { _id: id },
+        { $push: { overall: message } },
+        { new: true }
+      );
+    }
+
+    // console.log(finalFeedback)
     res.status(200).json(response.data.choices[0].message?.content);
-    // res.status(200).json(askForFeedback);
-
   } catch (err: any) {
     res.status(500).json(err.message);
   }
-}
+};
 
-export {getInterviewsByUser,getInterview, newInterview, addAnswerToInterview , getQuestionFromChatGPT, getInterviewRating};
+export {getInterviewsByUser, getInterviewByInterviewId, newInterview, addAnswerToInterview , getQuestionFromChatGPT, getInterviewRating};

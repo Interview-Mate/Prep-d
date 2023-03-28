@@ -2,7 +2,6 @@ import { config } from 'dotenv';
 config();
 
 import textToSpeech from "@google-cloud/text-to-speech";
-//TODO check if axios import works / needed
 import axios from "axios";
 import { Request, Response } from "express";
 import FormData from "form-data";

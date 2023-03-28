@@ -5,15 +5,22 @@ import ProblemList from "./Coding/ProblemList";
 
 export default function Dashboard() {
   return (
-    <div className="h-screen w-screen bg-seasalt">
+    <div className="h-screen w-screen ">
       <Navbar />
+      <h2 className="text-center text-xl mb-5 mt-20 font-bold">
+        Welcome to Prep'd!
+      </h2>
       <div className="dashboard-container">
-        <div className="h-max min-h-max flex flex-col flex: 1">
+        <div className="dashboard-elements">
           <ProblemList dashboard={true} />
         </div>
-        <div className="h-max min-h-max flex flex-col flex: 1">
+        <div className="dashboard-elements">
           <Link to="/interview">
-            <img className="dashboard-image" src={Interview}></img>
+            <img
+              className="dashboard-image"
+              src={Interview}
+              alt="Remote interview"
+            ></img>
           </Link>
         </div>
       </div>
