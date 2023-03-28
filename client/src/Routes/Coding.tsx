@@ -188,7 +188,7 @@ function Coding() {
   };
 
   return (
-    <div className='h-screen w-screen bg-seasalt'>
+    <div className='h-screen w-screen'>
       <Navbar />
       <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
         {problem && (number as number) < problems.length && (
@@ -205,7 +205,7 @@ function Coding() {
 
             <div className='mx-4 text-center w-3/4'>
               <Editor
-                className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
+                className='border p-0.5 pt-5 pr-2  bg-white rounded-lg shadow '
                 height='65vh'
                 defaultLanguage={problem.language}
                 theme='vs-light'

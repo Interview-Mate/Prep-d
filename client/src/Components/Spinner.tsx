@@ -1,11 +1,10 @@
 const Spinner = () => {
   return (
-
-      <div className="flex flex-col items-center justify-center h-full">
-      <div role='status' className='text-center mt-96'>
+    <div className='flex flex-col items-center justify-center h-full'>
+      <div role='status' className='text-center '>
         <svg
           aria-hidden='true'
-          className='inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300'
+          className='inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-african-violet-900 dark:fill-gray-300'
           viewBox='0 0 100 101'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
@@ -19,7 +18,6 @@ const Spinner = () => {
             fill='currentFill'
           />
         </svg>
-        <span className='sr-only'>Loading...</span>
       </div>
     </div>
   );

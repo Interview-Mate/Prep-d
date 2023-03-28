@@ -1,12 +1,11 @@
 import Exercise from "../models/exercise"
 //WARN:
-// This function populatex the "exercises" collection in the database.
+// This function populates the "exercises" collection in the database.
 // It needs to be executed only once before starting interacting with that collection.
 
 async function populateExerciseCollection () {
   try {
     await Exercise.deleteMany({});
-
     await Exercise.insertMany([{
       name: 'Simple Addition',
       description:

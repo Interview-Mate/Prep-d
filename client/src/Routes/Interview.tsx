@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Context } from "../Context";
 import Navbar from "../Components/Navbar";
 import { useState } from "react";
@@ -42,6 +42,14 @@ export default function Interview() {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [suggestions, setSuggestions] = useState("");
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [conversation]);
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
     setFormValues(values);
@@ -51,6 +59,7 @@ export default function Interview() {
   };
 
   const newInterview = async (values: InterviewFormValues) => {
+    setIsInterviewerSpeaking(true);
     const res = await ApiService.createInterview(
       currentUser.id,
       values.jobLevel,
@@ -88,6 +97,7 @@ export default function Interview() {
         ...prevData,
         { message: res, messageType: "interviewer" },
       ]);
+      setIsInterviewerSpeaking(false);
     }
   };
 

@@ -1,14 +1,15 @@
-const router = require("express").Router();
-const interviewCont = require ("./controllers/interview.controller");
-const exerciseCont = require ("./controllers/exercise.controller");
-const solvedProblemCont = require ("./controllers/solvedProblem.controller");
-const userCont = require ('./controllers/user.controller');
-const puncCont = require ('./controllers/punctuator.controller');
-//const test = require ('./controllers/test');
-const textSpeech = require ('./controllers/textSpeech.controller');
-const coverLetterCont = require ('./controllers/coverLetter.controller');
+import {Router} from 'express';
+import * as interviewCont  from  "./controllers/interview.controller";
+import * as exerciseCont  from  "./controllers/exercise.controller";
+import * as solvedProblemCont  from  "./controllers/solvedProblem.controller";
+import * as userCont  from  './controllers/user.controller';
+import * as puncCont  from  './controllers/punctuator.controller';
+import * as textSpeech  from  './controllers/textSpeech.controller';
+import * as coverLetterCont  from  './controllers/coverLetter.controller';
 
 import { Request, Response } from "express";
+
+const router =  Router();
 
 router.get('/', (req: Request, res: Response) => {
   res.send('Hiiii');
@@ -33,6 +34,7 @@ router.post('/interview-rating/:id', interviewCont.getInterviewRating)
 
 //exercise methods
 router.get("/get-all-exercises", exerciseCont.getAllExercises);
+router.get("/get-all-exercises/:id", exerciseCont.getAllExercises);
 
 //solved problems
 router.get("/problems/:userId", solvedProblemCont.getSolvedProblems);
@@ -41,13 +43,11 @@ router.post("/problem", solvedProblemCont.addSolvedProblem);
 
 //Cover letter creator
 router.post("/create-cover-letter", coverLetterCont.createCoverLetter);
+router.post("/get-text-review", coverLetterCont.getTextReview);
+router.post("/get-pdf-review", coverLetterCont.getPdfReview);
 
 // NEW
 router.post("/punctuate", puncCont.punctuate);
-
-//test
-//outer.post("/test", test.bubu);
-
 
 
 router.post("/api/text-to-speech", textSpeech.speechMe);
