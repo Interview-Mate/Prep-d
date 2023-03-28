@@ -13,8 +13,7 @@ export default function Profile() {
   }
 
   return (
-    <>
-      <div className="h-screen w-full bg-seasalt">
+      <div>
         <Navbar />
         {currentUser && (
           <div className="profile-container">
@@ -23,6 +22,5 @@ export default function Profile() {
           </div>
         )}
       </div>
-    </>
   );
 }

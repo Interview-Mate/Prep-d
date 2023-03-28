@@ -1,9 +1,26 @@
-import Expand from "../Assets/full-screen.png";
-import { useState } from "react";
+import Expand from '../Assets/full-screen.png';
+import { useEffect, useState } from 'react';
 
 export default function PastInterview({ interview }: { interview: Interview }) {
-  const cleanArr = interview.conversation.slice(1);
   const [expand, setExpand] = useState(false);
+  const [averageRating, setAverageRating] = useState([]);
+  const cleanArr = interview.conversation.slice(1);
+
+  useEffect(() => {
+    if (cleanArr.length > 0) {
+      const avg = cleanArr
+        .filter((message: { role: string }) => message.role === 'assistant')
+        .slice(1)
+        .map((message: { content: any }) => {
+          const { content } = message;
+          return isJsonString(content)
+            ? JSON.parse(content).rating_number
+            : null;
+        })
+        .filter((rating: null) => rating !== null);
+      setAverageRating(avg);
+    }
+  }, []);
 
   function isJsonString(str: string) {
     try {
@@ -13,6 +30,10 @@ export default function PastInterview({ interview }: { interview: Interview }) {
     }
     return true;
   }
+
+  const expandInterview = () => {
+    setExpand((prev) => !prev);
+  };
 
   return (
     <div className="past-interview">
@@ -26,6 +47,28 @@ export default function PastInterview({ interview }: { interview: Interview }) {
             }}
           />
         </button>
+      </div>
+      <div
+        className='border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col'
+        style={{ background: 'rgba(252, 252, 252, 1)' }}
+      >
+        {averageRating.length > 0 && (
+          <h2 className='text-sm'>
+            Average answer rating{' '}
+            <span className='text-sm font-bold'>
+              {Math.round(
+                averageRating.reduce((acc, curr) => acc + curr, 0) /
+                  averageRating.length
+              )}
+            </span>
+          </h2>
+        )}
+        {interview.overall.length > 0 && (
+          <h2 className='text-sm'>
+            Overall rating{' '}
+            <span className='text-sm font-bold'>{interview.overall}</span>
+          </h2>
+        )}
       </div>
       <div className="past-interview-body">
         {expand

@@ -139,8 +139,7 @@ export default function Interview() {
   };
 
   return (
-    <>
-      <div className="h-screen w-screen bg-seasalt">
+      <div>
         <Navbar />
         {showInterviewForm && <InterviewForm onFormSubmit={handleFormSubmit} />}
         {formSubmitted && (
@@ -199,6 +198,5 @@ export default function Interview() {
           </>
         )}
       </div>
-    </>
   );
 }

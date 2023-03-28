@@ -29,7 +29,7 @@ function CoverLetterBuilderForm({
   };
 
   return (
-    <div className='border border-teal-600 mr-8 p-4 h-full min-h-max w-full flex flex-col bg-white text-sm'>
+    <div className='shadow mr-8 p-4 h-full min-h-max w-full flex flex-col bg-white text-sm'>
       <form onSubmit={handleSubmit} className='mb-0'>
         <Accordion>
           <Accordion.Panel>

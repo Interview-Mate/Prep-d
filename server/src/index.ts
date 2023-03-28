@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
+import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import router from './router';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -21,9 +22,8 @@ const PORT: number = Number(process.env.SERVER_PORT) || 4000;
 
 app
   .use(cors())
-
-  .use(express.json({ limit: '50mb' }))
-
+  .use(fileUpload())
+  .use(express.json({ limit: '50mb' })) // TODO: check limit
   .use(router)
   .use(mongoSanitize())
   .use(limiter)
