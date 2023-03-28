@@ -86,8 +86,8 @@ const CoverLetterReviewer = () => {
             {review === "" && !loading && (
               <div className="max-w-md">
                 <div>
-                  <h2 className='text-center text-xl mb-5 font-bold tracking-tight'>
-                    Analyze your cover letter
+                  <h2 className="text-center text-xl mb-5 font-bold">
+                    Review Your Cover Letter
                   </h2>
                 </div>
 
@@ -136,12 +136,12 @@ const CoverLetterReviewer = () => {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="flex items-center justify-center">
                       <button
                         type="submit"
-                        className="w-full bg-african-violet-900 hover:opacity-75 active:opacity-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
                       >
-                        Analyze
+                        Review
                       </button>
                     </div>
                   </form>
@@ -172,21 +172,21 @@ const CoverLetterReviewer = () => {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="flex items-center justify-center">
                       <button
                         type="submit"
-                        className="w-full bg-african-violet-900 hover:opacity-75 active:opacity-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
                       >
-                        Analyze
+                        Review
                       </button>
                     </div>
                   </form>
                 )}
               </div>
             )}
-            {review !== '' && !loading && (
-              <div className='max-w-xl flex flex-col items-center justify-center'>
-                <h2 className='text-center text-xl mb-5 font-bold tracking-tight'>
+            {review !== "" && !loading && (
+              <div className="max-w-xl flex flex-col items-center justify-center">
+                <h2 className="text-center text-xl mb-5 font-bold tracking-tight">
                   Review
                 </h2>
                 <div className="flex flex-col items-center justify-center text-sm">
