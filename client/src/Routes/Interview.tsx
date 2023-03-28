@@ -37,6 +37,7 @@ export default function Interview() {
   const [conversation, setConversation] = useState<Message[]>([]);
   const [isInterviewerSpeaking, setIsInterviewerSpeaking] = useState(false);
   const [interviewEnd, setInterviewEnd] = useState(false);
+  const [interviewResult, setInterviewResult] = useState("");
 
   const handleFormSubmit = async (values: InterviewFormValues) => {
     setFormValues(values);
@@ -75,7 +76,7 @@ export default function Interview() {
   };
 
   const nextQuestion = (res: string, values: InterviewFormValues) => {
-    console.log("res in nextquestion", res);
+    console.log("res in next question", res);
     if (values.video === true) {
       setVideoQuestion(res);
     } else {
@@ -86,34 +87,20 @@ export default function Interview() {
     }
   };
 
-  // const finalComment = (res: string, values: InterviewFormValues) => {
-  //   console.log("res in final comment", res);
-  //   if (values.video === true) {
-  //     setVideoQuestion(res);
-  //   } else {
-  //     setConversation((prevData) => [
-  //       ...prevData,
-  //       { message: "that concludes the interview", messageType: "interviewer" },
-  //     ]);
-  //   }
-  // };
-
   const endInterview = async (res: string, formValues: InterviewFormValues) => {
-    // //save previous reply from user
-    // //robot to reply 'that concludes interview"
-    // //save the rating as a variable
-
-    // console.log("in end interview");
-    // finalComment(res, formValues);
-    // console.log("res in endInterview", res);
-    // // const result = await ApiService.endInterview(interviewId);
-    // // console.log("result of end interview", result)
-    // // if (result.error) {
-    // //   console.log(result.error);
-    // // } else {
-    // //   setInterviewEnd(true);
-    // // }
-    // setInterviewEnd(true);
+    try {
+      console.log("in end interview");
+      nextQuestion(res, formValues);
+      console.log("res in endInterview", res);
+      const result = await ApiService.endInterview(interviewId);
+      const resultObj = JSON.parse(result)
+      console.log("result of end interview", resultObj);
+      setInterviewEnd(true);
+      console.log("the rating is", resultObj.overall_feedback)
+      setInterviewResult(resultObj.overall_feedback);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const saveUserResponse = async (audioUrl: string, transcript: string) => {
@@ -131,11 +118,11 @@ export default function Interview() {
         questionCount
       );
 
-      if (questionCount < 4) {
+      if (questionCount < 3) {
         setQuestionCount((count) => count + 1);
         nextQuestion(res, formValues);
       } else {
-        endInterview(res, formValues)
+        endInterview(res, formValues);
       }
     } catch (error) {
       console.log(error);
@@ -197,7 +184,7 @@ export default function Interview() {
                 </div>
               </>
             )}
-            {!interviewEnd && (
+            {!interviewEnd ? (
               <SpeechToText
                 isInterviewerSpeaking={isInterviewerSpeaking}
                 onSaveUserResponse={(audioUrl: any, transcript: any) =>
@@ -206,6 +193,11 @@ export default function Interview() {
                 video={formValues.video}
                 interviewEnd={interviewEnd}
               />
+            ) : (
+              <div>
+                <h2>Interview Rating:</h2>
+                <p>{interviewResult}</p>
+              </div>
             )}
           </>
         )}
