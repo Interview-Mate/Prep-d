@@ -13,14 +13,16 @@ export default function Profile() {
   }
 
   return (
-      <div>
-        <Navbar />
-        {currentUser && (
-          <div className="profile-container">
-            <div className="profile-title">Hi, {currentUser.name}!</div>
-            <img src={currentUser.image} alt={currentUser.name} />
+    <div>
+      <Navbar />
+      {currentUser && (
+        <div className="profile-container">
+          <div className="text-center text-xl mb-5 font-bold">
+            Hi, {currentUser.name}!
           </div>
-        )}
-      </div>
+          <img src={currentUser.image} alt={currentUser.name} />
+        </div>
+      )}
+    </div>
   );
 }

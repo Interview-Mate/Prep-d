@@ -126,28 +126,6 @@ code {
   text-align: center;
 }
 
-.speech-button-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.speech-button {
-  color: white;
-  background-color: red;
-  font-size: 1.3rem;
-  font-weight: 500;
-  padding: 0.5em 0.8em;
-  margin: 0 30px;
-  border: none;
-  border-radius: 0.2em;
-  text-align: center;
-}
-
-.speech-button:disabled {
-  background-color: #999999;
-}
-
 .interview-form {
   max-width: 600px;
   margin: 0 auto;

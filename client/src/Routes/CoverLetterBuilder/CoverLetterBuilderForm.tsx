@@ -359,8 +359,11 @@ function CoverLetterBuilderForm({
         </Accordion>
         <br />
 
-        <div className="flex justify-center">
-          <button className="form-button" type="submit">
+        <div className="flex items-center justify-center">
+          <button
+            className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
+            type="submit"
+          >
             Generate
           </button>
         </div>
