@@ -1,5 +1,6 @@
-import Expand from '../Assets/full-screen.png';
-import { useEffect, useState } from 'react';
+import Expand from "../Assets/full-screen.png";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 export default function PastInterview({ interview }: { interview: Interview }) {
   const [expand, setExpand] = useState(false);
@@ -9,7 +10,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
   useEffect(() => {
     if (cleanArr.length > 0) {
       const avg = cleanArr
-        .filter((message: { role: string }) => message.role === 'assistant')
+        .filter((message: { role: string }) => message.role === "assistant")
         .slice(1)
         .map((message: { content: any }) => {
           const { content } = message;
@@ -21,6 +22,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
       setAverageRating(avg);
     }
   }, []);
+  const date = moment(interview.date).format("dddd, MMMM Do YYYY");
 
   function isJsonString(str: string) {
     try {
@@ -38,7 +40,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
   return (
     <div className="past-interview">
       <div className="past-interview-head">
-        Your interview on {interview.date}
+        Your interview for {interview.title} at {interview.company} on {date}
         <button onClick={() => setExpand((prev) => !prev)}>
           <img
             src={Expand}
@@ -49,13 +51,13 @@ export default function PastInterview({ interview }: { interview: Interview }) {
         </button>
       </div>
       <div
-        className='border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col'
-        style={{ background: 'rgba(252, 252, 252, 1)' }}
+        className="border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
+        style={{ background: "rgba(252, 252, 252, 1)" }}
       >
         {averageRating.length > 0 && (
-          <h2 className='text-sm'>
-            Average answer rating{' '}
-            <span className='text-sm font-bold'>
+          <h2 className="text-sm">
+            Average answer rating{" "}
+            <span className="text-sm font-bold">
               {Math.round(
                 averageRating.reduce((acc, curr) => acc + curr, 0) /
                   averageRating.length
@@ -64,9 +66,9 @@ export default function PastInterview({ interview }: { interview: Interview }) {
           </h2>
         )}
         {interview.overall.length > 0 && (
-          <h2 className='text-sm'>
-            Overall rating{' '}
-            <span className='text-sm font-bold'>{interview.overall}</span>
+          <h2 className="text-sm">
+            Overall rating{" "}
+            <span className="text-sm font-bold">{interview.overall}</span>
           </h2>
         )}
       </div>

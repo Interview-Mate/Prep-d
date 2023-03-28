@@ -145,11 +145,9 @@ export const updateInterview = async (
     .catch((err) => console.log(err));
 };
 
-export const endInterview = async (
-  interview_id: string,
-): Promise<any> => {
+export const endInterview = async (interview_id: string): Promise<any> => {
   return fetch(`${BASE_URL}/interview-rating/${interview_id}`, {
-    method: "PUT",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },

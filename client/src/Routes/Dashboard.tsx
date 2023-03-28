@@ -17,7 +17,11 @@ export default function Dashboard() {
         </div>
         <div className="dashboard-elements">
           <Link to="/interview">
-            <img className="dashboard-image" src={Interview}></img>
+            <img
+              className="dashboard-image"
+              src={Interview}
+              alt="Remote interview"
+            ></img>
           </Link>
         </div>
       </div>
