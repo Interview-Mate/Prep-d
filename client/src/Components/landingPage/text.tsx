@@ -5,7 +5,7 @@ import { useState } from "react";
 const Section = (props:any) => {
   return (
     <section
-      className={`h-screen flex flex-col justify-center p-10 ${
+      className={`h-screen flex flex-col justify-center p-10 mr-60 ${
         props.right ? "items-end" : "items-start"
       }`}
       style={{

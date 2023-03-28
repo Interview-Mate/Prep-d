@@ -28,13 +28,13 @@ export default function Login() {
 
   return (
 <>
-  <div className="flex z-0 login-container overflow-hidden justify-end">
-    <div className="w-full h-full z-10 flex justify-center items-center">
+  <div className='flex z-0 login-container overflow-hidden justify-end'>
+    <div className='w-full h-full z-10 flex justify-center items-center'>
       <Login3D />
       {!isAuthenticated && (
-        <div className='flex flex-col justify-center items-center h-full rounded-lg w-1/4 bg-seasalt z-50'>
-          <div className='px-8 rounded-lg drop-shadow-xl my-'>
-          <div className='py-10 underline-offset-8 text-2xl font-bold mt-4 text-eerie-black text-center'>
+        <div className='mr-20 flex flex-col justify-center items-center h-full rounded-lg w-1/4 bg-seasalt'>
+          <div className='hover:bg-white py-8 border px-8 rounded-lg drop-shadow-lg z-50'>
+          <div className='pb-10 underline-offset-8 text-2xl font-bold mt-4 text-eerie-black text-center'>
             <p> Let's get Prep'd </p>
           </div>
           <div className='pb-20 mt-6 text-center text-eerie-black'>

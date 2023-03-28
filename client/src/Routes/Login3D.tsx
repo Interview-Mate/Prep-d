@@ -14,9 +14,10 @@ model.scene.scale.set( 1, 1, 1 );
 return (
   
     <>
-    <Canvas >
+    <Canvas style={{ overflow: 'hidden' }}>
       <OrbitControls enableZoom={false}/>
       <ambientLight intensity={1}/>
+
       <ScrollControls pages={3} damping={0.25}  >
         <Overlay />
         <Office3D /> 
