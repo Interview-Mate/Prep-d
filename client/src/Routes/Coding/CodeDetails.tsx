@@ -32,20 +32,19 @@ const CodeDetails = ({
   };
 
   return (
-    <div className='border border-teal-600 rounded-md mr-8 p-4 h-full w-1/4 flex flex-col bg-white'>
+    <div className=' mr-8 p-6 w-1/4 h-full  space-y-6 bg-white rounded-lg shadow '>
       <div className='text-right'>
         Score: <span className='font-bold'>{score}</span>
       </div>
       <h2 className='text-xl font-bold'>{problem.name}</h2>
       <h3>{problem.description}</h3>
-      <br />
       <p>
         Level: <span className='font-bold'>{level[problem.level]}</span>
       </p>
 
       <p
         onClick={handleHint}
-        className='mt-4 italic text-sm cursor-pointer hover:font-bold'
+        className='italic text-sm cursor-pointer hover:font-bold'
       >
         Get a hint <br />
         {toggleHint && problem.hint}

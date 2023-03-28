@@ -62,6 +62,7 @@ const Insights = () => {
       allSolvedProblems.reduce((acc, curr) => acc + curr.solveTime, 0) /
         allSolvedProblems.length
     );
+    console.log(usersAverageSolveTime, allAverageSolveTimes)
   }, [allSolvedProblems]);
 
   ChartJS.register(
@@ -110,19 +111,18 @@ const Insights = () => {
   return (
     <div>
       <Navbar />
-      <h2 className="form-title">Insights</h2>
-      <div className="p-20 h-4/5 w-full transition duration-200 ease-in-out">
-        <div
-          className="shadow-md rounded-lg mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
-          style={{ background: "rgba(252, 252, 252, 1)" }}
-        >
+      <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm'>
+        <div className='w-fit	  p-10 space-y-8 bg-white rounded-lg shadow '>
+          <h2 className='text-center text-xl mb-5 font-bold tracking-tight'>
+            Coding Insights
+          </h2>
           {solvedProblems.length === 0 && (
-            <div className="flex flex-col items-center justify-center h-full">
-              <h1 className="text-2xl font-bold">
+            <div className='flex flex-col items-center justify-center h-full'>
+              <h1 className='text-lg font-bold'>
                 You have not solved any problems yet
               </h1>
-              <h2 className="text-xl mt-5">
-                Solve some problems to see your progress
+              <h2 className='text-lg mt-2'>
+              Do a coding challenge to see your progress
               </h2>
             </div>
           )}

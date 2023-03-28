@@ -48,7 +48,7 @@ export default function Settings() {
     <div>
       <Navbar />
       <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='w-1/2 max-w-md  p-10 space-y-8 bg-white rounded-md shadow'>
+        <div className='w-5/6	 max-w-md p-10 -space-y-px rounded-md shadow-sm bg-white '>
           <div>
             <h2 className='text-center text-2xl font-bold tracking-tight'>
               Settings
@@ -64,7 +64,7 @@ export default function Settings() {
               <div className=' '>
                 <label
                   htmlFor='first-name'
-                  className='block m-2 text-sm font-medium text-gray-900 dark:text-white'
+                  className='block mb-2 text-sm font-bold text-gray-900 dark:text-white'
                 >
                   First name
                 </label>
@@ -72,13 +72,13 @@ export default function Settings() {
                   id='first-name'
                   name='name'
                   autoComplete='firstname'
-                  className='relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-3'
+                  className=' border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-african-violet-900 focus:border-african-violet-900 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-african-violet-900 dark:focus:border-african-violet-900'
                 />
               </div>
               <div>
                 <label
                   htmlFor='last-name'
-                  className='block m-2 text-sm font-medium text-gray-900 dark:text-white'
+                  className='block mb-2 text-sm font-bold text-gray-900 dark:text-white'
                 >
                   Last name
                 </label>
@@ -86,13 +86,13 @@ export default function Settings() {
                   id='last-name'
                   name='surname'
                   autoComplete='lastname'
-                  className='relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-3'
+                  className=' border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-african-violet-900 focus:border-african-violet-900 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-african-violet-900 dark:focus:border-african-violet-900'
                 />
               </div>
               <div>
                 <label
                   htmlFor='level'
-                  className='block m-2 text-sm font-medium text-gray-900 dark:text-white'
+                  className='block mb-2 text-sm font-bold text-gray-900 dark:text-white'
                 >
                   Skill level
                 </label>
@@ -100,7 +100,7 @@ export default function Settings() {
                   id='level'
                   name='level'
                   autoComplete='level'
-                  className='relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-3'
+                  className='border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-african-violet-900 focus:border-african-violet-900 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-african-violet-900 dark:focus:border-african-violet-900'
                 >
                   <option value=''></option>
                   <option value='Junior'>Junior</option>
@@ -110,9 +110,9 @@ export default function Settings() {
             </div>
 
             <div className='flex align-middle h-20'>
-              <div className='flex flex-col w-1/2'>
+              <div className='flex flex-col w-2/3'>
                 <label
-                  className='block m-2 text-sm font-medium text-gray-900 dark:text-white'
+                  className='block mb-2 text-sm font-bold text-gray-900 dark:text-white'
                   htmlFor='file_input'
                 >
                   Profile picture
@@ -127,12 +127,12 @@ export default function Settings() {
                   }
                 />
               </div>
-              <div className='w-full'>
+              <div className='w-1/3 flex items-center justify-center '>
                 {selectedPicture && (
                   <img
                     src={URL.createObjectURL(selectedPicture)}
                     alt='profile'
-                    className='h-20 ml-20 rounded-full'
+                    className='h-20 w-20 rounded-full'
                   />
                 )}
               </div>

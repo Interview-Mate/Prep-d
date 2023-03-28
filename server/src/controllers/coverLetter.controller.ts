@@ -1,5 +1,30 @@
 import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
+// import fixPdfParse from '../asset/PdfParsefixer';
+
+import fs from 'fs';
+import path from 'path';
+const pdfParseIndexPath = path.join('../../node_modules/pdf-parse/index.js');
+
+
+fs.readFile(pdfParseIndexPath, 'utf8', (err, data) => {
+  if (err) {
+    console.error(`Error reading pdf-parse index.js: ${err}`);
+    return;
+  }
+
+  const modifiedData = data.replace(/let isDebugMode = !module\.parent;/, 'let isDebugMode = false;');
+
+  fs.writeFile(pdfParseIndexPath, modifiedData, (err) => {
+    if (err) {
+      console.error(`Error writing pdf-parse index.js: ${err}`);
+      return;
+    }
+
+    console.log('pdf-parse isDebugMode set to false');
+  });
+});
+
 import pdf from 'pdf-parse';
 import { Configuration, OpenAIApi } from 'openai';
 import { config } from 'dotenv';
@@ -30,9 +55,9 @@ const createCoverLetter = async (req: Request, res: Response) => {
 const getPdfReview = async (req: Request | any, res: Response) => {
   try {
     let text;
-    pdf(req.files.file.data).then(function (data: { text: any; }) {
-      text = data.text;
-    });
+    // pdf(req.files.file.data).then(function (data: { text: any; }) {
+    //   text = data.text;
+    // });
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: `Review my cover letter: ${req.body.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,

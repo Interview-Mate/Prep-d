@@ -41,28 +41,33 @@ const InterviewInsights = () => {
   useEffect(() => {
     const fetchData = async () => {
       const interviews = await getInterviews(currentUser.id);
-      setInterviews(interviews);
-      let filteredRatings: number[] = [];
-      if (interviews.length > 0) {
-        filteredRatings = interviews.flatMap(
-          (interview: { conversation: any[] }) =>
-            interview.conversation
-              .filter(
-                (message: { role: string }) => message.role === 'assistant'
-              )
-              .slice(1)
-              .map((message: { content: any }) => {
-                const { content } = message;
-                return isJsonString(content)
-                  ? JSON.parse(content).rating_number
-                  : null;
-              })
-              .filter((rating: null) => rating !== null)
-        );
-        setRatings(filteredRatings);
-        const overall = interviews.flatMap((interview: { overall: any; }) => interview.overall);
-        setOverallRatings(overall);
+      if (typeof interviews !== 'string') {
+        setInterviews(interviews);
+        let filteredRatings: number[] = [];
+        if (interviews.length > 0) {
+          filteredRatings = interviews.flatMap(
+            (interview: { conversation: any[] }) =>
+              interview.conversation
+                .filter(
+                  (message: { role: string }) => message.role === 'assistant'
+                )
+                .slice(1)
+                .map((message: { content: any }) => {
+                  const { content } = message;
+                  return isJsonString(content)
+                    ? JSON.parse(content).rating_number
+                    : null;
+                })
+                .filter((rating: null) => rating !== null)
+          );
+          setRatings(filteredRatings);
+          const overall = interviews.flatMap(
+            (interview: { overall: any }) => interview.overall
+          );
+          setOverallRatings(overall);
+        }
       }
+      // console.log(interviews)
     };
     fetchData();
   }, []);
@@ -107,17 +112,14 @@ const InterviewInsights = () => {
   return (
     <div>
       <Navbar />
-      <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
-        <div
-          className='border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col'
-          style={{ background: 'rgba(252, 252, 252, 1)' }}
-        >
+      <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm'>
+        <div className='w-fit	  p-10 space-y-8 bg-white rounded-lg shadow '>
           {interviews.length === 0 && (
             <div className='flex flex-col items-center justify-center h-full'>
-              <h1 className='text-2xl font-bold'>
+              <h1 className='text-lg font-bold'>
                 You have not done any interviews yet
               </h1>
-              <h2 className='text-xl mt-5'>
+              <h2 className='text-lg mt-2'>
                 Complete an interview to see your feedback
               </h2>
             </div>

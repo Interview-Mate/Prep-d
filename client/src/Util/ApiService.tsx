@@ -54,17 +54,37 @@ export const updateUser = async (updatedUser: User) => {
   }
 };
 
-export const getInterview = (id: string) =>
-  fetch(`${BASE_URL}/interview/${id}`)
-    .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
-    .then((res) => res.json())
-    .catch((err) => err);
+// export const getInterview = (id: string) =>
+//   fetch(`${BASE_URL}/interview/${id}`)
+//     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
+//     .then((res) => res.json())
+//     .catch((err) => err);
 
-export const getInterviews = (id: string) =>
-  fetch(`${BASE_URL}/get-all-interviews/${id}`)
-    .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
-    .then((res) => res.json())
-    .catch((err) => err);
+// export const getInterviews = (id: string) =>
+//   fetch(`${BASE_URL}/get-all-interviews/${id}`)
+//     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
+//     .then((res) => res.json())
+//     .catch((err) => err);
+
+export const getInterview = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/interview/${id}`);
+    const interview = await response.json();
+    return interview;
+  } catch (error) {
+    console.error("Error getting interview:", error);
+  }
+};
+
+export const getInterviews = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/get-all-interviews/${id}`);
+    const interviews = await response.json();
+    return interviews;
+  } catch (error) {
+    console.error("Error getting interviews:", error);
+  }
+};
 
 export const punctuate = async (text: string) => {
   return fetch(`${BASE_URL}/punctuate`, {
