@@ -282,13 +282,17 @@ code {
 
 .past-interview {
   align-items: center;
-  background-color: #fff;
+  background-color: #f8f7f9ff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   margin: 20px auto;
   padding: 30px;
+}
+
+.past-interview-body {
+  width: 100%;
 }
 
 .left-convo {
@@ -301,7 +305,7 @@ code {
 
 .left-convo,
 .right-convo {
-  background-color: #f8f7f9ff;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block;
@@ -316,11 +320,11 @@ code {
   justify-content: space-between;
 }
 
-.past-interview-body-title {
+/* .past-interview-body-title {
   font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
-}
+} */
 
 .avatar-user {
   margin-left: 10px;
