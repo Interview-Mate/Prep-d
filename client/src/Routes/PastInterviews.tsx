@@ -28,7 +28,7 @@ export default function PastInterviews() {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center py-12">
+      <div className="flex items-center justify-center py-12 w-full">
         <div className="bg-white p-10 space-y-8 bg-white rounded-lg shadow">
           <h2 className="text-center text-xl mb-5 font-bold">
             Past Interviews
