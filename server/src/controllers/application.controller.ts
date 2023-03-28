@@ -100,9 +100,10 @@ const improveCoverLetter = async (req: Request, res: Response) => {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Improve my cover letter. No comments, only the content, but make it a complete cover letter, including adress and greeting: ${req.body.text}.`,
+      prompt: `Improve my cover letter. No comments, only the content, but make it a complete cover letter, including greeting at the start: ${JSON.stringify(req.body.text)}.{end}`,
       temperature: 1,
       max_tokens: 350,
+      stop: ["{end}"],
     });
     res.status(201).json(response.data.choices[0].text);
   } catch (err: any) {

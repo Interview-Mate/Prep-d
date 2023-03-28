@@ -35,7 +35,7 @@ const CoverLetterReviewer = () => {
   const [improvement, setImprovement] = useState<string | null>('');
   const [loading, setLoading] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
-  const [coverLetterData, setCoverLetterData] = useState('');
+  const [coverLetterData, setCoverLetterData] = useState();
 
   const handlePdfUpload = async (event: {
     preventDefault: () => void;
@@ -77,10 +77,17 @@ const CoverLetterReviewer = () => {
     event.preventDefault();
     setLoading(true);
     const response = await improveCoverLetter(text);
+    console.log(response)
     setCoverLetterData(response);
-    setShowImprove(true);
-    setLoading(false);
   };
+
+  useEffect(() => {
+    if (coverLetterData) {
+      console.log(coverLetterData)
+      setShowImprove(true);
+      setLoading(false);
+    }
+  }, [coverLetterData]);
 
   return (
     <div>
