@@ -28,7 +28,7 @@ const createCoverLetter = async (req: Request, res: Response) => {
   }
 };
 
-exports.getPdfReview = async (req: Request, res: Response) => {
+exports.getPdfReview = async (req: Request | any, res: Response) => {
   try {
     let text;
     pdf(req.files.file.data).then(function (data: { text: any; }) {
@@ -36,12 +36,11 @@ exports.getPdfReview = async (req: Request, res: Response) => {
     });
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Review following cover letter: ${text}. Write a short review of the cover letter. Give examples what to improve. The format shoud be: 'Review: review text. Improvement: improvements.'`,
+      prompt: `Review my cover letter: ${req.body.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
       temperature: 1,
       max_tokens: 350,
     });
-    console.log(response.data.choices[0].text);
-    res.status(201).json(response.data.choices[0].text);
+    res.status(201).json({response: response.data.choices[0].text, text: text});
   } catch (err: any) {
     res.status(403).json(err.message);
   }
@@ -51,15 +50,26 @@ exports.getTextReview = async (req: Request, res: Response) => {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Review following cover letter: ${req.body.text}. Write a short review of the cover letter. Give examples what to improve. The format shoud be: 'Review: review text. Improvement: improvements.'`,
+      prompt: `Review my cover letter: ${req.body.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
       temperature: 1,
       max_tokens: 350,
     });
-    console.log(response.data.choices[0].text);
-    res.status(201).json(response.data.choices[0].text);
+    res.status(201).json({response: response.data.choices[0].text, text: req.body.text});
   } catch (err: any) {
     res.status(403).json(err.message);
   }
 };
 
-
+exports.improveCoverLetter = async (req: Request, res: Response) => {
+  try {
+    const response = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: `Improve my cover letter. No comments, only the content: ${req.body.text}.`,
+      temperature: 1,
+      max_tokens: 350,
+    });
+    res.status(201).json(response.data.choices[0].text);
+  } catch (err: any) {
+    res.status(403).json(err.message);
+  }
+};

@@ -23,10 +23,6 @@ import Spinner from './Components/Spinner';
 import CoverLetterBuilder from './Routes/CoverLetterBuilder';
 import CoverLetterReviewer from './Routes/CoverLetterReviewer';
 
-
-
-
-
 function App() {
   const { currentUser, isAuthenticated, isLoading, handleGetUser } = useContext(
     Context
@@ -119,7 +115,9 @@ function App() {
   return (
     <div className='App'>
       {isLoading ? (
-        <Spinner />
+        <div className='mt-96'>
+          <Spinner />
+        </div>
       ) : !isAuthenticated ? (
         <Login />
       ) : currentUser.name === '' ? (

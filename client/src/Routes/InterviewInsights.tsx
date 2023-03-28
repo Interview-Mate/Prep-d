@@ -60,7 +60,7 @@ const InterviewInsights = () => {
               .filter((rating: null) => rating !== null)
         );
         setRatings(filteredRatings);
-        const overall = interviews.flatMap((interview) => interview.overall);
+        const overall = interviews.flatMap((interview: { overall: any; }) => interview.overall);
         setOverallRatings(overall);
       }
     };
@@ -105,7 +105,7 @@ const InterviewInsights = () => {
   };
 
   return (
-    <div className='h-screen w-screen bg-seasalt'>
+    <div>
       <Navbar />
       <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
         <div

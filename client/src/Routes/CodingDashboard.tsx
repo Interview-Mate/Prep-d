@@ -1,13 +1,11 @@
-import ProblemList from "./Coding/ProblemList";
-import Navbar from "../Components/Navbar";
+import ProblemList from './Coding/ProblemList';
+import Navbar from '../Components/Navbar';
 
 const CodingDashboard = () => {
   return (
-    <div className="h-screen w-screen bg-seasalt">
+    <div>
       <Navbar />
-      <div>
-        <ProblemList dashboard={false} />
-      </div>
+      <ProblemList dashboard={false} />
     </div>
   );
 };
