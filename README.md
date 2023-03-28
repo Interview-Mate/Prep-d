@@ -42,7 +42,7 @@ chatGPT_key=xxx
 
 From the root folder, `cd` into the `/server` folder and run `npm i` in order to install all dependencies.
 
-Once this is done, run `npm start` to initiate the server on port 3001.
+Once this is done, run `npm start` to initiate the server on port 4000.
 
 ### Front End
 
