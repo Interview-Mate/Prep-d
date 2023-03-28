@@ -123,19 +123,7 @@ export default function Navbar() {
                 </Menu>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <NavLink
-                        key={item.name}
-                        to={item.href}
-                        className={({ isActive }) =>
-                          isActive
-                            ? "bg-eerie-black text-white rounded-md px-3 py-2 text-base font-medium"
-                            : "text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
-                        }
-                      >
-                        {item.name}
-                      </NavLink>
-                    ))}
+                    
                     <Menu as="div" className="relative ml-3">
                       <div>
                         <Menu.Button className="text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
@@ -187,7 +175,7 @@ export default function Navbar() {
                               </Link>
                             )}
                           </Menu.Item>
-                          <Menu.Item>
+                          {/* <Menu.Item>
                             {({ active }) => (
                               <Link
                                 to="/resumebuilder"
@@ -199,10 +187,23 @@ export default function Navbar() {
                                 Resume Generator
                               </Link>
                             )}
-                          </Menu.Item>
+                          </Menu.Item> */}
                         </Menu.Items>
                       </Transition>
                     </Menu>
+                    {navigation.map((item) => (
+                      <NavLink
+                        key={item.name}
+                        to={item.href}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "bg-eerie-black text-white rounded-md px-3 py-2 text-base font-medium"
+                            : "text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
+                        }
+                      >
+                        {item.name}
+                      </NavLink>
+                    ))}
                   </div>
                 </div>
               </div>

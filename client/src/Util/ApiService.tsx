@@ -311,6 +311,7 @@ export const improveCoverLetter = async (coverLetterRequest: string) => {
       body: JSON.stringify({text: coverLetterRequest}),
     });
     const receivedCoverLetter = await response.json();
+    console.log(receivedCoverLetter);
     return receivedCoverLetter;
   } catch (error) {
     console.error("Error improving cover letter:", error);
