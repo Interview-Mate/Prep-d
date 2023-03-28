@@ -35,16 +35,18 @@ export default function PastInterview({ interview }: { interview: Interview }) {
 
   return (
     <div className="past-interview">
+      <button id="expand-button" onClick={() => setExpand((prev) => !prev)}>
+        <img
+          src={Expand}
+          style={{
+            maxWidth: 20,
+            marginBottom: 5,
+          }}
+          alt="Expand the interview and get more detail"
+        />
+      </button>
       <div className="past-interview-head">
         Your interview for {interview.title} at {interview.company} on {date}
-        <button onClick={() => setExpand((prev) => !prev)}>
-          <img
-            src={Expand}
-            style={{
-              maxWidth: 20,
-            }}
-          />
-        </button>
       </div>
       <div
         className="border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
