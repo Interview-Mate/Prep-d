@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
-import Navbar from "../Components/Navbar";
-import Spinner from "../Components/Spinner";
+import { useState, useEffect } from 'react';
+import Navbar from '../Components/Navbar';
+import Spinner from '../Components/Spinner';
+import CoverLetterReviewerText from '../Components/CoverLetterReviewerText';
 import {
   reviewPdfCoverLetter,
   reviewTextCoverLetter,
   improveCoverLetter,
-} from "../Util/ApiService";
+} from '../Util/ApiService';
 
 function parseReview(reviewStr: string) {
   const ratingMatch = reviewStr.match(/Rating: (\d+)/);
@@ -27,12 +28,14 @@ function parseReview(reviewStr: string) {
 const CoverLetterReviewer = () => {
   const [showPDFUpload, setShowPDFUpload] = useState(false);
   const [showTextUpload, setShowTextUpload] = useState(false);
-  const [textInput, setTextInput] = useState("");
-  const [text, setText] = useState("");
+  const [textInput, setTextInput] = useState('');
+  const [text, setText] = useState('');
   const [rating, setRating] = useState<number | null>(0);
-  const [review, setReview] = useState<string | null>("");
-  const [improvement, setImprovement] = useState<string | null>("");
+  const [review, setReview] = useState<string | null>('');
+  const [improvement, setImprovement] = useState<string | null>('');
   const [loading, setLoading] = useState(false);
+  const [showImprove, setShowImprove] = useState(false);
+  const [coverLetterData, setCoverLetterData] = useState('');
 
   const handlePdfUpload = async (event: {
     preventDefault: () => void;
@@ -41,7 +44,7 @@ const CoverLetterReviewer = () => {
     event.preventDefault();
     setLoading(true);
     const dataForm = new FormData();
-    dataForm.append("file", event.target.file.files[0]);
+    dataForm.append('file', event.target.file.files[0]);
     const response = await reviewPdfCoverLetter(dataForm);
     const { rating, review, improvement } = parseReview(response.response);
     setText(response.text);
@@ -65,7 +68,6 @@ const CoverLetterReviewer = () => {
     setReview(review);
     setImprovement(improvement);
     setLoading(false);
-    console.log(response);
   };
 
   const handleImprove = async (event: {
@@ -75,25 +77,28 @@ const CoverLetterReviewer = () => {
     event.preventDefault();
     setLoading(true);
     const response = await improveCoverLetter(text);
+    setCoverLetterData(response);
+    setShowImprove(true);
+    setLoading(false);
   };
 
   return (
     <div>
       <Navbar />
-      {!loading ? (
-        <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="w-5/6 max-w-md h-full p-10 space-y-8 bg-white rounded-md shadow">
-            {review === "" && !loading && (
-              <div className="max-w-md">
+      {!loading && !showImprove && (
+        <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+          <div className=' h-full p-10 space-y-8 bg-white rounded-md shadow'>
+            {review === '' && !loading && (
+              <div className='max-w-md'>
                 <div>
-                  <h2 className="text-center text-xl mb-5 font-bold">
-                    Review Your Cover Letter
+                  <h2 className='text-center text-xl mb-5 font-bold'>
+                    Review Cover Letter
                   </h2>
                 </div>
 
-                <div className="flex flex-row items-center justify-center text-xl font-bold">
+                <div className='flex flex-row items-center justify-center text-xl font-bold'>
                   <span
-                    className="text-sm m-5 bg-white hover:opacity-75 active:opacity-100 text-african-violet-900 border-african-violet-900 border-solid border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+                    className='text-sm m-5 bg-white hover:opacity-75 active:opacity-100 text-dark-cyan border-dark-cyan border-solid border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer'
                     onClick={() => {
                       setShowPDFUpload(!showPDFUpload);
                       setShowTextUpload(false);
@@ -102,7 +107,7 @@ const CoverLetterReviewer = () => {
                     Upload PDF
                   </span>
                   <span
-                    className="text-sm m-5 bg-white hover:opacity-75 active:opacity-100 text-african-violet-900 border-african-violet-900 border-solid border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+                    className='text-sm m-5 bg-white hover:opacity-75 active:opacity-100 text-dark-cyan border-dark-cyan border-solid border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer'
                     onClick={() => {
                       setShowTextUpload(!showTextUpload);
                       setShowPDFUpload(false);
@@ -113,33 +118,33 @@ const CoverLetterReviewer = () => {
                 </div>
                 {showPDFUpload && (
                   <form
-                    className="mt-8 space-y-6"
-                    action="#"
-                    method="POST"
-                    id="uploadForm"
-                    encType="multipart/form-data"
+                    className='mt-8 space-y-6'
+                    action='#'
+                    method='POST'
+                    id='uploadForm'
+                    encType='multipart/form-data'
                     onSubmit={handlePdfUpload}
                   >
-                    <div className="flex align-middle h-20">
-                      <div className="flex flex-col w-full">
+                    <div className='flex align-middle h-20'>
+                      <div className='flex flex-col w-full'>
                         <label
-                          className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                          htmlFor="file_input"
+                          className='block m-2 text-sm font-medium text-gray-900 dark:text-white'
+                          htmlFor='file_input'
                         >
                           <input
-                            className="block w-full h-10 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            id="file"
-                            name="image"
-                            type="file"
+                            className='block w-full h-10 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                            id='file'
+                            name='image'
+                            type='file'
                           />
                         </label>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-center">
+                    <div className='flex items-center justify-center'>
                       <button
-                        type="submit"
-                        className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
+                        type='submit'
+                        className='w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'
                       >
                         Review
                       </button>
@@ -148,21 +153,21 @@ const CoverLetterReviewer = () => {
                 )}
                 {showTextUpload && (
                   <form
-                    className="mt-8 space-y-6"
-                    action="#"
-                    method="POST"
+                    className='mt-8 space-y-6'
+                    action='#'
+                    method='POST'
                     onSubmit={handleTextUpload}
                   >
-                    <div className="flex align-middle ">
-                      <div className="flex flex-col w-full ">
+                    <div className='flex align-middle '>
+                      <div className='flex flex-col w-full '>
                         <label
-                          className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                          htmlFor="text_input"
+                          className='block m-2 text-sm font-medium text-gray-900 dark:text-white'
+                          htmlFor='text_input'
                         >
                           <textarea
-                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg  bg-gray-50 dark:text-gray-400 active:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            id="text-input"
-                            name="text"
+                            className='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg  bg-gray-50 dark:text-gray-400 active:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                            id='text-input'
+                            name='text'
                             value={textInput}
                             onChange={(
                               event: React.ChangeEvent<HTMLTextAreaElement>
@@ -172,10 +177,10 @@ const CoverLetterReviewer = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-center">
+                    <div className='flex items-center justify-center'>
                       <button
-                        type="submit"
-                        className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
+                        type='submit'
+                        className='w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'
                       >
                         Review
                       </button>
@@ -184,29 +189,29 @@ const CoverLetterReviewer = () => {
                 )}
               </div>
             )}
-            {review !== "" && !loading && (
-              <div className="max-w-xl flex flex-col items-center justify-center">
-                <h2 className="text-center text-xl mb-5 font-bold tracking-tight">
+            {review !== '' && !loading && (
+              <div className='max-w-xl flex flex-col items-center justify-center'>
+                <h2 className='text-center text-xl mb-5 font-bold tracking-tight'>
                   Review
                 </h2>
-                <div className="flex flex-col items-center justify-center text-sm">
+                <div className='flex flex-col items-center justify-center text-sm'>
                   <span>
-                    <span className="font-bold">{rating}</span>/5
+                    <span className='font-bold text-red-500'>{rating}</span>/5
                   </span>
 
-                  <div className="flex flex-row m-5 text-sm">
-                    <div className="m-5 w-1/2">
-                      <span className="font-bold">Review</span> <br />
+                  <div className='flex flex-row m-5 text-sm'>
+                    <div className='m-5 w-1/2'>
+                      <span className='font-bold'>Review</span> <br />
                       {review}
                     </div>
-                    <div className="m-5 w-1/2">
-                      <span className="font-bold">Improvements</span> <br />
+                    <div className='m-5 w-1/2'>
+                      <span className='font-bold'>Improvements</span> <br />
                       {improvement}
                     </div>
                   </div>
                   <button
                     onClick={handleImprove}
-                    className="w-full bg-african-violet-900 hover:opacity-75 active:opacity-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className='w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'
                   >
                     Improve
                   </button>
@@ -215,13 +220,15 @@ const CoverLetterReviewer = () => {
             )}
           </div>
         </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center">
+      )}
+
+      {loading && (
+        <div className='mt-60 flex flex-col items-center justify-center'>
           <Spinner />
-          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight ">
-            Analyzing...
-          </h2>
         </div>
+      )}
+      {showImprove && !loading && (
+        <CoverLetterReviewerText CoverLetterData={coverLetterData} />
       )}
     </div>
   );

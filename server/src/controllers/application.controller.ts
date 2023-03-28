@@ -5,28 +5,28 @@ import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
 // import fixPdfParse from '../asset/PdfParsefixer';
 
-import fs from 'fs';
-import path from 'path';
-const pdfParseIndexPath = path.join('../../node_modules/pdf-parse/index.js');
+// import fs from 'fs';
+// import path from 'path';
+// const pdfParseIndexPath = path.join('../../node_modules/pdf-parse/index.js');
 
 
-fs.readFile(pdfParseIndexPath, 'utf8', (err, data) => {
-  if (err) {
-    console.error(`Error reading pdf-parse index.js: ${err}`);
-    return;
-  }
+// fs.readFile(pdfParseIndexPath, 'utf8', (err, data) => {
+//   if (err) {
+//     console.error(`Error reading pdf-parse index.js: ${err}`);
+//     return;
+//   }
 
-  const modifiedData = data.replace(/let isDebugMode = !module\.parent;/, 'let isDebugMode = false;');
+//   const modifiedData = data.replace(/let isDebugMode = !module\.parent;/, 'let isDebugMode = false;');
 
-  fs.writeFile(pdfParseIndexPath, modifiedData, (err) => {
-    if (err) {
-      console.error(`Error writing pdf-parse index.js: ${err}`);
-      return;
-    }
+//   fs.writeFile(pdfParseIndexPath, modifiedData, (err) => {
+//     if (err) {
+//       console.error(`Error writing pdf-parse index.js: ${err}`);
+//       return;
+//     }
 
-    console.log('pdf-parse isDebugMode set to false');
-  });
-});
+//     console.log('pdf-parse isDebugMode set to false');
+//   });
+// });
 
 import pdf from 'pdf-parse';
 import { Configuration, OpenAIApi } from 'openai';
@@ -69,17 +69,14 @@ const createResume = async (req: Request, res: Response) => {
 
 const getPdfReview = async (req: Request | any, res: Response) => {
   try {
-    let text;
-    // pdf(req.files.file.data).then(function (data: { text: any; }) {
-    //   text = data.text;
-    // });
+    let data = await pdf(req.files.file.data)
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Review my cover letter: ${req.body.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
+      prompt: `Review my cover letter: ${data.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
       temperature: 1,
       max_tokens: 350,
     });
-    res.status(201).json({response: response.data.choices[0].text, text: text});
+    res.status(201).json({response: response.data.choices[0].text, text: data.text});
   } catch (err: any) {
     res.status(403).json(err.message);
   }
@@ -103,7 +100,7 @@ const improveCoverLetter = async (req: Request, res: Response) => {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Improve my cover letter. No comments, only the content: ${req.body.text}.`,
+      prompt: `Improve my cover letter. No comments, only the content, but make it a complete cover letter, including adress and greeting: ${req.body.text}.`,
       temperature: 1,
       max_tokens: 350,
     });

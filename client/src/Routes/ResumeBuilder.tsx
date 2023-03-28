@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
-import ResumeBuilderForm from './ResumeBuilder/ResumeBuilderForm';
-import ResumeBuilderText from './ResumeBuilder/ResumeBuilderText';
+import ResumeBuilderForm from '../Components/ResumeBuilder/ResumeBuilderForm';
+import ResumeBuilderText from '../Components/ResumeBuilder/ResumeBuilderText';
 import * as ApiService from '../Util/ApiService';
 import Spinner from '../Components/Spinner';
 
@@ -69,11 +69,11 @@ const ResumeBuilder = () => {
   }, [ResumeData]);
 
   return (
-    <div className='h-screen w-screen bg-seasalt'>
+    <div className='h-screen w-screen'>
       <Navbar />
 
       <div className='flex flex-row h-full w-full'>
-        <div className='w-1/4 bg-black'>
+        <div className='w-1/4'>
           <ResumeBuilderForm
             ResumeData={ResumeData}
             setResumeData={setResumeData}

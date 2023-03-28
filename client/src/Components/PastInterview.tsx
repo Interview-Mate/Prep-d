@@ -39,6 +39,13 @@ export default function PastInterview({ interview }: { interview: Interview }) {
     return true;
   }
 
+  const expandInterview = () => {
+    setExpand((prev) => !prev);
+  };
+
+  const regex1 = /Rating:[\s\S]*/;
+  const regex2 = /{[^{}]*}/g;
+
   return (
     <div className="past-interview">
       <button id="expand-button" onClick={() => setExpand((prev) => !prev)}>
@@ -54,44 +61,46 @@ export default function PastInterview({ interview }: { interview: Interview }) {
       <div className="past-interview-head">
         Your interview for {interview.title} at {interview.company} on {date}
       </div>
-      <div
-        className='shadow rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col'
-        style={{ background: 'rgba(252, 252, 252, 1)' }}
-      >
-        {averageRating.length > 0 && (
-          <h2 className='text-sm'>
-            Average answer rating{' '}
-            <span className='text-sm font-bold'>
-              {Math.round(
-                averageRating.reduce((acc, curr) => acc + curr, 0) /
-                  averageRating.length
-              )}
+      {averageRating.length > 0 && (
+        <div className='shadow rounded-md mt-5  p-4 mb-5  -space-y-px  h-4/5 min-h-max w-full flex flex-col'>
+          <h2 className='text-sm m-2'>
+            <span className=' font-bold'>
+              Average answer rating
+              <span className='text-red-500'>
+                {' '}
+                {Math.round(
+                  averageRating.reduce((acc, curr) => acc + curr, 0) /
+                    averageRating.length
+                )}{' '}
+              </span>
             </span>
+            / 5
           </h2>
-        )}
-        {overall && (
-          <>
-            <h2 className='text-sm'>
-              Overall rating{' '}
-              <span className='text-sm font-bold'>
-                {overall.overall_number}
-              </span>
-            </h2>
-            <h2 className='text-sm  font-bold'>
-              Feedback
-              <br />
-              <span className='text-sm font-bold'>
-                {overall.overall_feedback}
-              </span>
-            </h2>
-            <h2 className='text-sm  font-bold'>
-              Suggestions
-              <br />
-              <span className='text-sm'>{overall.suggestions}</span>
-            </h2>
-          </>
-        )}
-      </div>
+
+          {overall && (
+            <div className='text-sm'>
+              <h2 className=' ml-2 mb-2'>
+                <span className='font-bold'>
+                  Overall rating
+                  <span className='text-red-500'>
+                    {' '}
+                    {overall.overall_number}{' '}
+                  </span>
+                </span>
+                / 5
+              </h2>
+
+              <h2 className=' ml-2 font-bold'>Feedback</h2>
+
+              <div className='ml-2 mb-2'>{overall.overall_feedback}</div>
+
+              <h2 className=' ml-2 font-bold'>Suggestions</h2>
+
+              <div className=' ml-2'>{overall.suggestions}</div>
+            </div>
+          )}
+        </div>
+      )}
       <div className='past-interview-body'>
         {expand
           ? cleanArr.map((convo: any, index: number) => (
@@ -102,6 +111,8 @@ export default function PastInterview({ interview }: { interview: Interview }) {
                 {isJsonString(convo.content)
                   ? JSON.parse(convo.content).rating_feedback
                   : convo.content
+                      .replace(regex1, '')
+                      .replace(regex2, '')
                       .replace(
                         'Rate my response out of 5 with a comment. Then continue to the next question. return this as a JSON object without plus signs in this format {rating_number: input the rating you gave me as a number , rating_feedback: ',
                         ''

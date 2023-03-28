@@ -18,7 +18,6 @@ import PastInterviews from './Routes/PastInterviews';
 import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
-import InterviewInsights from './Routes/InterviewInsights';
 import Spinner from './Components/Spinner';
 import CoverLetterBuilder from './Routes/CoverLetterBuilder';
 import CoverLetterReviewer from './Routes/CoverLetterReviewer';
@@ -89,11 +88,6 @@ function App() {
     {
       path: "/insights",
       element: <AuthenticationGuard component={Insights} />,
-      errorElement: <Error />,
-    },
-    {
-      path: "/interviewinsights",
-      element: <AuthenticationGuard component={InterviewInsights} />,
       errorElement: <Error />,
     },
     {

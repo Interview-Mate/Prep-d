@@ -6,7 +6,6 @@ import {
   View,
   StyleSheet,
   Font,
-  PDFDownloadLink,
 } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
@@ -41,7 +40,7 @@ Font.register({
   src: "https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf",
 });
 
-function ResumeBuilderText({ ResumeData }: any) {
+function CoverLetterBuilderText({ CoverLetterData }: any) {
   const {
     firstName,
     lastName,
@@ -51,8 +50,8 @@ function ResumeBuilderText({ ResumeData }: any) {
     city,
     zipCode,
     textBody,
-  } = ResumeData;
-  // center the text in the middle of the page
+  } = CoverLetterData;
+
   return (
     <div className="flex justify-center">
       <PDFViewer style={{ width: "700px", height: "700px" }}>
@@ -83,4 +82,4 @@ function ResumeBuilderText({ ResumeData }: any) {
   );
 }
 
-export default ResumeBuilderText;
+export default CoverLetterBuilderText;

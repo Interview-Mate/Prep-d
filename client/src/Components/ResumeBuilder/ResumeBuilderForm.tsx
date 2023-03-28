@@ -1,10 +1,6 @@
-import { Accordion } from "flowbite-react";
+import { Accordion } from 'flowbite-react';
 
-function ResumeBuilderForm({
-  ResumeData,
-  setResumeData,
-  generatePDF,
-}: any) {
+function ResumeBuilderForm({ ResumeData, setResumeData, generatePDF }: any) {
   const handleKeywordChange = (event: { target: { value: any } }) => {
     const keyword = event.target.value;
 
@@ -29,22 +25,24 @@ function ResumeBuilderForm({
   };
 
   return (
-    <div className="shadow mr-8 p-4 h-full min-h-max w-full flex flex-col bg-white text-sm">
-      <form onSubmit={handleSubmit} className="mb-0">
-        <Accordion>
+    <div className='shadow mr-8 p-4 h-full min-h-max w-full flex flex-col bg-white text-sm'>
+      <h2 className='text-center text-xl mb-5 font-bold'>Resume Generator</h2>
+      <form onSubmit={handleSubmit} className='mb-0'>
+      <Accordion collapseAll={true}>
           <Accordion.Panel>
             <Accordion.Title>Your Details</Accordion.Title>
             <Accordion.Content>
               <label
-                className="block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1"
-                htmlFor="firstName"
+                className='block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1'
+                htmlFor='firstName'
               >
                 First Name
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="firstName"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='firstName'
                 value={ResumeData.firstName}
                 onChange={(e) =>
                   setResumeData({
@@ -55,15 +53,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="lastName"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='lastName'
               >
                 Last Name
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="lastName"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='lastName'
                 value={ResumeData.lastName}
                 onChange={(e) =>
                   setResumeData({
@@ -74,15 +73,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="email"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='email'
               >
                 Email
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="email"
-                id="email"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='email'
+                id='email'
                 value={ResumeData.email}
                 onChange={(e) =>
                   setResumeData({
@@ -93,15 +93,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="phoneNumber"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='phoneNumber'
               >
                 Phone Number
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="tel"
-                id="phoneNumber"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='tel'
+                id='phoneNumber'
                 value={ResumeData.phoneNumber}
                 onChange={(e) =>
                   setResumeData({
@@ -112,15 +113,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="street"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='street'
               >
                 Street
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="street"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='street'
                 value={ResumeData.street}
                 onChange={(e) =>
                   setResumeData({
@@ -131,15 +133,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="city"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='city'
               >
                 City
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="city"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='city'
                 value={ResumeData.city}
                 onChange={(e) =>
                   setResumeData({
@@ -150,15 +153,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="zipCode"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='zipCode'
               >
                 Zip Code
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="zipCode"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='zipCode'
                 value={ResumeData.zipCode}
                 onChange={(e) =>
                   setResumeData({
@@ -168,15 +172,16 @@ function ResumeBuilderForm({
                 }
               />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="state"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='state'
               >
                 State
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2 mb-3 text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="state"
+                className='shadow appearance-none border rounded w-full py-1 px-2 mb-3 text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='state'
                 value={ResumeData.city}
                 onChange={(e) =>
                   setResumeData({
@@ -191,15 +196,16 @@ function ResumeBuilderForm({
             <Accordion.Title>Job details</Accordion.Title>
             <Accordion.Content>
               <label
-                className="block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1"
-                htmlFor="jobTitle"
+                className='block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1'
+                htmlFor='jobTitle'
               >
                 Job Title
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="jobTitle"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='jobTitle'
                 value={ResumeData.jobTitle}
                 onChange={(e) =>
                   setResumeData({
@@ -210,15 +216,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Position
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="position"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='position'
                 value={ResumeData.position}
                 onChange={(e) =>
                   setResumeData({
@@ -229,15 +236,16 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Company
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="company"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='text'
+                id='company'
                 value={ResumeData.company}
                 onChange={(e) =>
                   setResumeData({
@@ -248,16 +256,17 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Start Date
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="date"
-                id="startDate"
-                min={new Date().toISOString().split("T")[0]}
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
+                type='date'
+                id='startDate'
+                min={new Date().toISOString().split('T')[0]}
                 value={ResumeData.startDate}
                 onChange={(e) =>
                   setResumeData({
@@ -268,14 +277,15 @@ function ResumeBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Description
                 <textarea
-                  className="shadow appearance-none border rounded w-full py-1 px-2 mt-2 mb-3 text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-normal"
+                  className='shadow appearance-none border rounded w-full py-1 px-2 mt-2 mb-3 text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-normal'
+                  required
                   value={ResumeData.description}
-                  id="description"
+                  id='description'
                   onChange={(e) =>
                     setResumeData({
                       ...ResumeData,
@@ -283,7 +293,7 @@ function ResumeBuilderForm({
                     })
                   }
                 />
-              </label>{" "}
+              </label>{' '}
               <br />
             </Accordion.Content>
           </Accordion.Panel>
@@ -291,15 +301,16 @@ function ResumeBuilderForm({
             <Accordion.Title>Work experience</Accordion.Title>
             <Accordion.Content>
               <label
-                className="block text-gray-700 text-sm font-bold mt-3 mb-2 ml-1"
-                htmlFor="workExperience"
+                className='block text-gray-700 text-sm font-bold mt-3 mb-2 ml-1'
+                htmlFor='workExperience'
               >
                 Work Experience
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
                 value={ResumeData.workExperience}
-                id="workExperience"
+                id='workExperience'
                 rows={5}
                 onChange={(e) =>
                   setResumeData({
@@ -307,18 +318,19 @@ function ResumeBuilderForm({
                     workExperience: e.target.value,
                   })
                 }
-              />{" "}
+              />{' '}
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="Qualification"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='Qualification'
               >
                 Qualification
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3  mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className='shadow appearance-none border rounded w-full py-2 px-3  mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
                 value={ResumeData.qualification}
-                id="Qualification"
+                id='Qualification'
                 rows={3}
                 onChange={(e) =>
                   setResumeData({
@@ -326,41 +338,39 @@ function ResumeBuilderForm({
                     qualification: e.target.value,
                   })
                 }
-              />{" "}
+              />{' '}
             </Accordion.Content>
           </Accordion.Panel>
           <Accordion.Panel>
             <Accordion.Title>Keywords</Accordion.Title>
             <Accordion.Content>
-              <div className="mt-2  ">
+              <div className='mt-2  '>
                 {ResumeData.keywords.map((keyword: any) => (
                   <label
                     key={keyword}
                     htmlFor={keyword}
-                    className="block text-gray-700 text-base mb-2"
+                    className='block text-gray-700 text-base mb-2'
                   >
                     <input
-                      className="mr-2 "
+                      className='mr-2 '
                       id={keyword}
-                      type="checkbox"
+                      type='checkbox'
                       value={keyword}
-                      checked={ResumeData.selectedKeywords.includes(
-                        keyword
-                      )}
+                      checked={ResumeData.selectedKeywords.includes(keyword)}
                       onChange={handleKeywordChange}
                     />
-                    <span className="ml-2">{keyword}</span>
+                    <span className='ml-2'>{keyword}</span>
                   </label>
                 ))}
-              </div>{" "}
+              </div>{' '}
               <br />
             </Accordion.Content>
           </Accordion.Panel>
         </Accordion>
         <br />
 
-        <div className="flex justify-center">
-          <button className="form-button" type="submit">
+        <div className='flex justify-center'>
+          <button className='form-button' type='submit'>
             Generate
           </button>
         </div>
