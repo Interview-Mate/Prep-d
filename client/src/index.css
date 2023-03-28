@@ -35,6 +35,7 @@ code {
 }
 
 .login-container {
+  overflow: hidden;
   height: 100vh;
   margin:0;
   align-items: center;
