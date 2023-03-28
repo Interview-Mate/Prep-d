@@ -132,7 +132,7 @@ function addHintForChatGPT (inp:String, question_count: number){
 //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
 //? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
 //adds user answer to DB => returnts next question from chatGPT
-exports.addAnswerToInterview = async (req: Request, res: Response, question_count: number) => {
+const addAnswerToInterview = async (req: Request, res: Response, question_count: number) => {
   try {
     const interview_id = req.params.id;
     const { answer_text, answer_audio_url, question_count } = req.body;
