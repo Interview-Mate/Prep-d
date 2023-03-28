@@ -32,7 +32,7 @@ const CodeDetails = ({
   };
 
   return (
-    <div className=' mr-8 p-6 w-1/4 h-full  space-y-6 bg-white rounded-lg shadow '>
+    <div className='mr-8 p-6 h-full w-full space-y-6 bg-white rounded-lg shadow text-sm'>
       <div className='text-right'>
         Score: <span className='font-bold'>{score}</span>
       </div>

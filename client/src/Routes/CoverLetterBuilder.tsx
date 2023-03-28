@@ -1,27 +1,27 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
-import CVBuilderForm from './CoverLetterBuilder/CoverLetterBuilderForm';
-import CVBuilderText from './CoverLetterBuilder/CoverLetterBuilderText';
+import CVBuilderForm from '../Components/CoverLetterBuilder/CoverLetterBuilderForm';
+import CVBuilderText from '../Components/CoverLetterBuilder/CoverLetterBuilderText';
 import * as ApiService from '../Util/ApiService';
+import Spinner from '../Components/Spinner';
 
-const CoverLetter = () => {
+const CoverLetterBuilder = () => {
   const [showPDF, setShowPDF] = useState(false);
   const [CoverLetterData, setCoverLetterData] = useState({
-    firstName: 'Darian',
-    lastName: 'Piro',
-    email: 'darian@piro.com',
-    phoneNumber: '01577 1234567',
-    street: 'Examplestr. 8',
-    zipCode: '12345',
-    city: 'Berlin',
-    workExperience:
-      'I can center a div.',
-    qualification: 'Codeworks graduate',
-    position: 'Junior',
-    jobTitle: 'Software Engineer',
-    company: 'Google',
-    startDate: '2023-05-01',
-    description: 'Full stack web developer',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    street: '',
+    zipCode: '',
+    city: '',
+    workExperience: '',
+    qualification: '',
+    position: '',
+    jobTitle: '',
+    company: '',
+    startDate: '',
+    description: '',
     keywords: [
       'Agile',
       'Leadership',
@@ -83,10 +83,8 @@ const CoverLetter = () => {
           {loading && (
             <div className='w-full h-full flex justify-center items-center'>
               <div className='flex flex-col justify-center items-center'>
-                <div className='animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900'></div>
-                <p className='mt-10 text-2xl font-bold'>
-                  Generating cover letter...
-                </p>
+                <Spinner />
+                <p className='mt-10 text-2xl font-bold'>Generating...</p>
               </div>
             </div>
           )}
@@ -99,4 +97,4 @@ const CoverLetter = () => {
   );
 };
 
-export default CoverLetter;
+export default CoverLetterBuilder;

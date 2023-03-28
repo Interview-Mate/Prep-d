@@ -2,10 +2,10 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import Editor from '@monaco-editor/react';
 import Frame from 'react-frame-component';
-import Sandbox from './Coding/Sandbox';
+import Sandbox from '../Components/Coding/Sandbox';
 import Insights from './Insights';
-import CodeFooter from './Coding/CodeFooter';
-import CodeDetails from './Coding/CodeDetails';
+import CodeFooter from '../Components/Coding/CodeFooter';
+import CodeDetails from '../Components/Coding/CodeDetails';
 import Navbar from '../Components/Navbar';
 import { useContext } from 'react';
 import { Context } from '../Context';
@@ -190,20 +190,21 @@ function Coding() {
   return (
     <div className='h-screen w-screen'>
       <Navbar />
-      <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
+      <div className='h-full w-full'>
         {problem && (number as number) < problems.length && (
           <div className='flex items-center justify-center h-full w-full'>
-            <CodeDetails
-              problem={problem}
-              score={score}
-              tests={tests}
-              solved={solved}
-              error={error}
-              runtime={runtime}
-              solveTime={solveTime}
-            />
-
-            <div className='mx-4 text-center w-3/4'>
+            <div className='w-1/4 h-full'>
+              <CodeDetails
+                problem={problem}
+                score={score}
+                tests={tests}
+                solved={solved}
+                error={error}
+                runtime={runtime}
+                solveTime={solveTime}
+              />
+            </div>
+            <div className='p-20 m-5 w-3/4'>
               <Editor
                 className='border p-0.5 pt-5 pr-2  bg-white rounded-lg shadow '
                 height='65vh'

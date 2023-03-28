@@ -1,7 +1,7 @@
 import Interview from "../Assets/InterviewMock.JPG";
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-import ProblemList from "./Coding/ProblemList";
+import ProblemList from "../Components/Coding/ProblemList";
 
 export default function Dashboard() {
   return (

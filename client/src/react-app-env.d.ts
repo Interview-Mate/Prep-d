@@ -190,6 +190,7 @@ interface Message {
 }
 
 interface Interview {
+  overall: any;
   _id: string;
   date: Date;
   company: string;

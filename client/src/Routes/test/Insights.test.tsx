@@ -1,5 +1,5 @@
 import { render, act } from '@testing-library/react';
-import Insights from '../Insights';
+import Insights from '../CodeInsights';
 
 describe('CodeInsights component', () => {
   HTMLCanvasElement.prototype.getContext = () => {
