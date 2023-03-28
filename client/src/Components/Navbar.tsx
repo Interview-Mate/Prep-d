@@ -39,14 +39,14 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <Link to="/dashboard">
+                  <Link to="/home" aria-label="Go back to Prep'd homepage">
                     <img
                       className="block h-10 w-auto mr-10 lg:hidden"
                       src={Logo}
                       alt="Prep'd"
                     />
                   </Link>
-                  <Link to="/dashboard">
+                  <Link to="/home" aria-label="Go back to Prep'd homepage">
                     <img
                       className="hidden h-10 w-auto mr-10 lg:block"
                       src={Logo}
