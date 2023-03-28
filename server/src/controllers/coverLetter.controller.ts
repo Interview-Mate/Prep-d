@@ -1,6 +1,5 @@
 import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
-import fs from 'fs';
 import pdf from 'pdf-parse';
 import { Configuration, OpenAIApi } from 'openai';
 import { config } from 'dotenv';
@@ -28,7 +27,7 @@ const createCoverLetter = async (req: Request, res: Response) => {
   }
 };
 
-exports.getPdfReview = async (req: Request | any, res: Response) => {
+const getPdfReview = async (req: Request | any, res: Response) => {
   try {
     let text;
     pdf(req.files.file.data).then(function (data: { text: any; }) {
@@ -46,7 +45,7 @@ exports.getPdfReview = async (req: Request | any, res: Response) => {
   }
 };
 
-exports.getTextReview = async (req: Request, res: Response) => {
+const getTextReview = async (req: Request, res: Response) => {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
@@ -60,7 +59,7 @@ exports.getTextReview = async (req: Request, res: Response) => {
   }
 };
 
-exports.improveCoverLetter = async (req: Request, res: Response) => {
+const improveCoverLetter = async (req: Request, res: Response) => {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
@@ -72,4 +71,12 @@ exports.improveCoverLetter = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(403).json(err.message);
   }
+};
+
+
+export {
+  createCoverLetter,
+  getPdfReview,
+  getTextReview,
+  improveCoverLetter,
 };
