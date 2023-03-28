@@ -71,10 +71,10 @@ function CoverLetterBuilderText({ CoverLetterData }: any) {
               <View style={{ marginTop: 10 }}>
                 <Text style={styles.body}>{textBody}</Text>
               </View>
-              <Text style={styles.body}>Best regards,</Text>
+              {/* <Text style={styles.body}>Best regards,</Text>
               <Text style={styles.body}>
                 {firstName} {lastName}
-              </Text>
+              </Text> */}
             </View>
           </Page>
         </Document>

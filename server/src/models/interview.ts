@@ -15,9 +15,6 @@ const interviewSchema = new mongoose.Schema({
 
   conversation: [{
       role: String,
-      feedback: String, //?
-      rating: Number,   //?
-      next_question: String, //?
       cloudinary_url: String,
       content: String,
     },

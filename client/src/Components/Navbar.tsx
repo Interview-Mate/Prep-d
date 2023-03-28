@@ -13,10 +13,7 @@ export default function Navbar() {
   const { currentUser } = useContext(Context) as any;
   const { logout } = useAuth0();
 
-  const navigation = [
-    { name: "Past Interviews", href: "/pastinterviews", className: "" },
-    { name: "Insights", href: "/insights", className: "" },
-  ];
+  const navigation = [{ name: "Insights", href: "/insights", className: "" }];
 
   function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
@@ -58,7 +55,7 @@ export default function Navbar() {
                 </div>
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
+                    <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
                       Interview Practice
                       <img
                         src={Arrow}
@@ -107,6 +104,19 @@ export default function Navbar() {
                           </Link>
                         )}
                       </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to="/pastinterviews"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                          >
+                            Past Interviews
+                          </Link>
+                        )}
+                      </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -125,11 +135,10 @@ export default function Navbar() {
                         {item.name}
                       </NavLink>
                     ))}
-
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <Menu.Button className="text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
-                          Useful Tools
+                        <Menu.Button className="text-white hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium">
+                          Build Application
                           <img
                             src={Arrow}
                             alt="Arrow down"
@@ -154,13 +163,26 @@ export default function Navbar() {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to="/coverletter"
+                                to="/coverletterreviewer"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Cover Letter Builder
+                                Cover Letter Reviewer
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/coverletterbuilder"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Cover Letter Generator
                               </Link>
                             )}
                           </Menu.Item>
@@ -173,7 +195,7 @@ export default function Navbar() {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Resume Builder
+                                Resume Generator
                               </Link>
                             )}
                           </Menu.Item>
@@ -183,6 +205,7 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
+
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"

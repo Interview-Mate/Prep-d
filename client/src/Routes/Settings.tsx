@@ -22,7 +22,10 @@ export default function Settings() {
     if (formJson.image.name !== '') {
       const formData = new FormData();
       formData.append('file', formJson.image);
-      formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET as string);
+      formData.append(
+        'upload_preset',
+        process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET as string
+      );
       const POST_URL = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`;
       const response = await fetch(`${POST_URL}`, {
         method: 'POST',
@@ -42,12 +45,12 @@ export default function Settings() {
   };
 
   return (
-    <div className='h-screen w-screen bg-seasalt'>
+    <div>
       <Navbar />
-      <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black'>
-        <div className='w-full max-w-md space-y-8'>
+      <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+        <div className='w-1/2 max-w-md  p-10 space-y-8 bg-white rounded-md shadow'>
           <div>
-            <h2 className='text-center text-3xl font-bold tracking-tight '>
+            <h2 className='text-center text-2xl font-bold tracking-tight'>
               Settings
             </h2>
           </div>
@@ -124,7 +127,7 @@ export default function Settings() {
                   }
                 />
               </div>
-              <div className='w-1/2'>
+              <div className='w-full'>
                 {selectedPicture && (
                   <img
                     src={URL.createObjectURL(selectedPicture)}

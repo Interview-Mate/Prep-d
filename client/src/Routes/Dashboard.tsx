@@ -5,7 +5,7 @@ import ProblemList from "./Coding/ProblemList";
 
 export default function Dashboard() {
   return (
-    <div className="h-screen w-screen bg-seasalt">
+    <div className="h-screen w-screen ">
       <Navbar />
       <div className="dashboard-container">
         <div className="dashboard-subtitles">Train your coding skills</div>

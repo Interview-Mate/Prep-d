@@ -108,7 +108,7 @@ const Insights = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-seasalt">
+    <div>
       <Navbar />
       <h2 className="form-title">Insights</h2>
       <div className="p-20 h-4/5 w-full transition duration-200 ease-in-out">
@@ -182,7 +182,7 @@ const Insights = () => {
                   </h3>
                 )}
               </div>
-              <div className="flex flex-row items-center justify-center  h-full w-2/4 m-5">
+              <div className="w-2/3 h-full m-5">
                 <Line options={options} data={data} />
               </div>
             </div>
