@@ -14,7 +14,7 @@ import { Line } from 'react-chartjs-2';
 import { getInterviews } from '../Util/ApiService';
 import { useContext } from 'react';
 import { Context } from '../Context';
-import Navbar from '../Components/Navbar';
+import { Card } from 'flowbite-react';
 
 const level: Dict = {
   1: 'Beginner',
@@ -61,13 +61,20 @@ const InterviewInsights = () => {
                 .filter((rating: null) => rating !== null)
           );
           setRatings(filteredRatings);
-          const overall = interviews.flatMap(
-            (interview: { overall: any }) => interview.overall
-          );
-          setOverallRatings(overall);
+          const overallRatings: number[] = [];
+          interviews.forEach((interview: { overall: any[] }) => {
+            if (
+              interview.overall.length !== 0 &&
+              isJsonString(interview.overall[0])
+            ) {
+              overallRatings.push(
+                JSON.parse(interview.overall[0]).overall_number
+              );
+            }
+          });
+          setOverallRatings(overallRatings);
         }
       }
-      // console.log(interviews)
     };
     fetchData();
   }, []);
@@ -106,54 +113,68 @@ const InterviewInsights = () => {
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
+      {
+        label: 'Overall rating',
+        data: overallRatings,
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
     ],
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm'>
-        <div className='w-fit	  p-10 space-y-8 bg-white rounded-lg shadow '>
-          {interviews.length === 0 && (
-            <div className='flex flex-col items-center justify-center h-full'>
-              <h1 className='text-lg font-bold'>
-                You have not done any interviews yet
-              </h1>
-              <h2 className='text-lg mt-2'>
-                Complete an interview to see your feedback
-              </h2>
-            </div>
-          )}
-          {interviews.length !== 0 && ratings?.length !== 0 && (
-            <div className='flex flex-row items-center justify-center h-full'>
-              <div className='flex flex-col items-center justify-center w-1/4'>
-                <h2 className='text-sm '>Completed interviews</h2>
-                <h3 className='text-sm font-bold'>{interviews.length}</h3>
-                <h2 className='text-sm mt-5'>Average answer rating</h2>
+    <div className='w-1/2 h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm'>
+      <div className='w-full h-full p-10 space-y-8 bg-white rounded-lg shadow '>
+        <h2 className='text-center text-xl mb-5 font-bold'>
+          Interview Insights
+        </h2>
+        {interviews.length === 0 && (
+          <div className='flex flex-col items-center justify-center h-full'>
+            <h1 className='text-lg font-bold'>
+              You have not done any interviews yet
+            </h1>
+            <h2 className='text-lg mt-2'>
+              Complete an interview to see your feedback
+            </h2>
+          </div>
+        )}
+        {interviews.length !== 0 && ratings?.length !== 0 && (
+          <div className='flex flex-col items-center justify-center h-full'>
+            <div className='flex flex-row'>
+              <Card>
+                <h2 className='font-bold'>Interviews</h2>
+                <h3 className='font-bold text-red-500'>{interviews.length}</h3>
+              </Card>
+              <Card>
+                <h2 className='font-bold'>Average Answer Rating</h2>
                 {ratings && (
-                  <h3 className='text-sm font-bold'>
+                  <h3 className='font-bold text-red-500'>
                     {Math.round(
                       ratings.reduce((acc, curr) => acc + curr, 0) /
                         ratings.length
                     )}
                   </h3>
                 )}
-                <h2 className='text-sm mt-5'>Average overall rating</h2>
-                {overallRatings && (
-                  <h3 className='text-sm font-bold'>
+              </Card>
+              <Card>
+                <h2 className='font-bold'>Average Overall Rating</h2>
+                {overallRatings.length > 0 && (
+                  <h3 className='font-bold text-red-500'>
                     {Math.round(
                       overallRatings.reduce((acc, curr) => acc + curr, 0) /
                         overallRatings.length
                     )}
                   </h3>
                 )}
-              </div>
-              <div className='flex flex-row items-center justify-center  h-full w-2/4 m-5'>
-                <Line options={options} data={data} />
-              </div>
+              </Card>
             </div>
-          )}
-        </div>
+            <br />
+            <br />
+            <div className='w-full h-full mt-5'>
+              <Line options={options} data={data} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

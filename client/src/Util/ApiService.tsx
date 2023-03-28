@@ -254,6 +254,22 @@ export const createCoverLetter = async (coverLetterRequest: any) => {
   }
 };
 
+export const createResume = async (resumeRequest: any) => {
+  try {
+    const response = await fetch(`${BASE_URL}/create-resume`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resumeRequest),
+    });
+    const receivedResume = await response.json();
+    return receivedResume;
+  } catch (error) {
+    console.error("Error creating resume:", error);
+  }
+};
+
 export const reviewPdfCoverLetter = async (pdf: FormData) => {
   try {
     const response = await fetch(`${BASE_URL}/get-pdf-review`, {
@@ -269,7 +285,6 @@ export const reviewPdfCoverLetter = async (pdf: FormData) => {
 };
 
 export const reviewTextCoverLetter = async (coverLetterRequest: string) => {
-  console.log("coverLetterRequest", coverLetterRequest);
   try {
     const response = await fetch(`${BASE_URL}/get-text-review`, {
       method: "POST",
@@ -286,14 +301,14 @@ export const reviewTextCoverLetter = async (coverLetterRequest: string) => {
   }
 }
 
-export const improveCoverLetter = async (coverLetterRequest: any) => {
+export const improveCoverLetter = async (coverLetterRequest: string) => {
   try {
     const response = await fetch(`${BASE_URL}/improve-cover-letter`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(coverLetterRequest),
+      body: JSON.stringify({text: coverLetterRequest}),
     });
     const receivedCoverLetter = await response.json();
     return receivedCoverLetter;

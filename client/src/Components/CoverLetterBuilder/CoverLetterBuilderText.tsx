@@ -6,7 +6,6 @@ import {
   View,
   StyleSheet,
   Font,
-  PDFDownloadLink,
 } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
@@ -52,7 +51,7 @@ function CoverLetterBuilderText({ CoverLetterData }: any) {
     zipCode,
     textBody,
   } = CoverLetterData;
-  // center the text in the middle of the page
+
   return (
     <div className="flex justify-center">
       <PDFViewer style={{ width: "700px", height: "700px" }}>
