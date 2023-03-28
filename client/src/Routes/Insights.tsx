@@ -51,7 +51,7 @@ const Insights = () => {
   }, []);
 
   useEffect(() => {
-    if(!allSolvedProblems.length) return;
+    if (!allSolvedProblems.length) return;
 
     setUsersAverageSolveTime(
       solvedProblems.reduce((acc, curr) => acc + curr.solveTime, 0) /
@@ -62,8 +62,7 @@ const Insights = () => {
       allSolvedProblems.reduce((acc, curr) => acc + curr.solveTime, 0) /
         allSolvedProblems.length
     );
-
-    
+    console.log(usersAverageSolveTime, allAverageSolveTimes);
   }, [allSolvedProblems]);
 
   ChartJS.register(
@@ -110,34 +109,38 @@ const Insights = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-seasalt">
+    <div>
       <Navbar />
-      <div className="p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out">
-        <div
-          className="border border-teal-600 rounded-md mt-5 p-4 h-4/5 min-h-max w-full flex flex-col"
-          style={{ background: "rgba(252, 252, 252, 1)" }}
-        >
+      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm">
+        <div className="w-fit	  p-10 space-y-8 bg-white rounded-lg shadow ">
+          <h2 className="text-center text-xl mb-5 font-bold">
+            Coding Insights
+          </h2>
           {solvedProblems.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full">
-              <h1 className="text-2xl font-bold">You have not solved any problems yet</h1>
-              <h2 className="text-xl mt-5">Solve some problems to see your progress</h2>
+              <h1 className="text-lg font-bold">
+                You have not solved any problems yet
+              </h1>
+              <h2 className="text-lg mt-2">
+                Do a coding challenge to see your progress
+              </h2>
             </div>
           )}
           {solvedProblems.length !== 0 && usersAverageSolveTime !== 0 && (
             <div className="flex flex-row items-center justify-center h-full">
               <div className="flex flex-col items-center justify-center w-1/4">
-                <h2 className="text-sm ">Completed challenges:</h2>
-                <h3 className="text-sm font-bold">{solvedProblems.length}</h3>
-                <h2 className="text-sm mt-5">Score:</h2>
+                <h2 className="text-base ">Completed challenges:</h2>
+                <h3 className="text-base font-bold">{solvedProblems.length}</h3>
+                <h2 className="text-base mt-5">Score:</h2>
 
-                <h3 className="text-sm font-bold">
+                <h3 className="text-base font-bold">
                   {solvedProblems.reduce(
                     (acc, curr) => acc + curr.exercise!.level,
                     0
                   ) * 100}
                 </h3>
-                <h2 className="text-sm mt-5">Your level: </h2>
-                <h3 className="text-sm font-bold">
+                <h2 className="text-base mt-5">Your level: </h2>
+                <h3 className="text-base font-bold">
                   {
                     level[
                       Math.round(
@@ -149,18 +152,18 @@ const Insights = () => {
                     ]
                   }
                 </h3>
-                <h2 className="text-sm mt-5">Average solve time:</h2>
+                <h2 className="text-base mt-5">Average solve time:</h2>
                 {usersAverageSolveTime && (
-                  <h3 className="text-sm font-bold">
+                  <h3 className="text-base font-bold">
                     {prettifyTime(usersAverageSolveTime)}
                   </h3>
                 )}
 
-                <h2 className="text-sm mt-5">
+                <h2 className="mt-5 text-center">
                   Your solve time compared to the average:
                 </h2>
                 {usersAverageSolveTime && allAverageSolveTimes && (
-                  <h3 className="text-sm font-bold">
+                  <h3 className="text-base font-bold">
                     {usersAverageSolveTime < allAverageSolveTimes ? (
                       <span className="text-green-500">
                         {prettifyTime(
@@ -179,7 +182,7 @@ const Insights = () => {
                   </h3>
                 )}
               </div>
-              <div className="flex flex-row items-center justify-center  h-full w-2/4 m-5">
+              <div className="w-2/3 h-full m-5">
                 <Line options={options} data={data} />
               </div>
             </div>
