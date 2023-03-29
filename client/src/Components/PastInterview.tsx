@@ -116,7 +116,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
                       color={'#4fbbbd'}
                     />
                   ) : (
-                    <Rating.Star filled={overall.overall_number >= 1} />
+                    <Rating.Star filled={overall.overall_number >= 1} color={'gray'}/>
                   )}
                   {overall.overall_number >= 2 ? (
                     <Rating.Star
@@ -124,7 +124,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
                       color={'#4fbbbd'}
                     />
                   ) : (
-                    <Rating.Star filled={overall.overall_number >= 2} />
+                    <Rating.Star filled={overall.overall_number >= 2} color={'gray'}/>
                   )}
                   {overall.overall_number >= 3 ? (
                     <Rating.Star
@@ -132,7 +132,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
                       color={'#4fbbbd'}
                     />
                   ) : (
-                    <Rating.Star filled={overall.overall_number >= 3} />
+                    <Rating.Star filled={overall.overall_number >= 3}color={'gray'} />
                   )}
                   {overall.overall_number >= 4 ? (
                     <Rating.Star
@@ -140,7 +140,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
                       color={'#4fbbbd'}
                     />
                   ) : (
-                    <Rating.Star filled={overall.overall_number >= 4} />
+                    <Rating.Star filled={overall.overall_number >= 4} color={'gray'}/>
                   )}
                   {overall.overall_number >= 5 ? (
                     <Rating.Star
@@ -148,7 +148,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
                       color={'#4fbbbd'}
                     />
                   ) : (
-                    <Rating.Star filled={overall.overall_number >= 5} />
+                    <Rating.Star filled={overall.overall_number >= 5} color={'gray'} />
                   )}
                 </Rating>
               </div>
@@ -224,7 +224,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
           {expand
             ? cleanArr.map((convo: any, index: number) => (
                 <>
-                  {index % 2 === 0 && (
+                  {/* {index % 2 === 0 && (
                     <div className='float-right mt-10'>
                       <Rating>
                         {isJsonString(convo.content)
@@ -319,7 +319,7 @@ export default function PastInterview({ interview }: { interview: Interview }) {
                           : null}
                       </Rating>
                     </div>
-                  )}
+                  )} */}
                   <div
                     key={index}
                     className={index % 2 === 0 ? 'left-convo' : 'right-convo'}
