@@ -232,7 +232,7 @@ const getInterviewRating = async (req: Request, res: Response) => {
     let entireConversation: any = result.conversation.map((x) =>
       checkContent(x)
     );
-
+    // @ts-ignore
     let jsons = entireConversation.map((x) => JSON.stringify(x));
 
     let askForFeedback = `You are an interviewer, who just interviewed someone for a job at ${
