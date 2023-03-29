@@ -47,22 +47,23 @@ export default function PastInterview({ interview }: { interview: Interview }) {
   const regex2 = /{[^{}]*}/g;
 
   return (
-    <div className="past-interview">
-      <button id="expand-button" onClick={() => setExpand((prev) => !prev)}>
+    <div className='past-interview'>
+      <button id='expand-button' onClick={() => setExpand((prev) => !prev)}>
         <img
           src={Expand}
           style={{
             maxWidth: 20,
             marginBottom: 5,
           }}
-          alt="Expand the interview and get more detail"
+          alt='Expand the interview and get more detail'
         />
       </button>
-      <div className="past-interview-head">
+      <div className='past-interview-head'>
         Your interview for {interview.title} at {interview.company} on {date}
       </div>
-      {averageRating.length > 0 && (
-        <div className='shadow rounded-md mt-5  p-4 mb-5  -space-y-px  h-4/5 min-h-max w-full flex flex-col'>
+          
+      <div className='shadow rounded-md mt-5  p-4 mb-5  -space-y-px  h-4/5 min-h-max w-full flex flex-col'>
+        {averageRating.length > 0 && (
           <h2 className='text-sm m-2'>
             <span className=' font-bold'>
               Average answer rating
@@ -76,31 +77,28 @@ export default function PastInterview({ interview }: { interview: Interview }) {
             </span>
             / 5
           </h2>
+        )}
+        {overall && (
+          <div className='text-sm'>
+            <h2 className=' ml-2 mb-2'>
+              <span className='font-bold'>
+                Overall rating
+                <span className='text-red-500'> {overall.overall_number} </span>
+              </span>
+              / 5
+            </h2>
 
-          {overall && (
-            <div className='text-sm'>
-              <h2 className=' ml-2 mb-2'>
-                <span className='font-bold'>
-                  Overall rating
-                  <span className='text-red-500'>
-                    {' '}
-                    {overall.overall_number}{' '}
-                  </span>
-                </span>
-                / 5
-              </h2>
+            <h2 className=' ml-2 font-bold'>Feedback</h2>
 
-              <h2 className=' ml-2 font-bold'>Feedback</h2>
+            <div className='ml-2 mb-2'>{overall.overall_feedback}</div>
 
-              <div className='ml-2 mb-2'>{overall.overall_feedback}</div>
+            <h2 className=' ml-2 font-bold'>Suggestions</h2>
 
-              <h2 className=' ml-2 font-bold'>Suggestions</h2>
+            <div className=' ml-2'>{overall.suggestions}</div>
+          </div>
+        )}
+      </div>
 
-              <div className=' ml-2'>{overall.suggestions}</div>
-            </div>
-          )}
-        </div>
-      )}
       <div className='past-interview-body'>
         {expand
           ? cleanArr.map((convo: any, index: number) => (
