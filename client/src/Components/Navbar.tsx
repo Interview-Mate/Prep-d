@@ -158,7 +158,7 @@ export default function Navbar() {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Cover Letter Reviewer
+                                Cover Letter Review
                               </Link>
                             )}
                           </Menu.Item>
@@ -223,7 +223,7 @@ export default function Navbar() {
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
                         <img
-                          className="h-10 w-10 rounded-full"
+                          className="h-10 w-10 rounded-full border-2 border-white"
                           src={currentUser.image}
                           alt={currentUser.name}
                         />

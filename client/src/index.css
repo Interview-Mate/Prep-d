@@ -69,16 +69,12 @@ code {
 .dashboard-container {
   display: flex;
   justify-content: space-evenly;
-  margin: 100px auto;
 }
 
 .dashboard-elements {
-  align-items: stretch;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* display: flex; */
+
+
   height: 100%;
-  flex: 1;
   max-width: 35vw;
 }
 
@@ -308,10 +304,10 @@ code {
 .right-convo {
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   display: inline-block;
-  margin: 15px 0;
-  padding: 5px;
+  margin: 1rem;
+  padding: 1rem;
 }
 
 .past-interview-head {

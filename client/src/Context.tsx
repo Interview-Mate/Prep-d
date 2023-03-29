@@ -78,12 +78,11 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const handleUpdateUser = async (updatedUser: User) => {
-    console.log(updatedUser)
     const receivedUser = await ApiService.updateUser({
       id: currentUser.id,
       email: updatedUser.email === '' ? currentUser.email : updatedUser.email,
-      name: updatedUser.name === '' ? currentUser.name : updatedUser.name,
-      surname: updatedUser.surname === '' ? currentUser.surname : updatedUser.surname,
+      name: updatedUser.name === currentUser.name ? currentUser.name : updatedUser.name,
+      surname: updatedUser.surname === currentUser.surname ? currentUser.surname : updatedUser.surname,
       level: updatedUser.level !== currentUser.level ? updatedUser.level : currentUser.level,
       image: updatedUser.image === '' || undefined ? currentUser.image : updatedUser.image,
     });

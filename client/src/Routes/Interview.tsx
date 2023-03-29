@@ -94,7 +94,7 @@ export default function Interview() {
     const res = await ApiService.retrieveQuestion({
       id: id,
       role: "system",
-      content: `You are an interviewer, interviewing someone for a job at ${values.companyName}. It is for a ${values.jobLevel} position in the field of ${values.jobField}. Begin by asking an introductory question.`,
+      content: `You are an interviewer, interviewing someone for a job at ${values.companyName}. It is for a ${values.jobLevel} position in the field of ${values.jobField}. The name of the interviewed person is ${currentUser.name} ${currentUser.surname}, greet them by their last or first name depending if it is appropriate to the job, but leave it out if the name is be hard to pronounce for a speech synthesis api. Begin by asking an introductory question.`,
     });
     if (res.error) {
       console.log(res.error);

@@ -1,4 +1,4 @@
-import React from "react";
+import { Rating } from 'flowbite-react';
 
 interface InterviewFeedback {
   rating: number;
@@ -12,10 +12,48 @@ function InterviewFeedback(interviewFeedback: InterviewFeedback) {
   return (
     <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm'>
       <div className='w-fit	  p-10 space-y-8 bg-white rounded-lg shadow '>
-        <h1 className='text-center text-xl mb-5 font-bold tracking-tight'>Feedback and Suggestions</h1>
-        <p><span className='font-bold'>Overall Rating of the Interview: </span>{rating} out of 5.</p>
-        <p><span className='font-bold'>Feedback: </span>{feedback}</p>
-        <p><span className='font-bold'>Suggestions: </span>{suggestions}</p>
+        <h1 className='text-center text-xl mb-5 font-bold tracking-tight'>
+          Feedback and Suggestions
+        </h1>
+        <p className='flex flex-row'>
+          <span className='font-bold'>Overall rating </span>
+          {rating}{' '}
+          <Rating>
+            {rating >= 1 ? (
+              <Rating.Star filled={rating >= 1} color={'#4fbbbd'} />
+            ) : (
+              <Rating.Star filled={rating >= 1} />
+            )}
+            {rating >= 2 ? (
+              <Rating.Star filled={rating >= 2} color={'#4fbbbd'} />
+            ) : (
+              <Rating.Star filled={rating >= 2} />
+            )}
+            {rating >= 3 ? (
+              <Rating.Star filled={rating >= 3} color={'#4fbbbd'} />
+            ) : (
+              <Rating.Star filled={rating >= 3} />
+            )}
+            {rating >= 4 ? (
+              <Rating.Star filled={rating >= 4} color={'#4fbbbd'} />
+            ) : (
+              <Rating.Star filled={rating >= 4} />
+            )}
+            {rating >= 5 ? (
+              <Rating.Star filled={rating >= 5} color={'#4fbbbd'} />
+            ) : (
+              <Rating.Star filled={rating >= 5} />
+            )}
+          </Rating>
+        </p>
+        <p>
+          <span className='font-bold'>Feedback </span>
+          {feedback}
+        </p>
+        <p>
+          <span className='font-bold'>Suggestions </span>
+          {suggestions}
+        </p>
       </div>
     </div>
   );

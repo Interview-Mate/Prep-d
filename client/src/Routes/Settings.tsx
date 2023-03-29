@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 export default function Settings() {
-  const { handleUpdateUser, user } = useContext(Context) as any;
+  const { handleUpdateUser, user, currentUser } = useContext(Context) as any;
   const [selectedPicture, setSelectedPicture] = useState<Blob | undefined>();
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export default function Settings() {
     };
 
     handleUpdateUser(updatedUser);
-    navigate("/dashboard");
+    navigate("/");
   };
 
   return (
@@ -69,6 +69,7 @@ export default function Settings() {
                 <input
                   id="first-name"
                   name="name"
+                  defaultValue={currentUser.name}
                   autoComplete="firstname"
                   className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-african-violet-900 focus:border-african-violet-900 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-african-violet-900 dark:focus:border-african-violet-900"
                 />
@@ -84,6 +85,7 @@ export default function Settings() {
                   id="last-name"
                   name="surname"
                   autoComplete="lastname"
+                  defaultValue={currentUser.surname}
                   className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-african-violet-900 focus:border-african-violet-900 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-african-violet-900 dark:focus:border-african-violet-900"
                 />
               </div>
@@ -141,7 +143,7 @@ export default function Settings() {
             <div className="flex items-center justify-center">
               <button
                 type="submit"
-                className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
+                className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold hover:bg-african-violet-900 hover:text-seasalt rounded-md text-base font-medium"
               >
                 Save
               </button>
