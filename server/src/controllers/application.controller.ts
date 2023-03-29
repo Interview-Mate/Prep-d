@@ -3,32 +3,9 @@ config();
 
 import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
-// import fixPdfParse from '../asset/PdfParsefixer';
-
-// import fs from 'fs';
-// import path from 'path';
-// const pdfParseIndexPath = path.join('../../node_modules/pdf-parse/index.js');
 
 
-// fs.readFile(pdfParseIndexPath, 'utf8', (err, data) => {
-//   if (err) {
-//     console.error(`Error reading pdf-parse index.js: ${err}`);
-//     return;
-//   }
-
-//   const modifiedData = data.replace(/let isDebugMode = !module\.parent;/, 'let isDebugMode = false;');
-
-//   fs.writeFile(pdfParseIndexPath, modifiedData, (err) => {
-//     if (err) {
-//       console.error(`Error writing pdf-parse index.js: ${err}`);
-//       return;
-//     }
-
-//     console.log('pdf-parse isDebugMode set to false');
-//   });
-// });
-
-import pdf from 'pdf-parse';
+import pdf from '../libs/pdf-parse';
 import { Configuration, OpenAIApi } from 'openai';
 
 const openai = new OpenAIApi(
@@ -41,7 +18,7 @@ const createCoverLetter = async (req: Request, res: Response) => {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Create a cover letter based on following information: Position: ${req.body.position}, job title: ${req.body.jobTitle}, company: ${req.body.company}, start date: ${req.body.startDate}(write the date in a more appropriate way), description: ${req.body.description}. My work experience is: ${req.body.workExperience}, my qualifications: ${req.body.qualification}. Include following keywords at appropriate points: ${req.body.selectedKeywords}. Address the hiring manager as such. Close the letter with following name: ${req.body.firstName} ${req.body.lastName}.`,
+      prompt: `Create a cover letter based on following information: Position: ${req.body.position}, job title: ${req.body.jobTitle}, company: ${req.body.company}, start date: ${req.body.startDate}(write the date in a more appropriate way), description: ${req.body.description}. My work experience is: ${req.body.workExperience}, my qualifications: ${req.body.qualification}. Include following keywords at appropriate points: ${req.body.selectedKeywords}. Address the hiring manager with: Dear hiring manager. Close the letter with following name: ${req.body.firstName} ${req.body.lastName}.`,
       temperature: 1,
       max_tokens: 350,
     });

@@ -48,6 +48,7 @@ function CoverLetterBuilderText({ CoverLetterData }: any) {
     phoneNumber,
     street,
     city,
+    state,
     zipCode,
     textBody,
   } = CoverLetterData;
@@ -64,11 +65,13 @@ function CoverLetterBuilderText({ CoverLetterData }: any) {
               <Text style={styles.body}>{email}</Text>
               <Text style={styles.body}>{phoneNumber}</Text>
               <Text style={styles.body}>{street}</Text>
+              <Text style={styles.body}>{city}</Text>
+              {/* <Text style={styles.body}>{state}</Text> */}
               <Text style={styles.body}>
                 {zipCode} {city}
               </Text>
               <View style={{ marginTop: 10 }}>
-                <Text style={styles.body}>{textBody}</Text>
+                <Text style={styles.body}>{textBody.replace('[Your Name]', `${firstName} ${lastName}`)}</Text>
               </View>
               {/* <Text style={styles.body}>Best regards,</Text>
               <Text style={styles.body}>
