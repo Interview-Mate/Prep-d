@@ -68,12 +68,14 @@ const InterviewInsights = () => {
                 })
                 .filter((rating: null) => rating !== null)
           );
-          const avg = Math.round(
-            filteredRatings.reduce((acc, curr) => acc + curr, 0) /
-              filteredRatings.length
-          );
-          setAverageRating(avg);
-          setRatings(filteredRatings);
+          if (filteredRatings.length !== 0) {
+            const avg = Math.round(
+              filteredRatings.reduce((acc, curr) => acc + curr, 0) /
+                filteredRatings.length
+            );
+            setAverageRating(avg);
+            setRatings(filteredRatings);
+          }
           const overallRatings: number[] = [];
           interviews.forEach((interview: { overall: any[] }) => {
             if (
@@ -83,14 +85,14 @@ const InterviewInsights = () => {
               overallRatings.push(
                 JSON.parse(interview.overall[0]).overall_number
               );
+              const avgOverall = Math.round(
+                overallRatings.reduce((acc, curr) => acc + curr, 0) /
+                  overallRatings.length
+              );
+              setAverageOverall(avgOverall);
+              setOverallRatings(overallRatings);
             }
           });
-          const avgOverall = Math.round(
-            overallRatings.reduce((acc, curr) => acc + curr, 0) /
-              overallRatings.length
-          );
-          setAverageOverall(avgOverall);
-          setOverallRatings(overallRatings);
         }
       }
     };
