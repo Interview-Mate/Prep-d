@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { dbConnection } from "./models/index.models";
-import Exercise from "./models/exercise";
-import populateExerciseCollection from "./asset/seedScript";
-import app from "./index";
+import { dbConnection } from './models/index.models';
+import Exercise from './models/exercise';
+import populateExerciseCollection from './asset/seedScript';
+import app from "./index-test";
 
 
 const PORT: number = Number(process.env.SERVER_PORT) || 4000;
