@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "tsx --watch src/server.ts",
+    "dev": "tsx  src/server.ts",
     "test": "jest",
     "test-async": "jest --detectOpenHandles",
     "test:watch": "jest --watch",

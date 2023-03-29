@@ -37,7 +37,7 @@ const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
   return dashboard ? (
     <div
       className={
-        "text-right rounded-2xl text-lg p-10 flex flex-col w-full justify-center bg-white"
+        "text-center rounded-2xl text-lg p-10 flex flex-col w-full justify-center bg-white"
       }
     >
       <h2 className="text-xl mb-5 font-bold">Coding Challenges</h2>
@@ -45,32 +45,46 @@ const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
         to={"/codingtest/level/" + "beginner"}
         className="hover:opacity-50 active:opacity-75"
       >
-        Work on <span className="font-bold">beginner</span> challenges
+        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
+           Work on <span className="font-bold">beginner</span> challenges
+        </button>
       </Link>
       <Link
         to={"/codingtest/level/" + "intermediate"}
         className="hover:opacity-50 active:opacity-75"
       >
+        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
+        
         Work on <span className="font-bold">intermediate</span> challenges
+        </button>
       </Link>
       <Link
         to={"/codingtest/level/" + "advanced"}
         className="hover:opacity-50 active:opacity-75"
       >
+        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
+        
         Work on <span className="font-bold">advanced</span> challenges
+        </button>
       </Link>
       <Link
         to={"/codingtest/level/" + "expert"}
         className="hover:opacity-50 active:opacity-75"
       >
+        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
+        
         Work on <span className="font-bold">expert</span> challenges
-      </Link>
+        </button>
+        </Link>
       <Link
         to={"/codingtest/level/" + "all"}
         className="hover:opacity-50 active:opacity-75"
       >
+        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>     
         Work on <span className="font-bold">all</span> challenges
-      </Link>
+        </button>
+        </Link>
+       
     </div>
   ) : (
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm">

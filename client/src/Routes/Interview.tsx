@@ -30,6 +30,7 @@ export default function Interview() {
     video: true,
   });
 
+
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [interviewId, setInterviewId] = useState("");
@@ -43,6 +44,20 @@ export default function Interview() {
   const [feedback, setFeedback] = useState("");
   const [suggestions, setSuggestions] = useState("");
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+
+
+    //to delay the loading of the avatar  
+  
+    const [isUserWebCamLoaded, setIsUserWebCamLoaded] = useState(false);
+
+
+    const handleUserWebCamLoaded = () => {
+      setTimeout(() => {
+        setIsUserWebCamLoaded(true);
+      }, 3000); 
+    };
+  
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -155,11 +170,13 @@ export default function Interview() {
             {formValues.video && (
               <div className="flex flex-col items-center justify-center w-full pt-20">
                 <div className="flex justify-center space-x-1">
-                  <UserWebCam />
-                  <AvatarWebCam
-                    isInterviewerSpeaking={isInterviewerSpeaking}
-                    video={formValues.video}
-                  />
+                  <UserWebCam onLoaded={handleUserWebCamLoaded} />
+                  {isUserWebCamLoaded && (
+                    <AvatarWebCam
+                      isInterviewerSpeaking={isInterviewerSpeaking}
+                      video={formValues.video}
+                    />
+                  )}
                 </div>
                 <Interviewer
                   videoQuestion={videoQuestion}

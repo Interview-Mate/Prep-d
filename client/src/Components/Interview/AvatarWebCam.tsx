@@ -4,12 +4,6 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
 const AvatarWebCam = ({ isInterviewerSpeaking }: any)  => {
-  
-  console.log('yes its speaking ' + isInterviewerSpeaking );
-  const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
-
-  const audioElmRef = React.useRef<HTMLAudioElement>(null!);
 
   return (
 
