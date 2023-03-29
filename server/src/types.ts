@@ -4,10 +4,15 @@
   field: string;
   title: string,
   date: Date;
-  conversation: any [];
-  cloudinary_url: string;
+  conversation: QorA[];
   overall: any[] ;
 };
+
+export type QorA = {
+  role: string,
+  cloudinary_url ?: string,
+  content: string,
+}
 
 export type Question = {
   timestamp: Date | string;
@@ -47,15 +52,3 @@ export interface IUser {
   level: number;
 }
 
-export type UserResponse = {
-  cloudinary_url: string,
-  text: string,
-  interview_id: string
-}
-
-export type AssistantResponse = {
-  feedback: string,
-  grade: number,
-  next_question: string,
-  interview_id: string
-}
