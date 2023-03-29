@@ -12,10 +12,7 @@ import InterviewFeedback from "../Components/InterviewFeedback";
 import MrBPrep from "../Assets/MrBPrep.png";
 import { all } from "q";
 
-interface LoadingStatus {
-  userWebCam: boolean;
-  avatarWebCam: boolean;
-}
+
 
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, ChangeEvent} from 'react';
+import React from 'react';
 import Avatar from './Avatar';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
