@@ -10,8 +10,8 @@
     "test-async": "jest --detectOpenHandles",
     "test:watch": "jest --watch",
     "server": "npx ts-node src/server.ts",
-    "ts-server": "nodemon --watch './**/*.ts' --exec 'ts-node' src/server.ts"
-    "start": "node ./dist/server.js"
+    "ts-server": "nodemon --watch './**/*.ts' --exec 'ts-node' src/server.ts",
+    "start": "node ./dist/server.js",
   },
   "keywords": [],
   "author": "",
