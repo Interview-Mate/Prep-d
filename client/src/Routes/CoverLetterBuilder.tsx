@@ -15,6 +15,7 @@ const CoverLetterBuilder = () => {
     street: '',
     zipCode: '',
     city: '',
+    // state: '',
     workExperience: '',
     qualification: '',
     position: '',
