@@ -88,7 +88,7 @@ const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
     </div>
   ) : (
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm">
-      <div className="bg-white w-fit p-10 space-y-8 bg-white rounded-lg shadow">
+      <div className="bg-white w-fit p-10 space-y-8 rounded-lg shadow">
         <h2 className="text-center text-xl mb-5 font-bold">
           Coding Challenges
         </h2>
@@ -139,11 +139,11 @@ const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
                 className="hover:opacity-50 active:opacity-75"
               >
                 {problem.name}{" "}
-                <span className="m-0.5 border text-teal-600 border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5">
+                <span className="m-0.5 border text-black border-dark-cyan rounded-sm text-xs pl-0.5 pr-0.5">
                   {level[problem.level]}
                 </span>
                 {solvedIds.includes(problem._id) && (
-                  <span className="m-0.5 border border-teal-600 rounded-sm text-xs pl-0.5 pr-0.5 bg-teal-600 text-white">
+                  <span className="m-0.5 border border-dark-cyan rounded-sm text-xs pl-0.5 pr-0.5 bg-dark-cyan text-white">
                     Solved
                   </span>
                 )}

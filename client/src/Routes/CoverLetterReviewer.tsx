@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Rating } from 'flowbite-react';
 import Navbar from '../Components/Navbar';
 import Spinner from '../Components/Spinner';
 import CoverLetterReviewerText from '../Components/CoverLetterReviewerText';
@@ -77,13 +78,13 @@ const CoverLetterReviewer = () => {
     event.preventDefault();
     setLoading(true);
     const response = await improveCoverLetter(text);
-    console.log(response)
+    console.log(response);
     setCoverLetterData(response);
   };
 
   useEffect(() => {
     if (coverLetterData) {
-      console.log(coverLetterData)
+      console.log(coverLetterData);
       setShowImprove(true);
       setLoading(false);
     }
@@ -203,7 +204,33 @@ const CoverLetterReviewer = () => {
                 </h2>
                 <div className='flex flex-col items-center justify-center text-sm'>
                   <span>
-                    <span className='font-bold text-red-500'>{rating}</span>/5
+                    <Rating>
+                      {rating >= 1 ? (
+                        <Rating.Star filled={rating >= 1} color={'#4fbbbd'} />
+                      ) : (
+                        <Rating.Star filled={rating >= 1} />
+                      )}
+                      {rating >= 2 ? (
+                        <Rating.Star filled={rating >= 2} color={'#4fbbbd'} />
+                      ) : (
+                        <Rating.Star filled={rating >= 2} />
+                      )}
+                      {rating >= 3 ? (
+                        <Rating.Star filled={rating >= 3} color={'#4fbbbd'} />
+                      ) : (
+                        <Rating.Star filled={rating >= 3} />
+                      )}
+                      {rating >= 4 ? (
+                        <Rating.Star filled={rating >= 4} color={'#4fbbbd'} />
+                      ) : (
+                        <Rating.Star filled={rating >= 4} />
+                      )}
+                      {rating >= 5 ? (
+                        <Rating.Star filled={rating >= 5} color={'#4fbbbd'} />
+                      ) : (
+                        <Rating.Star filled={rating >= 5} />
+                      )}
+                    </Rating>
                   </span>
 
                   <div className='flex flex-row m-5 text-sm'>

@@ -14,7 +14,7 @@ import { Line } from 'react-chartjs-2';
 import { getInterviews } from '../Util/ApiService';
 import { useContext } from 'react';
 import { Context } from '../Context';
-import { Card } from 'flowbite-react';
+import { Rating } from 'flowbite-react';
 
 const level: Dict = {
   1: 'Beginner',
@@ -37,11 +37,19 @@ const InterviewInsights = () => {
   const [interviews, setInterviews] = useState<Interview[]>([]);
   const [ratings, setRatings] = useState<number[]>([]);
   const [overallRatings, setOverallRatings] = useState<number[]>([]);
+  const [averageRating, setAverageRating] = useState<number>();
+  const [averageOverall, setAverageOverall] = useState<number>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const interviews = await getInterviews(currentUser.id);
+      let interviews = await getInterviews(currentUser.id);
       if (typeof interviews !== 'string') {
+        // filter all the interviews where interview.conversation length is 2 or less
+
+        interviews = interviews.filter(
+          (interview: { conversation: any[] }) =>
+            interview.conversation.length > 2
+        );
         setInterviews(interviews);
         let filteredRatings: number[] = [];
         if (interviews.length > 0) {
@@ -60,6 +68,11 @@ const InterviewInsights = () => {
                 })
                 .filter((rating: null) => rating !== null)
           );
+          const avg = Math.round(
+            filteredRatings.reduce((acc, curr) => acc + curr, 0) /
+              filteredRatings.length
+          );
+          setAverageRating(avg);
           setRatings(filteredRatings);
           const overallRatings: number[] = [];
           interviews.forEach((interview: { overall: any[] }) => {
@@ -72,6 +85,11 @@ const InterviewInsights = () => {
               );
             }
           });
+          const avgOverall = Math.round(
+            overallRatings.reduce((acc, curr) => acc + curr, 0) /
+              overallRatings.length
+          );
+          setAverageOverall(avgOverall);
           setOverallRatings(overallRatings);
         }
       }
@@ -110,14 +128,14 @@ const InterviewInsights = () => {
       {
         label: 'Answer skills',
         data: ratings,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: '#c98bb9ff',
+        backgroundColor: '#c98bb9ff',
       },
       {
         label: 'Overall rating',
         data: overallRatings,
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        borderColor: '#4fbbbd',
+        backgroundColor: '#4fbbbd',
       },
     ],
   };
@@ -139,38 +157,113 @@ const InterviewInsights = () => {
           </div>
         )}
         {interviews.length !== 0 && ratings?.length !== 0 && (
-          <div className='flex flex-col items-center justify-center h-full'>
-            <div className='flex flex-row'>
-              <Card>
+          <div className='flex flex-col h-full'>
+            <div className='flex flex-row justify-between'>
+              <div className='flex flex-col items-center justify-center'>
                 <h2 className='font-bold'>Interviews</h2>
-                <h3 className='font-bold text-red-500'>{interviews.length}</h3>
-              </Card>
-              <Card>
+                <h3 className='font-bold text-dark-cyan'>
+                  {interviews.length}
+                </h3>
+              </div>
+              <div className='flex flex-col items-center justify-center'>
                 <h2 className='font-bold'>Average Answer Rating</h2>
-                {ratings && (
-                  <h3 className='font-bold text-red-500'>
-                    {Math.round(
-                      ratings.reduce((acc, curr) => acc + curr, 0) /
-                        ratings.length
+                {averageRating && (
+                  <Rating>
+                    {averageRating >= 1 ? (
+                      <Rating.Star
+                        filled={averageRating >= 1}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageRating >= 1} />
                     )}
-                  </h3>
+                    {averageRating >= 2 ? (
+                      <Rating.Star
+                        filled={averageRating >= 2}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageRating >= 2} />
+                    )}
+                    {averageRating >= 3 ? (
+                      <Rating.Star
+                        filled={averageRating >= 3}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageRating >= 3} />
+                    )}
+                    {averageRating >= 4 ? (
+                      <Rating.Star
+                        filled={averageRating >= 4}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageRating >= 4} />
+                    )}
+                    {averageRating >= 5 ? (
+                      <Rating.Star
+                        filled={averageRating >= 5}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageRating >= 5} />
+                    )}
+                  </Rating>
                 )}
-              </Card>
-              <Card>
+              </div>
+              <div className='flex flex-col items-center justify-center'>
                 <h2 className='font-bold'>Average Overall Rating</h2>
-                {overallRatings.length > 0 && (
-                  <h3 className='font-bold text-red-500'>
-                    {Math.round(
-                      overallRatings.reduce((acc, curr) => acc + curr, 0) /
-                        overallRatings.length
+                {averageOverall && (
+                  <Rating>
+                    {averageOverall >= 1 ? (
+                      <Rating.Star
+                        filled={averageOverall >= 1}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageOverall >= 1} />
                     )}
-                  </h3>
+                    {averageOverall >= 2 ? (
+                      <Rating.Star
+                        filled={averageOverall >= 2}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageOverall >= 2} />
+                    )}
+                    {averageOverall >= 3 ? (
+                      <Rating.Star
+                        filled={averageOverall >= 3}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageOverall >= 3} />
+                    )}
+                    {averageOverall >= 4 ? (
+                      <Rating.Star
+                        filled={averageOverall >= 4}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageOverall >= 4} />
+                    )}
+                    {averageOverall >= 5 ? (
+                      <Rating.Star
+                        filled={averageOverall >= 5}
+                        color={'#4fbbbd'}
+                      />
+                    ) : (
+                      <Rating.Star filled={averageOverall >= 5} />
+                    )}
+                  </Rating>
                 )}
-              </Card>
+              </div>
             </div>
             <br />
             <br />
-            <div className='w-full h-full mt-5'>
+            <br />
+            <div className='w-full h-full '>
               <Line options={options} data={data} />
             </div>
           </div>

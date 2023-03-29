@@ -15,7 +15,7 @@ import { getSolvedProblems, getAllSolvedProblems } from '../Util/ApiService';
 import { prettifyTime } from '../Util/CodeEditorHelpers';
 import { useContext } from 'react';
 import { Context } from '../Context';
-import { Card } from 'flowbite-react';
+import { Rating } from 'flowbite-react';
 
 const level: Dict = {
   1: 'Beginner',
@@ -96,14 +96,14 @@ const CodeInsights = () => {
       {
         label: 'Level',
         data: solvedProblems.map((problem) => problem.exercise?.level),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: '#c98bb9ff',
+        backgroundColor: '#c98bb9ff',
       },
       {
         label: 'Solve time',
         data: solvedProblems.map((problem) => problem.solveTime / 1000),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        borderColor: '#4fbbbd',
+        backgroundColor: '#4fbbbd',
       },
     ],
   };
@@ -124,68 +124,76 @@ const CodeInsights = () => {
         )}
         {solvedProblems.length !== 0 && usersAverageSolveTime !== 0 && (
           <div className='flex flex-col h-full'>
-            <div className='flex flex-row'>
-              <Card>
-                <h2 className='font-bold'>Challenges</h2>
-                <h3 className='font-bold text-red-500'>{solvedProblems.length}</h3>
-              </Card>
-
-              <Card>
-                <h2 className='font-bold'>Score</h2>
-
-                <h3 className='font-bold text-red-500'>
-                  {solvedProblems.reduce(
-                    (acc, curr) => acc + curr.exercise!.level,
-                    0
-                  ) * 100}
-                </h3>
-              </Card>
-              <Card>
-                <h2 className='font-bold'>Level </h2>
-                <h3 className='font-bold text-red-500'>
-                  {
-                    level[
-                      Math.round(
-                        solvedProblems.reduce(
-                          (acc, curr) => acc + curr.exercise!.level,
-                          0
-                        ) / solvedProblems.length
-                      )
-                    ]
-                  }
-                </h3>
-              </Card>
-              <Card>
-                {' '}
-                <h2 className='font-bold'>Average Solve Time</h2>
-                {usersAverageSolveTime && (
-                  <h3 className='font-bold text-red-500'>
-                    {prettifyTime(usersAverageSolveTime)}
+            <div>
+              <div className='flex flex-row justify-between'>
+                <div className='flex flex-col items-center justify-center'>
+                  <h2 className='font-bold'>Challenges</h2>
+                  <h3 className='font-bold text-dark-cyan'>
+                    {solvedProblems.length}
                   </h3>
-                )}
-              </Card>
-              <Card>
-                {usersAverageSolveTime && allAverageSolveTimes && (
-                  <h3 className='font-bold'>
-                    {usersAverageSolveTime < allAverageSolveTimes ? (
-                      <span className='text-green-500'>
-                        {prettifyTime(
-                          allAverageSolveTimes - usersAverageSolveTime
-                        )}{' '}
-                        faster
-                      </span>
-                    ) : (
-                      <span className='text-red-500'>
-                        {prettifyTime(
-                          usersAverageSolveTime - allAverageSolveTimes
-                        )}{' '}
-                        slower
-                      </span>
-                    )}{' '}
-                    than the average
+                </div>
+
+                <div className='flex flex-col items-center justify-center'>
+                  <h2 className='font-bold'>Score</h2>
+
+                  <h3 className='font-bold text-dark-cyan'>
+                    {solvedProblems.reduce(
+                      (acc, curr) => acc + curr.exercise!.level,
+                      0
+                    ) * 100}
                   </h3>
-                )}
-              </Card>
+                </div>
+                <div className='flex flex-col items-end justify-center'>
+                  <h2 className='font-bold'>Level </h2>
+                  <h3 className='font-bold text-dark-cyan'>
+                    {
+                      level[
+                        Math.round(
+                          solvedProblems.reduce(
+                            (acc, curr) => acc + curr.exercise!.level,
+                            0
+                          ) / solvedProblems.length
+                        )
+                      ]
+                    }
+                  </h3>
+                </div>
+              </div>
+              <br />
+              <div className=' flex flex-row justify-between'>
+                <div className='flex flex-col items-center justify-center'>
+                  {usersAverageSolveTime && (
+                    <h2 className='font-bold'>
+                      Average Solve Time:{' '}
+                      <span className='font-bold text-dark-cyan'>
+                        {prettifyTime(usersAverageSolveTime)}
+                      </span>
+                    </h2>
+                  )}
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  {usersAverageSolveTime && allAverageSolveTimes && (
+                    <h3 className='font-bold'>
+                      {usersAverageSolveTime < allAverageSolveTimes ? (
+                        <span className='text-green-500'>
+                          {prettifyTime(
+                            allAverageSolveTimes - usersAverageSolveTime
+                          )}{' '}
+                          faster
+                        </span>
+                      ) : (
+                        <span className='text-dark-cyan'>
+                          {prettifyTime(
+                            usersAverageSolveTime - allAverageSolveTimes
+                          )}{' '}
+                          slower
+                        </span>
+                      )}{' '}
+                      than the average
+                    </h3>
+                  )}
+                </div>
+              </div>
             </div>
             <div className='w-full h-full mt-5'>
               <Line options={options} data={data} />

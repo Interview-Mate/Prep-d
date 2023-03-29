@@ -338,10 +338,10 @@ function CoverLetterBuilderForm({
                   <label
                     key={keyword}
                     htmlFor={keyword}
-                    className="block text-gray-700 text-base mb-2"
+                    className="block text-gray-700 text-sm mb-2 "
                   >
                     <input
-                      className="mr-2 "
+                      className="w-4 h-4 text-african-violet-900  border-gray-300 rounded focus:ring-african-violet-900 dark:focus:ring-african-violet-900 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       id={keyword}
                       type="checkbox"
                       value={keyword}
