@@ -10,8 +10,9 @@ const AvatarWebCam = ({ isInterviewerSpeaking }: any)  => {
     <>
 
     <div className='w-full h-auto 
-    bg-gradient-radial from-white-500 via-gray-400 to-white-500
-    bg-gradient-to-r from-white via-gray to-white
+    bg-office
+    bg-cover
+
      '>
 
       <Canvas camera={{ fov: 10, position: [0, 0, 10] }} >
