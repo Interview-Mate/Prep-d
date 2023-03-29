@@ -112,7 +112,7 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
 
 function addHintForChatGPT (inp:String, question_count: number){
   let suffix
-  if (question_count < 3) {
+  if (question_count < 8) {
     suffix = ` Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format:
   {rating_number: input the rating you gave me as a number,
     rating_feedback: the feedback you gave me to the previous question,
