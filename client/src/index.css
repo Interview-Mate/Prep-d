@@ -2,20 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* #root {
-  width:100vh;
-  height:100vh;
-} */
-
-
 ::-webkit-scrollbar {
   width: 0px;
   height: 0px;
 }
 
-
 body {
-
   background-color: #f8f7f9ff;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -36,13 +28,13 @@ code {
   font-weight: 700;
   margin: 30px;
   text-align: center;
-  height: 100%
+  height: 100%;
 }
 
 .login-container {
   overflow: hidden;
   height: 100vh;
-  margin:0;
+  margin: 0;
   align-items: center;
   display: flex;
   justify-content: space-evenly;
@@ -77,12 +69,13 @@ code {
 .dashboard-container {
   display: flex;
   justify-content: space-evenly;
-  margin: 40px auto;
+  margin: 100px auto;
 }
 
 .dashboard-elements {
   align-items: stretch;
   border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex: 1;
   max-width: 35vw;
@@ -288,14 +281,18 @@ code {
 }
 
 .past-interview {
-  background-color: #fff;
+  align-items: center;
+  background-color: #f8f7f9ff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   margin: 20px auto;
   padding: 30px;
-  width: 60%;
+}
+
+.past-interview-body {
+  width: 100%;
 }
 
 .left-convo {
@@ -308,26 +305,19 @@ code {
 
 .left-convo,
 .right-convo {
-  background-color: #f8f7f9ff;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block;
   margin: 15px 0;
-  max-width: 95%;
   padding: 5px;
 }
 
 .past-interview-head {
   display: flex;
-  font-size: 20px;
-  font-weight: bold;
-  justify-content: space-between;
-}
-
-.past-interview-body-title {
   font-size: 18px;
   font-weight: bold;
-  margin-top: 10px;
+  justify-content: space-between;
 }
 
 .avatar-user {

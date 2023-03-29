@@ -1,4 +1,4 @@
-import ProblemList from './Coding/ProblemList';
+import ProblemList from '../Components/Coding/ProblemList';
 import Navbar from '../Components/Navbar';
 
 const CodingDashboard = () => {

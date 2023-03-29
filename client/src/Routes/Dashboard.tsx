@@ -1,16 +1,15 @@
 import Interview from "../Assets/InterviewMock.JPG";
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-import ProblemList from "./Coding/ProblemList";
+import ProblemList from "../Components/Coding/ProblemList";
 
 export default function Dashboard() {
   return (
     <div className="h-screen w-screen ">
       <Navbar />
-      <div className="dashboard-container">
-        <div className="dashboard-subtitles">Train your coding skills</div>
-        <div className="dashboard-subtitles">Practice live interviewing</div>
-      </div>
+      <h2 className="text-center text-xl mb-5 mt-20 font-bold">
+        Welcome to Prep'd!
+      </h2>
       <div className="dashboard-container">
         <div className="dashboard-elements">
           <ProblemList dashboard={true} />
