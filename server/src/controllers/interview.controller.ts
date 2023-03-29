@@ -230,8 +230,8 @@ const getInterviewRating = async (req: Request, res: Response) => {
     const entireConversation: Array<any> = result.conversation.map((x) =>
       checkRoleAndParseMessage(x)
     );
-
-    const jsons = entireConversation.map((x) => JSON.stringify(x));
+    // @ts-ignore
+    let jsons = entireConversation.map((x) => JSON.stringify(x));
 
     const askForFeedback = `You are an interviewer, who just interviewed someone for a job at ${
       result.company || "a certain company"
