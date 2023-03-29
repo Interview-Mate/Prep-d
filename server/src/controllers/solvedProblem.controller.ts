@@ -5,6 +5,9 @@ import { Request, Response } from 'express';
 
 const addSolvedProblem = async (req: Request, res: Response) => {
   try {
+    if(req.body.user_id !== 24 || req.body.problem_id !== 24 ){
+      throw new Error('user_id or problem_id missing')
+    }
     let alreadySolved = await SolvedProblem.find({
       $and: [
         { user_id: req.body.user_id },
@@ -110,23 +113,5 @@ const getAllSolvedProblems = async (req: Request, res: Response) => {
 //   console.log('solvedProblemByUser: ',solvedProblemByUser)
 // }
 // getUnionData1()
-
-//________________________________________________________________________
-
-// async function getLookupData() {
-//   const lookupData = await SolvedProblem.aggregate([
-//     {
-//       $lookup: {
-//         from: 'exercises',
-//         localField: 'problem_id',
-//         foreignField: '_id',
-//         as: 'problemsss'
-//       }
-//     },
-//     { $unwind: '$problemsss' },
-//   ])
-//   console.log('lookupData:' ,lookupData);
-// }
-// getLookupData();
 
 export {addSolvedProblem, getSolvedProblems, getAllSolvedProblems}

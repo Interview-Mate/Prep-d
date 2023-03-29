@@ -1,34 +1,35 @@
+import { config } from 'dotenv';
+config();
+
 import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
 // import fixPdfParse from '../asset/PdfParsefixer';
 
-import fs from 'fs';
-import path from 'path';
-const pdfParseIndexPath = path.join('../../node_modules/pdf-parse/index.js');
+// import fs from 'fs';
+// import path from 'path';
+// const pdfParseIndexPath = path.join('../../node_modules/pdf-parse/index.js');
 
 
-fs.readFile(pdfParseIndexPath, 'utf8', (err, data) => {
-  if (err) {
-    console.error(`Error reading pdf-parse index.js: ${err}`);
-    return;
-  }
+// fs.readFile(pdfParseIndexPath, 'utf8', (err, data) => {
+//   if (err) {
+//     console.error(`Error reading pdf-parse index.js: ${err}`);
+//     return;
+//   }
 
-  const modifiedData = data.replace(/let isDebugMode = !module\.parent;/, 'let isDebugMode = false;');
+//   const modifiedData = data.replace(/let isDebugMode = !module\.parent;/, 'let isDebugMode = false;');
 
-  fs.writeFile(pdfParseIndexPath, modifiedData, (err) => {
-    if (err) {
-      console.error(`Error writing pdf-parse index.js: ${err}`);
-      return;
-    }
+//   fs.writeFile(pdfParseIndexPath, modifiedData, (err) => {
+//     if (err) {
+//       console.error(`Error writing pdf-parse index.js: ${err}`);
+//       return;
+//     }
 
-    console.log('pdf-parse isDebugMode set to false');
-  });
-});
+//     console.log('pdf-parse isDebugMode set to false');
+//   });
+// });
 
 import pdf from 'pdf-parse';
 import { Configuration, OpenAIApi } from 'openai';
-import { config } from 'dotenv';
-config();
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -52,19 +53,30 @@ const createCoverLetter = async (req: Request, res: Response) => {
   }
 };
 
-const getPdfReview = async (req: Request | any, res: Response) => {
+const createResume = async (req: Request, res: Response) => {
   try {
-    let text;
-    // pdf(req.files.file.data).then(function (data: { text: any; }) {
-    //   text = data.text;
-    // });
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Review my cover letter: ${req.body.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
+      prompt: `Create a resume based on following information: Position: ${req.body.position}, job title: ${req.body.jobTitle}, company: ${req.body.company}, start date: ${req.body.startDate}(write the date in a more appropriate way), description: ${req.body.description}. My work experience is: ${req.body.workExperience}, my qualifications: ${req.body.qualification}. Include following keywords at appropriate points: ${req.body.selectedKeywords}. Address the hiring manager as such. Close the letter with following name: ${req.body.firstName} ${req.body.lastName}.`,
       temperature: 1,
       max_tokens: 350,
     });
-    res.status(201).json({response: response.data.choices[0].text, text: text});
+    res.status(201).json(response.data.choices[0].text);
+  } catch (err: any) {
+    res.status(403).json(err.message);
+  }
+};
+
+const getPdfReview = async (req: Request | any, res: Response) => {
+  try {
+    let data = await pdf(req.files.file.data)
+    const response = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: `Review my cover letter: ${data.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
+      temperature: 1,
+      max_tokens: 350,
+    });
+    res.status(201).json({response: response.data.choices[0].text, text: data.text});
   } catch (err: any) {
     res.status(403).json(err.message);
   }
@@ -88,9 +100,10 @@ const improveCoverLetter = async (req: Request, res: Response) => {
   try {
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Improve my cover letter. No comments, only the content: ${req.body.text}.`,
+      prompt: `Improve my cover letter. No comments, only the content, but make it a complete cover letter, including greeting at the start: ${JSON.stringify(req.body.text)}.{end}`,
       temperature: 1,
       max_tokens: 350,
+      stop: ["{end}"],
     });
     res.status(201).json(response.data.choices[0].text);
   } catch (err: any) {
@@ -101,6 +114,7 @@ const improveCoverLetter = async (req: Request, res: Response) => {
 
 export {
   createCoverLetter,
+  createResume,
   getPdfReview,
   getTextReview,
   improveCoverLetter,

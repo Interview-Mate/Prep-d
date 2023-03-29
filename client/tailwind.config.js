@@ -12,7 +12,6 @@ module.exports = {
         },
         // prettier-ignore
         "seasalt": "#f8f7f9ff",
-        white: "#fcfcfcff",
       },
     },
 

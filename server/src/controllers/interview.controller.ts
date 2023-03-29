@@ -14,6 +14,9 @@ const openai = new OpenAIApi(
 
 const getInterviewsByUser = async function (req: Request, res: Response) {
   try {
+    if(req.params.userId.length !== 24){
+      throw new Error ('The user ID is either missing or invalid.')
+    }
     const userId = req.params.userId;
     const interviews = await Interview.find({ user_id: userId }).sort({
       date: -1,
@@ -43,7 +46,11 @@ const getInterviewByInterviewId = async (req: Request, res: Response) => {
 //! FE => createInterview - url/:userID => (userId, level, company, field, title)
 //? BE => router.post("/interview/:userId", interviewCont.newInterview);
  const newInterview = async (req: Request, res: Response) => {
+
   try {
+    if(req.params.userId.length !== 24){
+      throw new Error ('The user ID is either missing or invalid.')
+    }
     let interview = await Interview.create({
       user_id: req.params.userId,
       level: req.body.level,
@@ -55,7 +62,6 @@ const getInterviewByInterviewId = async (req: Request, res: Response) => {
     console.log("Interview created");
     res.status(201).json(interview);
   } catch (err: any) {
-    console.log(err);
     res.status(500).json(err.message);
   }
 };
@@ -110,26 +116,37 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
   }
 };
 
-function addHintForChatGPT(inp: String) {
-  let suffix = ` Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format:
+function addHintForChatGPT (inp:String, question_count: number){
+  let suffix
+  if (question_count < 3) {
+    suffix = ` Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format:
   {rating_number: input the rating you gave me as a number,
     rating_feedback: the feedback you gave me to the previous question,
-    next_question: your next question}.`;
-  return inp.concat(suffix);
+    next_question: your next question}.`
+
+    return inp.concat(suffix)
+  } else {
+    suffix = ` Rate my response out of 5 with a comment. Then conclude the interview with a statement. Return this as a JSON object without plus signs in this format:
+  {rating_number: input the rating you gave me as a number,
+    rating_feedback: the feedback you gave me to the previous question,
+    next_question: instead of a question, provide your conclusion}.`
+
+    return inp.concat(suffix)
+  }
 }
 
-    //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
-    //? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
-    //adds user answer to DB => returnts next question from chatGPT
-const addAnswerToInterview = async (req: Request, res: Response) => {
-      try {
-        const interview_id = req.params.id;
-        const { answer_text, answer_audio_url } = req.body;
-        const newInteraction = {
-          role: "user",
-          cloudinary_url: answer_audio_url,
-          content: answer_text,
-        };
+//! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
+//? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
+//adds user answer to DB => returnts next question from chatGPT
+const addAnswerToInterview = async (req: Request, res: Response, question_count: number) => {
+  try {
+    const interview_id = req.params.id;
+    const { answer_text, answer_audio_url, question_count } = req.body;
+    const newInteraction = {
+      role: "user",
+      cloudinary_url: answer_audio_url,
+      content: answer_text,
+    };
 
     const interview = await Interview.findOneAndUpdate(
       { _id: interview_id },
@@ -137,14 +154,15 @@ const addAnswerToInterview = async (req: Request, res: Response) => {
       { new: true }
     );
 
+
+
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       //@ts-ignore
       messages: interview.conversation.map((x) => {
         return {
           role: x.role,
-          content: x.role == "user" ? addHintForChatGPT(x.content) : x.content,
-        };
+          content: x.role == 'user' ? addHintForChatGPT(x.content, question_count) : x.content };
       }),
       temperature: 0.5,
     });
@@ -206,11 +224,11 @@ const getInterviewRating = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
     let result = await Interview.findById(id);
-    if (!result) {
-      throw new Error("Interview not found");
-    }
-    result.conversation.shift();
-    console.log(result.conversation);
+      if (!result) {
+        throw new Error("Interview not found");
+      }
+      result.conversation.shift();
+
 
     let entireConversation: any = result.conversation.map((x) =>
       checkContent(x)

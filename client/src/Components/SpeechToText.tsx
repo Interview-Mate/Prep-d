@@ -78,7 +78,7 @@ export default function SpeechToText({
     formData.append("file", audioBlob);
     formData.append(
       "upload_preset",
-      process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+      "prepdproject"
     );
     return formData;
   };

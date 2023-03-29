@@ -1,10 +1,11 @@
+import { config } from 'dotenv';
+config();
+
 import textToSpeech from "@google-cloud/text-to-speech";
 import axios from "axios";
 import { Request, Response } from "express";
 import FormData from "form-data";
 
-import { config } from 'dotenv';
-config();
 
 interface TextToSpeechRequestBody {
   text: string;

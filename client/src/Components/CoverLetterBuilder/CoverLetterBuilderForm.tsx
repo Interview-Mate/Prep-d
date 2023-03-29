@@ -30,8 +30,9 @@ function CoverLetterBuilderForm({
 
   return (
     <div className="shadow mr-8 p-4 h-full min-h-max w-full flex flex-col bg-white text-sm">
+      <h2 className='text-center text-xl mb-5 font-bold'>Cover Letter Generator</h2>
       <form onSubmit={handleSubmit} className="mb-0">
-        <Accordion>
+        <Accordion collapseAll={true}>
           <Accordion.Panel>
             <Accordion.Title>Your Details</Accordion.Title>
             <Accordion.Content>
