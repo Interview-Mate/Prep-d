@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthenticationGuard } from "./Components/AuthenticationGuard";
 import { useContext } from "react";
 import { Context } from "./Context";
-import TextToSpeech from "./Components/TextToSpeech";
 
 import FirstVisit from './Components/FirstVisit';
 import Login from './Routes/Login';
@@ -88,11 +87,6 @@ function App() {
     {
       path: "/insights",
       element: <AuthenticationGuard component={Insights} />,
-      errorElement: <Error />,
-    },
-    {
-      path: "/textspeech",
-      element: <AuthenticationGuard component={TextToSpeech} />,
       errorElement: <Error />,
     },
     {
