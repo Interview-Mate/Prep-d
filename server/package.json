@@ -13,8 +13,8 @@
     "ts-server": "nodemon --watch './**/*.ts' --exec 'ts-node' src/server.ts",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "buildDeploy": "npm i && tsc",
-    "start": "node ./dist/index.js"
+    "buildDeploy": "npm i --production=false && tsc -b",
+    "start": "node ./dist/server.js"
   },
   "keywords": [],
   "author": "",
