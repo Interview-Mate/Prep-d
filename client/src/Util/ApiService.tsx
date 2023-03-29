@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const getAllUsers = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/get-all-users`);
+    const response = await fetch(`${BASE_URL}/get-all-users`);
     const users = await response.json();
     return users;
   } catch (error) {
@@ -15,7 +15,7 @@ export const getAllUsers = async () => {
 export const getUser = async (email: string | undefined) => {
   console.log("Email: ", email)
   try {
-    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/getuser/${email}`);
+    const response = await fetch(`${BASE_URL}/getuser/${email}`);
     const user = await response.json();
     return user;
   } catch (error) {
