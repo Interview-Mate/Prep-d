@@ -49,8 +49,7 @@ Change line 6 to:
 
 let isDebugMode = false;
 
-
-Once this is done, run `npm start` to initiate the server on port 3001.
+Once this is done, run `npm start` to initiate the server on port 4000.
 
 ### Front End
 
