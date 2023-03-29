@@ -1,10 +1,11 @@
-//@ts-nocheck
+import { config } from "dotenv";
+config();
+
 import Interview from "../models/interview";
 import { Request, Response } from "express";
 import parseMessage from "./../asset/chatGPTparser";
 import { Configuration, OpenAIApi } from "openai";
-import { config } from "dotenv";
-config();
+import { QorA } from '../types';
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -85,7 +86,7 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       //@ts-ignore
-      messages: interview.conversation.map((x) => {
+      messages: interview.conversation.map((x: QorA) => {
         return { role: x.role, content: x.content };
       }),
       temperature: 0.5,
@@ -116,8 +117,8 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
   }
 };
 
-function addHintForChatGPT (inp:String, question_count: number){
-  let suffix
+function addHintForChatGPT (inp: any, question_count: number){
+  let suffix: string;
   if (question_count < 8) {
     suffix = ` Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format:
   {rating_number: input the rating you gave me as a number,
@@ -171,8 +172,6 @@ const addAnswerToInterview = async (req: Request, res: Response, question_count:
     if (response.data.choices && response.data.choices[0].message) {
       const message = response.data.choices[0].message;
 
-      console.log('Unparsed Message', message);
-      console.log('Parsed Message', parseMessage(message.content));
       updatedConversation = await Interview.findOneAndUpdate(
         { _id: interview_id },
         { $push: { conversation: message } },
@@ -196,7 +195,7 @@ const addAnswerToInterview = async (req: Request, res: Response, question_count:
   }
 };
 
-function checkContent(objInConversation) {
+function checkContent(objInConversation: any) {
   if (objInConversation.role === "user") {
     return {
       interviewee: objInConversation.content,
@@ -241,8 +240,11 @@ const getInterviewRating = async (req: Request, res: Response) => {
     }. It is for a ${result.title || "mid level"} position in the field of ${
       result.field || "software development"
     }. Provide a rating out of 5 for the candidate's responses and give a general feedback on the interview, including suggestions on how the candidate could improve their performance in future.
-    Return this as a JSON object (without any '+' sign), in the following format: {overall_number: input the rating you gave to the interview as a number, overall_feedback: the feedback you gave to the interview,
-      suggestions: how could the candidate improve  }.
+    Return this as a JSON object (without any '+' sign), in the following format:
+      {overall_number: input the rating you gave to the interview as a number,
+        overall_feedback: the feedback you gave to the interview,
+        suggestions: how could the candidate improve
+      }.
       The interview, as an array of JSONS, went like this: ${jsons}
     `;
     const response = await openai.createChatCompletion({
