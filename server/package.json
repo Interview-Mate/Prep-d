@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npm i && tsc",
     "dev": "tsx  src/server.ts",
     "test": "jest",
     "test-async": "jest --detectOpenHandles",
