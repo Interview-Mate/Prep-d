@@ -16,7 +16,7 @@ root.render(
       domain="dev-jha6px2ereu57v06.us.auth0.com"
       clientId="OgDgqM8zGI8BJLmkEWVkD8BS2I6M6eWw"
       authorizationParams={{
-        redirect_uri: "http://localhost:3000/dashboard",
+        redirect_uri: "http://localhost:3000/home",
       }}
     >
       <ContextProvider>

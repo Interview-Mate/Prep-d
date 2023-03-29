@@ -1,13 +1,16 @@
-import './App.css';
-import { useEffect } from 'react';
-import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AuthenticationGuard } from './Components/AuthenticationGuard';
+import "./App.css";
+import { useEffect } from "react";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthenticationGuard } from "./Components/AuthenticationGuard";
+import { useContext } from "react";
+import { Context } from "./Context";
 
 import FirstVisit from './Components/FirstVisit';
 import Login from './Routes/Login';
 import Dashboard from './Routes/Dashboard';
 import Error from './Components/Error';
+import CodingDashboard from './Routes/CodingDashboard';
 import Coding from './Routes/Coding';
 import Interview from './Routes/Interview';
 import PastInterviews from './Routes/PastInterviews';
@@ -15,12 +18,9 @@ import Profile from './Routes/Profile';
 import Settings from './Routes/Settings';
 import Insights from './Routes/Insights';
 import Spinner from './Components/Spinner';
-import SpeechToText from './Components/SpeechToText';
-import Interviewer from './Components/Interviewer';
-
-import { useContext } from 'react';
-import { Context } from './Context';
-import Navbar from './Components/Navbar';
+import CoverLetterBuilder from './Routes/CoverLetterBuilder';
+import CoverLetterReviewer from './Routes/CoverLetterReviewer';
+import ResumeBuilder from './Routes/ResumeBuilder';
 
 function App() {
   const { currentUser, isAuthenticated, isLoading, handleGetUser } = useContext(
@@ -35,74 +35,86 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: "/",
       element: <AuthenticationGuard component={Dashboard} />,
       errorElement: <Error />,
     },
     {
-      path: '/dashboard',
+      path: "/home",
       element: <AuthenticationGuard component={Dashboard} />,
       errorElement: <Error />,
     },
     {
-      path: '/codingtest',
+      path: "/codingdashboard",
+      element: <AuthenticationGuard component={CodingDashboard} />,
+      errorElement: <Error />,
+    },
+    {
+      path: "/codingtest",
       element: <AuthenticationGuard component={Coding} />,
       children: [
         {
-          path: 'level/:levelId',
+          path: "level/:levelId",
           element: <AuthenticationGuard component={Coding} />,
         },
         {
-          path: ':problemId',
+          path: ":problemId",
           element: <AuthenticationGuard component={Coding} />,
         },
       ],
       errorElement: <Error />,
     },
     {
-      path: '/interview',
+      path: "/interview",
       element: <AuthenticationGuard component={Interview} />,
       errorElement: <Error />,
     },
     {
-      path: '/pastinterviews',
+      path: "/pastinterviews",
       element: <AuthenticationGuard component={PastInterviews} />,
       errorElement: <Error />,
     },
     {
-      path: '/profile',
+      path: "/profile",
       element: <AuthenticationGuard component={Profile} />,
       errorElement: <Error />,
     },
     {
-      path: '/settings',
+      path: "/settings",
       element: <AuthenticationGuard component={Settings} />,
       errorElement: <Error />,
     },
     {
-      path: '/insights',
+      path: "/insights",
       element: <AuthenticationGuard component={Insights} />,
       errorElement: <Error />,
     },
     {
-      path: '/speechtotext',
-      element: <AuthenticationGuard component={SpeechToText} />,
+      path: "/coverletterbuilder",
+      element: <AuthenticationGuard component={CoverLetterBuilder} />,
       errorElement: <Error />,
     },
     {
-      path: '/interviewer',
-      element: <AuthenticationGuard component={Interviewer} />,
+      path: "/coverletterreviewer",
+      element: <AuthenticationGuard component={CoverLetterReviewer} />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/resumebuilder',
+      element: <AuthenticationGuard component={ResumeBuilder} />,
       errorElement: <Error />,
     },
   ]);
 
   return (
-    <div className='App'>
+    <div className="App">
       {isLoading ? (
-        <Spinner />
+        <div className="mt-96">
+          <Spinner />
+        </div>
       ) : !isAuthenticated ? (
         <Login />
-      ) : currentUser.name === '' ? (
+      ) : currentUser.name === "" ? (
         <FirstVisit />
       ) : (
         <RouterProvider router={router} fallbackElement={<Spinner />} />

@@ -1,12 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { CloudinaryContext, Video } from "cloudinary-react";
+import { useEffect, useRef, useState, useContext } from "react";
 import * as ApiService from "../Util/ApiService";
+import { Context } from "../Context";
 
-const SpeechToText: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRecorded, onSaveUserResponse, }) => {
+export default function SpeechToText({
+  isInterviewerSpeaking,
+  onSaveUserResponse,
+  video,
+  interviewEnd,
+}: SpeechProps) {
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
+
   const [recording, setRecording] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
-  const [audioClips, setAudioClips] = useState<AudioClip[]>([]);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
+    null
+  );
   const audioChunks = useRef<Blob[]>([]);
   const [currentTranscript, setCurrentTranscript] = useState<string>("");
   const speechRecognition = useRef(
@@ -17,18 +30,15 @@ const SpeechToText: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRe
   speechRecognition.current.continuous = true;
 
   useEffect(() => {
-    // Request access to the user's microphone
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       const recorder = new MediaRecorder(stream);
       setMediaRecorder(recorder);
 
-      // Triggers when a chunk of audio is ready for processing
       recorder.addEventListener("dataavailable", (event) => {
         audioChunks.current.push(event.data);
       });
     });
 
-    // Triggers when there is some speech for transcribing
     speechRecognition.current.addEventListener("result", (event: any) => {
       let newTranscript = "";
       for (let i = 0; i < event.results.length; i++) {
@@ -37,7 +47,6 @@ const SpeechToText: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRe
       setCurrentTranscript(newTranscript);
     });
 
-    // This prevents the microphone turning off if they haven't stopped
     speechRecognition.current.addEventListener("end", () => {
       if (recording) {
         speechRecognition.current.start();
@@ -51,78 +60,95 @@ const SpeechToText: React.FC<SpeechProps> = ({ isInterviewerSpeaking, onAnswerRe
     mediaRecorder?.start();
   };
 
-  // To be split into more managable functions!
-  const stopRecording = async () => {
-    // Stop the speech recognition and media recorder
+  const turnOffAudioInput = () => {
     speechRecognition.current.stop();
     mediaRecorder?.stop();
+  };
 
-    // Send the current transcript to the Punctuator API to get the punctuated text
+  const punctuateText = async (currentTranscript: string) => {
     const response = await ApiService.punctuate(currentTranscript);
     const punctuatedText: string = response.punctuatedText;
-    setCurrentTranscript(punctuatedText);
+    return punctuatedText;
+  };
 
-    // Convert the audio chunks into a single audio blob
+  const createAudioFile = async () => {
     const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
-
-    // Upload the audio blob to Cloudinary and get the public ID of the uploaded file
     const id = Math.random().toString(36).substr(2, 9);
     const formData = new FormData();
     formData.append("file", audioBlob);
-    formData.append("upload_preset", "j1mgzp8n");
-
-    // TODO move into ApiService
-    try {
-      const cloudinaryResponse = await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      const publicId = cloudinaryResponse.data.public_id;
-      const audioUrl = cloudinaryResponse.data.url
-
-      // Add the audio clip to the list of clips
-      setAudioClips((prev) => [
-        ...prev,
-        { id, publicId, transcript: punctuatedText },
-      ]);
-      setCurrentTranscript("");
-      audioChunks.current = [];
-      setRecording(false);
-      onAnswerRecorded(audioUrl, punctuatedText);
-      onSaveUserResponse();
-    } catch (error) {
-      console.log(error);
-    }
+    formData.append(
+      "upload_preset",
+      `${process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET}`
+    );
+    return formData;
   };
+
+  const postAudioFile = async (formData: any) => {
+    const cloudinaryResponse = await ApiService.postAudio(formData);
+    return cloudinaryResponse;
+  };
+
+  const stopRecording = async () => {
+    turnOffAudioInput();
+    const punctuatedText = await punctuateText(currentTranscript);
+    const formData = await createAudioFile();
+    const audioFile = await postAudioFile(formData);
+    const audioUrl = audioFile.data.url;
+    audioChunks.current = [];
+    setRecording(false);
+    onSaveUserResponse(audioUrl, punctuatedText);
+    setCurrentTranscript("");
+  };
+
+  const onTextSubmit = async () => {
+    onSaveUserResponse(null, currentTranscript);
+    setCurrentTranscript("");
+  };
+
+  if (!video) {
+    return (
+      <div>
+        <div className="chat-input-container">
+          <textarea
+            className="chat-input"
+            value={currentTranscript}
+            onChange={(e) => setCurrentTranscript(e.target.value)}
+            placeholder="Type your answer here..."
+            disabled={isInterviewerSpeaking}
+          />
+          <button
+            className={`chat-send-button ${
+              isInterviewerSpeaking ? "disabled" : ""
+            }`}
+            onClick={onTextSubmit}
+            disabled={isInterviewerSpeaking}
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1 className="speech-title">Interviewee</h1>
-      <div className="speech-button-container">
-        <button className="speech-button" onClick={startRecording} disabled={recording || isInterviewerSpeaking}>
+      <div className="flex items-center justify-center">
+        <button
+          className="w-fit py-2 px-4 mr-5 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium disabled:bg-eerie-black disabled:text-seasalt"
+          onClick={startRecording}
+          disabled={recording || isInterviewerSpeaking}
+        >
           Record
         </button>
 
-        <button className="speech-button" onClick={stopRecording} disabled={!recording}>
+        <button
+          className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium disabled:bg-eerie-black disabled:text-seasalt"
+          onClick={stopRecording}
+          disabled={!recording}
+        >
           Stop
         </button>
       </div>
-      <h2 className="speech-title">Live Transcription:</h2>
-      <p className="speech-text">{currentTranscript}</p>
-      <h2 className="speech-title">Previous Audio Clips:</h2>
-      <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME as string}>
-        {audioClips.map((clip) => (
-          <div key={clip.id}>
-            <Video publicId={clip.publicId} controls format="mp4" />
-            <div className="speech-text">{clip.transcript}</div>
-          </div>
-        ))}
-      </CloudinaryContext>
     </div>
   );
-};
-
-export default SpeechToText;
+}

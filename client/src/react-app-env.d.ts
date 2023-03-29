@@ -86,8 +86,8 @@ type SolvedProblem = {
   problem_id: string | undefined;
   solution: string | undefined;
   runtime: number;
-  solveTime: number
-  score: number,
+  solveTime: number;
+  score: number;
   __v?: number;
   _id?: string;
 };
@@ -129,6 +129,7 @@ interface User {
   name: string;
   surname: string;
   level: string;
+  image: string | undefined;
   id?: string;
 }
 
@@ -137,15 +138,23 @@ interface InterviewFormValues {
   companyName: string;
   jobField: string;
   jobTitle: string;
+  video: boolean;
 }
 
 type InterviewerProps = {
-  message?: string;
+  videoQuestion: string;
   setIsInterviewerSpeaking: (value: boolean) => void;
+  video: boolean;
 };
 
 type InterviewFormProps = {
-  onFormSubmit: (values: { companyName: string; jobLevel: string; jobField: string; jobTitle: string }) => void;
+  onFormSubmit: (values: {
+    companyName: string;
+    jobLevel: string;
+    jobField: string;
+    jobTitle: string;
+    video: boolean;
+  }) => void;
 };
 
 type AudioClip = {
@@ -156,8 +165,9 @@ type AudioClip = {
 
 type SpeechProps = {
   isInterviewerSpeaking: boolean;
-  onAnswerRecorded: (audioUrl: any, transcript: any) => void;
-  onSaveUserResponse: () => void;
+  onSaveUserResponse: (audioUrl: string | null, transcript: string) => void;
+  video: boolean;
+  interviewEnd;
 };
 
 type InterviewProps = {
@@ -174,3 +184,18 @@ type Result = {
   error: string | null;
 };
 
+interface Message {
+  message: string;
+  messageType: "interviewer" | "user";
+}
+
+interface Interview {
+  overall: any;
+  _id: string;
+  date: Date;
+  company: string;
+  conversation: Array;
+  field: string;
+  title: string;
+  // video: boolean;
+}

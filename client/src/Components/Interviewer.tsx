@@ -1,7 +1,16 @@
-import React, { useEffect, useState } from "react";
+// interviewer.tsx
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from '../Context';
 
-const Interviewer: React.FC<InterviewerProps> = ({ message = "this is a test message", setIsInterviewerSpeaking }) => {
-  const [messages, setMessages] = useState<string[]>([]);
+export default function Interviewer ({ videoQuestion, setIsInterviewerSpeaking, video }: InterviewerProps) {
+  const {
+    currentUser,
+    setCurrentUser,
+    isAuthenticated,
+    handleGetUser,
+    handleCreateUser,
+  } = useContext(Context) as any;
+
   const synth = window.speechSynthesis;
 
   function handleIsSpeaking() {
@@ -9,41 +18,38 @@ const Interviewer: React.FC<InterviewerProps> = ({ message = "this is a test mes
   }
 
   function speakMessage() {
-    const utterThis = new SpeechSynthesisUtterance(message);
+    // const utterThis = new SpeechSynthesisUtterance(message + 'I will do all the hand motions and gestures that you told me how to do and I will nail it ');
+    const utterThis = new SpeechSynthesisUtterance(videoQuestion);
     const voices = synth.getVoices();
-    utterThis.voice = voices.find((voice) => voice.name === "Google UK English Female") || null;
+    utterThis.voice = voices.find((voice) => voice.name === "Google UK English Male") || null;
     utterThis.pitch = 1;
     utterThis.rate = 1;
     synth.speak(utterThis);
     handleIsSpeaking();
     utterThis.onend = () => setIsInterviewerSpeaking(false);
-    setMessages((prevMessages) => [...prevMessages, message]);
   }  
+  let times = 0
+  function delaySpeakMessage() {
+    if (times == 0){
+      setTimeout(speakMessage, 5000);
+      times ++;
+    }
+    else {
+      setTimeout(speakMessage, 3000);
+    }
+
+  }
 
   useEffect(() => {
-    if (!message) {
-      message = "this is a test message";
-    }
-    synth.addEventListener('voiceschanged', speakMessage);
-    return () => synth.removeEventListener('voiceschanged', speakMessage);
-  }, [message]);
+      delaySpeakMessage();
+  }, [videoQuestion]);
   
 
   return (
     <>
-      <h1 className="speech-title">Interviewer</h1>
       <div className="speech-text">
-        <ul>
-          {messages.map((message, index) => (
-            <li key={index}>
-              {index + 1}. {message}
-            </li>
-          ))}
-        </ul>
+          {videoQuestion}
       </div>
     </>
-  );
-};
-
-export default Interviewer;
-
+  )
+}

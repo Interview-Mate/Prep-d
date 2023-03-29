@@ -1,12 +1,14 @@
-const router = require("express").Router();
-
-const interviewCont = require("./controllers/interview.controller");
-const exerciseCont = require("./controllers/exercise.controller");
-const solvedProblemCont = require("./controllers/solvedProblem.controller");
-const userCont = require("./controllers/user.controller");
-const puncCont = require ('./controllers/punctuator.controller');
+import { Router } from "express";
+import * as interviewCont from "./controllers/interview.controller";
+import * as exerciseCont from "./controllers/exercise.controller";
+import * as solvedProblemCont from "./controllers/solvedProblem.controller";
+import * as userCont from "./controllers/user.controller";
+import * as puncCont from "./controllers/punctuator.controller";
+import * as applicationCont from "./controllers/application.controller";
 
 import { Request, Response } from "express";
+
+const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
   res.send("Hiiii");
@@ -14,34 +16,38 @@ router.get("/", (req: Request, res: Response) => {
 
 //user methods
 router.post("/user", userCont.createUser);
-router.get("/get-all-users", userCont.getAllUsers); //for testing purposes
+router.get("/get-all-users", userCont.getAllUsers);
 router.get("/getuser/:email", userCont.getUser);
 router.delete("/users/:id", userCont.deleteUser);
 router.put("/user/:id", userCont.editUser);
 
 //interview methods
-
-router.get("/interview/:interviewid", interviewCont.getInterview);
-router.get("/get-all-interviews/:userid", interviewCont.getInterviewsByUser);
-router.put(
-  "/interview/:interviewid/questions",
-  interviewCont.addQuestionToInterview
-);
+router.get("/get-all-interviews/:userId", interviewCont.getInterviewsByUser);
+router.get("/interview/:id", interviewCont.getInterviewByInterviewId);
 router.post("/interview/:userId", interviewCont.newInterview);
-router.post('/chat-response', interviewCont.getQuestionFromChatGPT)
+//@ts-ignore
+router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
+router.post("/chat-response/:id", interviewCont.getQuestionFromChatGPT);
+
+router.post("/interview-rating/:id", interviewCont.getInterviewRating);
 
 //exercise methods
-//TODO
 router.get("/get-all-exercises", exerciseCont.getAllExercises);
-// router.get('/getuser/:id', exerciseCont.getExercise);
-// router.post("/user/:user_id", exerciseCont.addExercise);
+router.get("/get-all-exercises/:id", exerciseCont.getAllExercises);
 
 //solved problems
 router.get("/problems/:userId", solvedProblemCont.getSolvedProblems);
 router.get("/get-all-solved", solvedProblemCont.getAllSolvedProblems);
 router.post("/problem", solvedProblemCont.addSolvedProblem);
 
+//Cover letter creator
+router.post("/create-cover-letter", applicationCont.createCoverLetter);
+router.post("/create-resume", applicationCont.createResume);
+router.post("/improve-cover-letter", applicationCont.improveCoverLetter);
+router.post("/get-text-review", applicationCont.getTextReview);
+router.post("/get-pdf-review", applicationCont.getPdfReview);
+
+// NEW
 router.post("/punctuate", puncCont.punctuate);
 
 export default router;
-

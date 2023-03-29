@@ -1,20 +1,11 @@
 import Exercise from '../models/exercise';
 import SolvedProblem from '../models/solvedProblem';
-import User from '../models/user';
+//import User from '../models/user';
 import { Request, Response } from 'express';
 
-// DB TEST:
-// SolvedProblem.insertMany(new SolvedProblem({
-//   user_id: "641863bbe8c071eda5e39fbb",
-//   problem_id: "6418f04f14cd74f4d7c698ea",
-//   solution: "solution test",
-//   score: 1,
-//   runtime: 22,
-//   solveTime: 33
-//   }));
-
-exports.addSolvedProblem = async (req: Request, res: Response) => {
+const addSolvedProblem = async (req: Request, res: Response) => {
   try {
+ 
     let alreadySolved = await SolvedProblem.find({
       $and: [
         { user_id: req.body.user_id },
@@ -40,7 +31,7 @@ exports.addSolvedProblem = async (req: Request, res: Response) => {
           new: true,
         }
       );
-      console.log('Solution added');
+      console.log('Solution updated');
       res.status(201).json(updated);
     } else {
       let problem = await SolvedProblem.create({
@@ -59,7 +50,7 @@ exports.addSolvedProblem = async (req: Request, res: Response) => {
   }
 };
 
-exports.getSolvedProblems = async (req: Request, res: Response) => {
+const getSolvedProblems = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
     const problems = await SolvedProblem.find({ user_id: userId }).lean();
@@ -84,7 +75,7 @@ exports.getSolvedProblems = async (req: Request, res: Response) => {
   }
 };
 
-exports.getAllSolvedProblems = async (req: Request, res: Response) => {
+const getAllSolvedProblems = async (req: Request, res: Response) => {
   try {
     const problems = await SolvedProblem.find();
     res.status(200).json(problems);
@@ -121,20 +112,4 @@ exports.getAllSolvedProblems = async (req: Request, res: Response) => {
 // }
 // getUnionData1()
 
-//________________________________________________________________________
-
-// async function getLookupData() {
-//   const lookupData = await SolvedProblem.aggregate([
-//     {
-//       $lookup: {
-//         from: 'exercises',
-//         localField: 'problem_id',
-//         foreignField: '_id',
-//         as: 'problemsss'
-//       }
-//     },
-//     { $unwind: '$problemsss' },
-//   ])
-//   console.log('lookupData:' ,lookupData);
-// }
-// getLookupData();
+export {addSolvedProblem, getSolvedProblems, getAllSolvedProblems}

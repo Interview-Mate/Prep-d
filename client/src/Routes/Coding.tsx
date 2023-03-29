@@ -2,10 +2,10 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import Editor from '@monaco-editor/react';
 import Frame from 'react-frame-component';
-import Sandbox from './Coding/Sandbox';
-import CodeInsights from './Coding/CodeInsights';
-import CodeFooter from './Coding/CodeFooter';
-import CodeDetails from './Coding/CodeDetails';
+import Sandbox from '../Components/Coding/Sandbox';
+import Insights from './Insights';
+import CodeFooter from '../Components/Coding/CodeFooter';
+import CodeDetails from '../Components/Coding/CodeDetails';
 import Navbar from '../Components/Navbar';
 import { useContext } from 'react';
 import { Context } from '../Context';
@@ -48,6 +48,12 @@ function Coding() {
     const fetchData = async () => {
       let receivedProblems = await getProblems();
       const solvedProblems = await getSolvedProblems(currentUser.id);
+      setScore(
+        solvedProblems.reduce(
+          (acc: any, curr: any) => acc + curr.exercise!.level,
+          0
+        ) * 100
+      );
 
       // filter out problems that are solved if user didn't select a specific problem
       if (problemId === undefined) {
@@ -81,18 +87,21 @@ function Coding() {
           (problem: Problem) => problem._id === problemId
         );
         setProblems(problemsFilteredById);
-        // set code in editor to previous solution if it exists
+        // set code in editor and details to previous solution if it exists
         if (
           solvedProblems
             .map((solvedProblem: SolvedProblem) => solvedProblem.problem_id)
             .includes(problemId)
         ) {
-          setPreviousSolution(
-            solvedProblems.filter(
-              (solvedProblem: SolvedProblem) =>
-                solvedProblem.problem_id === problemId
-            )[0].solution
-          );
+          const previousSolution = solvedProblems.filter(
+            (solvedProblem: SolvedProblem) =>
+              solvedProblem.problem_id === problemId
+          )[0];
+          setSolved(true);
+          setTests(3);
+          setPreviousSolution(previousSolution.solution);
+          setRuntime(previousSolution.runtime);
+          setSolveTime(previousSolution.solveTime);
         }
       } else setProblems(receivedProblems);
 
@@ -134,13 +143,13 @@ function Coding() {
         const endTime = performance.now();
         setSolveTime(endTime - solveTime);
         setRuntime((runtime1 + runtime2 + runtime3) / 3);
-        if (!solved) setScore((prevScore) => prevScore + 100);
+        if (!solved) setScore((prevScore) => prevScore + 100 * problem!.level);
         setSolved(true);
         setError('');
       }
 
       if (error1 || error2 || error3) {
-        if (solved) setScore((prevScore) => prevScore - 100);
+        if (solved) setScore((prevScore) => prevScore - 100 * problem!.level);
         if (error1) setError(error1);
         else if (error2) setError(error2);
         else if (error3) setError(error3);
@@ -148,7 +157,8 @@ function Coding() {
       }
 
       if (testsPassed < 3 && !error1 && !error2 && !error3) {
-        if (solved) setScore((prevScore: number) => prevScore - 100);
+        if (solved)
+          setScore((prevScore: number) => prevScore - 100 * problem!.level);
         setError('');
         setSolved(false);
       }
@@ -178,25 +188,25 @@ function Coding() {
   };
 
   return (
-    <>
-      <div className='h-screen w-screen bg-seasalt'>
-        <Navbar />
-        <div className='p-20 mt-10 h-4/5 w-full transition duration-200 ease-in-out'>
+    <div className='h-screen w-screen'>
+      <Navbar />
+      <div className='h-full w-full'>
         {problem && (number as number) < problems.length && (
           <div className='flex items-center justify-center h-full w-full'>
-            <CodeDetails
-              problem={problem}
-              score={score}
-              tests={tests}
-              solved={solved}
-              error={error}
-              runtime={runtime}
-              solveTime={solveTime}
-            />
-
-            <div className='mx-4 text-center w-3/4'>
+            <div className='w-1/4 h-full'>
+              <CodeDetails
+                problem={problem}
+                score={score}
+                tests={tests}
+                solved={solved}
+                error={error}
+                runtime={runtime}
+                solveTime={solveTime}
+              />
+            </div>
+            <div className='p-20 m-5 w-3/4'>
               <Editor
-                className='border p-0.5 pt-5 pr-2 border-teal-600 rounded-md bg-white'
+                className='border p-0.5 pt-5 pr-2  bg-white rounded-lg shadow '
                 height='65vh'
                 defaultLanguage={problem.language}
                 theme='vs-light'
@@ -221,9 +231,7 @@ function Coding() {
             </div>
           </div>
         )}
-        {number === problems.length && (
-          <CodeInsights problems={problems} score={score} />
-        )}
+        {number === problems.length && <Insights />}
         <div style={{ display: 'none' }}>
           <Frame>
             <Sandbox
@@ -237,8 +245,7 @@ function Coding() {
           </Frame>
         </div>
       </div>
-      </div>
-    </>
+    </div>
   );
 }
 

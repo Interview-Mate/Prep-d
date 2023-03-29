@@ -1,11 +1,18 @@
- //FIXME: update Interview
-export type Interview  = {
+ export type Interview  = {
   user_id: string;
-  score: number;
+  company: string;
+  field: string;
+  title: string,
   date: Date;
-  cloudinary_url: string;
-  questions: Question[] ;
+  conversation: QorA[];
+  overall: any[] ;
 };
+
+export type QorA = {
+  role: string,
+  cloudinary_url ?: string,
+  content: string,
+}
 
 export type Question = {
   timestamp: Date | string;
@@ -45,15 +52,3 @@ export interface IUser {
   level: number;
 }
 
-export type UserResponce = {
-  cloudinary_url: string,
-  text: string,
-  interview_id: string
-}
-
-export type AssistantResponce = {
-  feedback: string,
-  grade: number,
-  next_question: string,
-  interview_id: string
-}
