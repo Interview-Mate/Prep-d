@@ -4,7 +4,6 @@ import * as exerciseCont from './controllers/exercise.controller';
 import * as solvedProblemCont from './controllers/solvedProblem.controller';
 import * as userCont from './controllers/user.controller';
 import * as puncCont from './controllers/punctuator.controller';
-import * as textSpeech from './controllers/textSpeech.controller';
 import * as applicationCont from './controllers/application.controller';
 
 import { Request, Response } from 'express';
@@ -49,7 +48,5 @@ router.post('/get-pdf-review', applicationCont.getPdfReview);
 
 // NEW
 router.post('/punctuate', puncCont.punctuate);
-
-router.post('/api/text-to-speech', textSpeech.speechMe);
 
 export default router;

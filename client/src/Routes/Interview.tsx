@@ -131,6 +131,7 @@ export default function Interview() {
           { message: transcript, messageType: "user" },
         ]);
       }
+      setIsInterviewerSpeaking(true)
       const res = await ApiService.updateInterview(
         interviewId,
         audioUrl,
@@ -178,34 +179,34 @@ export default function Interview() {
                 )}
                 {!formValues.video && (
                   <>
-                    <h2 className="speech-title">Chat Interview</h2>
-                    <div className="chat-container">
-                      {conversation.map((value, index) => (
-                        <div
-                          key={`${value.messageType}-${index}`}
-                          className={`chat-message ${
-                            value.messageType === "interviewer"
-                              ? "interviewer"
-                              : "user"
-                          }`}
-                        >
-                          {value.messageType === "interviewer" ? (
-                            <img
-                              src={MrBPrep}
-                              className="avatar"
-                              alt="Interviewer Avatar"
-                            />
-                          ) : (
-                            <img
-                              src={currentUser.image}
-                              className="avatar"
-                              alt="User Avatar"
-                            />
-                          )}
-                          <div className="chat-bubble">{value.message}</div>
+                      <div className="interviewer-header">
+                        <div className="speech-title-container">
+                          <img src={MrBPrep} className="avatar avatar-interviewer" alt="Interviewer Avatar" />
+                          <h2 className="speech-title">Mr B. Prep'd</h2>
+                          {isInterviewerSpeaking && (<p className="chat-typing">...is typing</p>)}
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                      <div className="chat-container" ref={chatContainerRef}>
+                        {conversation.map((value, index) => (
+                          <div
+                            key={`${value.messageType}-${index}`}
+                            className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"}`}
+                          >
+                            {value.messageType === "interviewer" && (
+                              <>
+                                <img src={MrBPrep} className="avatar avatar-interviewer" alt="Interviewer Avatar" />
+                                <div className="chat-bubble interviewer">{value.message}</div>
+                              </>
+                            )}
+                            {value.messageType === "user" && (
+                              <>
+                                <img src={currentUser.image} className="avatar avatar-user" alt="User Avatar" />
+                                <div className="chat-bubble user">{value.message}</div>
+                              </>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                   </>
                 )}
                 {!interviewEnd ? (
