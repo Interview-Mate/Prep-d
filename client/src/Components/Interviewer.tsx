@@ -28,9 +28,16 @@ export default function Interviewer ({ videoQuestion, setIsInterviewerSpeaking, 
     handleIsSpeaking();
     utterThis.onend = () => setIsInterviewerSpeaking(false);
   }  
-
+  let times = 0
   function delaySpeakMessage() {
-    setTimeout(speakMessage, 3000);
+    if (times == 0){
+      setTimeout(speakMessage, 5000);
+      times ++;
+    }
+    else {
+      setTimeout(speakMessage, 3000);
+    }
+
   }
 
   useEffect(() => {

@@ -14,10 +14,7 @@ import Spinner from "../Components/Spinner";
 
 import { all } from "q";
 
-interface LoadingStatus {
-  userWebCam: boolean;
-  avatarWebCam: boolean;
-}
+
 
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;
@@ -31,6 +28,7 @@ export default function Interview() {
     jobTitle: "",
     video: true,
   });
+
 
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -46,6 +44,20 @@ export default function Interview() {
   const [suggestions, setSuggestions] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+
+
+    //to delay the loading of the avatar  
+  
+    const [isUserWebCamLoaded, setIsUserWebCamLoaded] = useState(false);
+
+
+    const handleUserWebCamLoaded = () => {
+      setTimeout(() => {
+        setIsUserWebCamLoaded(true);
+      }, 3000); 
+    };
+  
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -164,11 +176,13 @@ export default function Interview() {
                 {formValues.video && (
                   <div className="flex flex-col items-center justify-center w-full pt-20">
                     <div className="flex justify-center space-x-1">
-                      <UserWebCam />
-                      <AvatarWebCam
-                        isInterviewerSpeaking={isInterviewerSpeaking}
-                        video={formValues.video}
-                      />
+                    <UserWebCam onLoaded={handleUserWebCamLoaded} />
+                  {isUserWebCamLoaded && (
+                    <AvatarWebCam
+                      isInterviewerSpeaking={isInterviewerSpeaking}
+                      video={formValues.video}
+                    />
+                  )}
                     </div>
                     <Interviewer
                       videoQuestion={videoQuestion}

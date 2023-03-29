@@ -13,6 +13,9 @@ module.exports = {
         // prettier-ignore
         "seasalt": "#f8f7f9ff",
       },
+      backgroundImage: {
+        'office': "url('./Assets/office.jpg')",
+      }
     },
 
     screens: {

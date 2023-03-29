@@ -1,9 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react';
 
-// for declaring upcoming props type
-type Props = any;
 
-const UserWebCam: React.FC<Props> = () => {
+type Props = {
+  onLoaded: () => void;
+};
+
+const UserWebCam: React.FC<Props> = ({ onLoaded}) => {
 
   // State to hold user's media stream once it starts
   const [stream, setStream] = useState<MediaStream | null> (null);
@@ -21,6 +23,9 @@ const UserWebCam: React.FC<Props> = () => {
 
         setStream(stream);
 
+        // call onLoaded once the media stream has started
+        onLoaded();
+
       } catch(error) {
         console.error('unable to access cam', error);
       }
@@ -28,7 +33,7 @@ const UserWebCam: React.FC<Props> = () => {
 
 
     getUserMedia();
-  }, []);
+  }, [onLoaded]);
 
   useEffect(() => {
     if (videoRef.current && stream) {
@@ -45,12 +50,6 @@ const UserWebCam: React.FC<Props> = () => {
       
       )}
 
-      
-      {/* <div  className='flex justify-end'>
-        <div className='bg-white w-24 flex justify-center'> 
-           YOU
-        </div>
-      </div> */}
 
     </div>
   )
