@@ -11,6 +11,7 @@
     "test:watch": "jest --watch",
     "server": "npx ts-node src/server.ts",
     "ts-server": "nodemon --watch './**/*.ts' --exec 'ts-node' src/server.ts",
+    "runDeploy": "npm i && tsc"
     "start": "node ./dist/server.js"
   },
   "keywords": [],
