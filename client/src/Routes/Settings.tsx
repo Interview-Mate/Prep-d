@@ -101,8 +101,10 @@ export default function Settings() {
                   className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-african-violet-900 focus:border-african-violet-900 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-african-violet-900 dark:focus:border-african-violet-900"
                 >
                   <option value=""></option>
-                  <option value="Junior">Junior</option>
-                  <option value="Senior">Senior</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                  <option value="Expert">Expert</option>
                 </select>
               </div>
             </div>
