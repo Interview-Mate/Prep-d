@@ -47,7 +47,7 @@ const createResume = async (req: Request, res: Response) => {
 const getPdfReview = async (req: Request | any, res: Response) => {
   try {
     //let data = await pdf(req.files.file.data)
-    let data
+    let data = {text: 'placeholder'};
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: `Review my cover letter: ${data.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
