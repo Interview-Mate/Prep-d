@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import InterviewForm from "../InterviewForm";
 
 describe("InterviewForm component", () => {
-  test("renders the form inputs and buttons", () => {
+  it("renders the form inputs and buttons", () => {
     render(<InterviewForm onFormSubmit={() => {}} />);
     expect(screen.getByLabelText("Company Name:")).toBeInTheDocument();
     expect(screen.getByLabelText("Job Level:")).toBeInTheDocument();
@@ -14,7 +14,7 @@ describe("InterviewForm component", () => {
     expect(screen.getByText("Cancel")).toBeInTheDocument();
   });
 
-  test("updates the input values when the user types", () => {
+  it("updates the input values when the user types", () => {
     render(<InterviewForm onFormSubmit={() => {}} />);
     const companyNameInput = screen.getByLabelText("Company Name:");
     const jobLevelInput = screen.getByLabelText("Job Level:");
@@ -34,7 +34,7 @@ describe("InterviewForm component", () => {
     expect(jobTitleInput).toHaveValue("Software Engineer");
   });
 
-  test("updates the video checkbox when the user clicks it", () => {
+  it("updates the video checkbox when the user clicks it", () => {
     render(<InterviewForm onFormSubmit={() => {}} />);
     const videoCheckbox = screen.getByLabelText("Video?");
     expect(videoCheckbox).toBeChecked();

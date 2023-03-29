@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import Interviewer from "../Interviewer";
 
 describe("Interviewer", () => {
-  const videoQuestion = "What are your strengths?";
+  const videoQuestion = "What is your biggest weakness?";
   const setIsInterviewerSpeaking = jest.fn();
   const video = true;
 
