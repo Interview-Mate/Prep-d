@@ -1,27 +1,27 @@
-import { mongoose } from './index.models';
-import { Interview } from '../types';
+import { mongoose } from "./index.models";
+import { Interview } from "../types";
 
 const interviewSchema = new mongoose.Schema({
   user_id: {
     type: String,
     required: true,
   },
-    company: String,
-    field: String,
-    title: String,
+  company: String,
+  field: String,
+  title: String,
   date: {
     type: Date, default: () => Date.now()
-   },
+  },
 
   conversation: [{
-      role: String,
-      cloudinary_url: String,
-      content: String,
-    },
+    role: String,
+    cloudinary_url: String,
+    content: String,
+  },
   ],
-    overall: [],
-  });
+  overall: [],
+});
 
 
-const Interview = mongoose.model('Interview', interviewSchema);
+const Interview = mongoose.model("Interview", interviewSchema);
 export default Interview;

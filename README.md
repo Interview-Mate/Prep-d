@@ -1,3 +1,4 @@
+
 # Prep'd
 
 Prepare for job interviews with our video chatbot, get feedback on your interview answers, get your programming skills up to scratch with our coding challenges and build yourself the perfect CV and cover letter to land your dream job!
@@ -37,6 +38,17 @@ chatGPT_key=xxx
 ```
 
 ## Running the app
+In order to install all the required dependencies, open a terminal from the root folder and run:
+```bash
+npm install
+```
+Once the installation is completed, simply run:
+
+```bash
+npm run start:server-client
+```
+
+## Alternatively:
 
 ### Back End
 

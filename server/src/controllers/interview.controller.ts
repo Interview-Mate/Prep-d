@@ -5,7 +5,7 @@ import Interview from "../models/interview";
 import { Request, Response } from "express";
 import parseMessage from "./../asset/chatGPTparser";
 import { Configuration, OpenAIApi } from "openai";
-import { QorA } from '../types';
+import { QorA } from "../types";
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -15,15 +15,15 @@ const openai = new OpenAIApi(
 
 const getInterviewsByUser = async (req: Request, res: Response) => {
   try {
-    if(req.params.userId.length !== 24){
-      throw new Error ('The user ID is either missing or invalid.')
+    if (req.params.userId.length !== 24) {
+      throw new Error ("The user ID is either missing or invalid.");
     }
     const userId = req.params.userId;
     const interviews = await Interview.find({ user_id: userId }).sort({
       date: -1,
     });
     if (interviews.length < 1) {
-      throw new Error('No previous interviews found');
+      throw new Error("No previous interviews found");
     }
     res.status(200).json(interviews);
   } catch (err: any) {
@@ -33,10 +33,10 @@ const getInterviewsByUser = async (req: Request, res: Response) => {
 
 const getInterviewByInterviewId = async (req: Request, res: Response) => {
   try {
-    let id = req.params.id;
-    let result = await Interview.findById(id);
+    const id = req.params.id;
+    const result = await Interview.findById(id);
     if (!result) {
-      throw new Error('Interview not found');
+      throw new Error("Interview not found");
     }
     res.status(200).json(result);
   } catch (err: any) {
@@ -46,13 +46,13 @@ const getInterviewByInterviewId = async (req: Request, res: Response) => {
 
 //! FE => createInterview - url/:userID => (userId, level, company, field, title)
 //? BE => router.post("/interview/:userId", interviewCont.newInterview);
- const newInterview = async (req: Request, res: Response) => {
+const newInterview = async (req: Request, res: Response) => {
 
   try {
-    if(req.params.userId.length !== 24){
-      throw new Error ('The user ID is either missing or invalid.')
+    if (req.params.userId.length !== 24) {
+      throw new Error ("The user ID is either missing or invalid.");
     }
-    let interview = await Interview.create({
+    const interview = await Interview.create({
       user_id: req.params.userId,
       level: req.body.level,
       company: req.body.company,
@@ -60,7 +60,6 @@ const getInterviewByInterviewId = async (req: Request, res: Response) => {
       title: req.body.title,
       conversation: [],
     });
-    console.log("Interview created");
     res.status(201).json(interview);
   } catch (err: any) {
     res.status(500).json(err.message);
@@ -103,7 +102,6 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
         { new: true }
       );
     }
-    console.log(interview);
     if (!interview) {
       throw new Error("Interview not found");
     }
@@ -112,27 +110,26 @@ const getQuestionFromChatGPT = async (req: Request, res: Response) => {
       //@ts-ignore
       .json(updatedConversation?.conversation[1].content);
   } catch (error: any) {
-    console.error(error);
     res.status(500).json(error.message);
   }
 };
 
-function addHintForChatGPT (inp: any, question_count: number){
+function addHintForChatGPT (inp: any, question_count: number) {
   let suffix: string;
   if (question_count < 8) {
     suffix = ` Rate my response out of 5 with a comment. Then continue to the next question. Return this as a JSON object without plus signs in this format:
   {rating_number: input the rating you gave me as a number,
     rating_feedback: the feedback you gave me to the previous question,
-    next_question: your next question}.`
+    next_question: your next question}.`;
 
-    return inp.concat(suffix)
+    return inp.concat(suffix);
   } else {
     suffix = ` Rate my response out of 5 with a comment. Then conclude the interview with a statement. Return this as a JSON object without plus signs in this format:
   {rating_number: input the rating you gave me as a number,
     rating_feedback: the feedback you gave me to the previous question,
-    next_question: instead of a question, provide your conclusion}.`
+    next_question: instead of a question, provide your conclusion}.`;
 
-    return inp.concat(suffix)
+    return inp.concat(suffix);
   }
 }
 
@@ -162,7 +159,7 @@ const addAnswerToInterview = async (req: Request, res: Response) => {
       messages: interview?.conversation.map((x) => {
         return {
           role: x.role,
-          content: x.role == 'user' ? addHintForChatGPT(x.content, question_count) : x.content };
+          content: x.role == "user" ? addHintForChatGPT(x.content, question_count) : x.content };
       }),
       temperature: 0.5,
     });
@@ -178,7 +175,7 @@ const addAnswerToInterview = async (req: Request, res: Response) => {
       );
     }
 
-    let followingQuestion = parseMessage(
+    const followingQuestion = parseMessage(
       updatedConversation?.conversation[
         updatedConversation.conversation.length - 1
       ].content
@@ -189,13 +186,12 @@ const addAnswerToInterview = async (req: Request, res: Response) => {
     }
     res.status(201).json(followingQuestion);
   } catch (error: any) {
-    console.error(error);
     res.status(500).json(error.message);
   }
 };
 
 
-function checkRoleAndParseMessage(objInConversation: any) {
+function checkRoleAndParseMessage (objInConversation: any) {
   if (objInConversation.role === "user") {
     return {
       interviewee: objInConversation.content,
@@ -214,7 +210,7 @@ function checkRoleAndParseMessage(objInConversation: any) {
   }
   if (!objInConversation.role) {
     throw new Error(
-      `Message ${objInConversation} is missing the \'role \' property`
+      `Message ${objInConversation} is missing the 'role ' property`
     );
   }
 }
@@ -223,21 +219,21 @@ function checkRoleAndParseMessage(objInConversation: any) {
 //sends the entire converstion to chat gpt and returns overall feedback and rating
 const getInterviewRating = async (req: Request, res: Response) => {
   try {
-    let id = req.params.id;
-    let result = await Interview.findById(id);
-      if (!result) {
-        throw new Error("Interview not found");
-      }
-      result.conversation.shift();
+    const id = req.params.id;
+    const result = await Interview.findById(id);
+    if (!result) {
+      throw new Error("Interview not found");
+    }
+    result.conversation.shift();
 
 
-    let entireConversation: any = result.conversation.map((x) =>
+    const entireConversation: Array<any> = result.conversation.map((x) =>
       checkRoleAndParseMessage(x)
     );
 
-    let jsons = entireConversation.map((x) => JSON.stringify(x));
+    const jsons = entireConversation.map((x) => JSON.stringify(x));
 
-    let askForFeedback = `You are an interviewer, who just interviewed someone for a job at ${
+    const askForFeedback = `You are an interviewer, who just interviewed someone for a job at ${
       result.company || "a certain company"
     }. It is for a ${result.title || "mid level"} position in the field of ${
       result.field || "software development"
