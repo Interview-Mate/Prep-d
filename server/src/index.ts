@@ -1,13 +1,13 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-import express, { Express, Request, Response } from 'express';
-import fileUpload from 'express-fileupload';
-import cors from 'cors';
-import router from './router';
-import mongoSanitize from 'express-mongo-sanitize';
-import rateLimit from 'express-rate-limit';
-import helmet from 'helmet';
+import express, { Express, Request, Response } from "express";
+import fileUpload from "express-fileupload";
+import cors from "cors";
+import router from "./router";
+import mongoSanitize from "express-mongo-sanitize";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 
 
 dotenv.config();
@@ -25,11 +25,11 @@ const PORT: number = Number(process.env.SERVER_PORT) || 4000;
 app
   .use(cors())
   .use(fileUpload())
-  .use(express.json({ limit: '50mb' })) 
+  .use(express.json({ limit: "50mb" })) 
   .use(router)
   .use(mongoSanitize())
   .use(limiter)
   .use(helmet());
 
 
-  export default app;
+export default app;

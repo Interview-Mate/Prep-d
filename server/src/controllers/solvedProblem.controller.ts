@@ -1,12 +1,13 @@
-import Exercise from '../models/exercise';
-import SolvedProblem from '../models/solvedProblem';
+import Exercise from "../models/exercise";
+import SolvedProblem from "../models/solvedProblem";
 //import User from '../models/user';
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
+import {SolvedProblemT} from "../types";
 
 const addSolvedProblem = async (req: Request, res: Response) => {
   try {
 
-    let alreadySolved = await SolvedProblem.find({
+    const alreadySolved = await SolvedProblem.find({
       $and: [
         { user_id: req.body.user_id },
         { problem_id: req.body.problem_id },
@@ -14,7 +15,7 @@ const addSolvedProblem = async (req: Request, res: Response) => {
     }).lean();
 
     if (alreadySolved.length > 0) {
-      let updated = await SolvedProblem.findOneAndUpdate(
+      const updated = await SolvedProblem.findOneAndUpdate(
         {
           $and: [
             { user_id: req.body.user_id },
@@ -31,10 +32,9 @@ const addSolvedProblem = async (req: Request, res: Response) => {
           new: true,
         }
       );
-      console.log('Solution updated');
       res.status(201).json(updated);
     } else {
-      let problem = await SolvedProblem.create({
+      const problem = await SolvedProblem.create({
         user_id: req.body.user_id,
         problem_id: req.body.problem_id,
         solution: req.body.solution,
@@ -42,7 +42,6 @@ const addSolvedProblem = async (req: Request, res: Response) => {
         runtime: req.body.runtime,
         solveTime: req.body.solveTime,
       });
-      console.log('Solution added');
       res.status(201).json(problem);
     }
   } catch (err: any) {
@@ -70,7 +69,6 @@ const getSolvedProblems = async (req: Request, res: Response) => {
     );
     res.status(200).json(solvedProblems);
   } catch (err: any) {
-    console.error(err);
     res.status(500).json(err.message);
   }
 };
@@ -80,7 +78,6 @@ const getAllSolvedProblems = async (req: Request, res: Response) => {
     const problems = await SolvedProblem.find();
     res.status(200).json(problems);
   } catch (err: any) {
-    console.error(err);
     res.status(500).json(err.message);
   }
 };
@@ -112,4 +109,4 @@ const getAllSolvedProblems = async (req: Request, res: Response) => {
 // }
 // getUnionData1()
 
-export {addSolvedProblem, getSolvedProblems, getAllSolvedProblems}
+export {addSolvedProblem, getSolvedProblems, getAllSolvedProblems};
