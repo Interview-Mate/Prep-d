@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useContext } from "react";
 import * as ApiService from "../Util/ApiService";
 import { Context } from "../Context";
-
 export default function SpeechToText({
   isInterviewerSpeaking,
   onSaveUserResponse,
@@ -15,7 +14,6 @@ export default function SpeechToText({
     handleGetUser,
     handleCreateUser,
   } = useContext(Context) as any;
-
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
     null
@@ -25,20 +23,16 @@ export default function SpeechToText({
   const speechRecognition = useRef(
     new (window.SpeechRecognition || window.webkitSpeechRecognition)()
   );
-
   speechRecognition.current.interimResults = true;
   speechRecognition.current.continuous = true;
-
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       const recorder = new MediaRecorder(stream);
       setMediaRecorder(recorder);
-
       recorder.addEventListener("dataavailable", (event) => {
         audioChunks.current.push(event.data);
       });
     });
-
     speechRecognition.current.addEventListener("result", (event: any) => {
       let newTranscript = "";
       for (let i = 0; i < event.results.length; i++) {
@@ -46,31 +40,26 @@ export default function SpeechToText({
       }
       setCurrentTranscript(newTranscript);
     });
-
     speechRecognition.current.addEventListener("end", () => {
       if (recording) {
         speechRecognition.current.start();
       }
     });
   }, []);
-
   const startRecording = () => {
     setRecording(true);
     speechRecognition.current.start();
     mediaRecorder?.start();
   };
-
   const turnOffAudioInput = () => {
     speechRecognition.current.stop();
     mediaRecorder?.stop();
   };
-
   const punctuateText = async (currentTranscript: string) => {
     const response = await ApiService.punctuate(currentTranscript);
     const punctuatedText: string = response.punctuatedText;
     return punctuatedText;
   };
-
   const createAudioFile = async () => {
     const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
     const id = Math.random().toString(36).substr(2, 9);
@@ -82,12 +71,10 @@ export default function SpeechToText({
     );
     return formData;
   };
-
   const postAudioFile = async (formData: any) => {
     const cloudinaryResponse = await ApiService.postAudio(formData);
     return cloudinaryResponse;
   };
-
   const stopRecording = async () => {
     turnOffAudioInput();
     const punctuatedText = await punctuateText(currentTranscript);
@@ -99,15 +86,13 @@ export default function SpeechToText({
     onSaveUserResponse(audioUrl, punctuatedText);
     setCurrentTranscript("");
   };
-
   const onTextSubmit = async () => {
     onSaveUserResponse(null, currentTranscript);
     setCurrentTranscript("");
   };
-
   if (!video) {
     return (
-      <div>
+      <div className="flex flex-col justify-center items-center">
         <div className="chat-input-container">
           <textarea
             className="chat-input"
@@ -129,7 +114,6 @@ export default function SpeechToText({
       </div>
     );
   }
-
   return (
     <div>
       <div className="flex items-center justify-center">
@@ -140,7 +124,6 @@ export default function SpeechToText({
         >
           Record
         </button>
-
         <button
           className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium disabled:bg-eerie-black disabled:text-seasalt"
           onClick={stopRecording}

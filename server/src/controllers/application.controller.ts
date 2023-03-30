@@ -1,18 +1,26 @@
 import { config } from "dotenv";
 config();
 
-import CoverLetter from "../models/coverLetter";
-import { Request, Response } from "express";
 
+import { Request, Response } from 'express';
 
-//import pdf from "../libs/pdf-parse";
-import { Configuration, OpenAIApi } from "openai";
+// if(process.env.NODE_ENV === 'development') {
+//   import pdf from '../libs/pdf-parse';
+// } else {
+//   import pdf from 'pdf-parse';
+// }
+// @ts-ignore
+import pdf from '../libs/pdf-parse';
+
+import { Configuration, OpenAIApi } from 'openai';
 
 const openai = new OpenAIApi(
   new Configuration({
     apiKey: process.env.chatGPT_key,
   })
 );
+
+
 
 const createCoverLetter = async (req: Request, res: Response) => {
   try {
@@ -46,7 +54,7 @@ const createResume = async (req: Request, res: Response) => {
 
 const getPdfReview = async (req: Request | any, res: Response) => {
   try {
-    //const data = await pdf(req.files.file.data);
+    const data = await pdf(req.files.file.data);
     const data = {text: "placeholder"};
     const response = await openai.createCompletion({
       model: "text-davinci-003",

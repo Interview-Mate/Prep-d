@@ -3,9 +3,8 @@ import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const dbName = process.env.DB_NAME || "prep-d";
-const dbURL = process.env.DB_URL || "mongodb://127.0.0.1:27017";
+const dbURL = process.env.DB_URL || 'mongodb://127.0.0.1:27017/prep-d';
 
-const dbConnection = mongoose.connect(`${dbURL}/${dbName}`, {});
+const dbConnection = mongoose.connect(`${dbURL}`, {});
 
 export {mongoose, dbConnection};

@@ -13,10 +13,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain="dev-jha6px2ereu57v06.us.auth0.com"
-      clientId="OgDgqM8zGI8BJLmkEWVkD8BS2I6M6eWw"
+      domain={process.env.REACT_APP_AUTH0_DOMAIN as string}
+      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID as string}
       authorizationParams={{
-        redirect_uri: "http://localhost:3000/home",
+        redirect_uri: process.env.REACT_APP_AUTH0_REDIRECT_URI as string,
       }}
     >
       <ContextProvider>
