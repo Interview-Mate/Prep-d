@@ -10,8 +10,9 @@ import { Request, Response } from "express";
 
 const router = Router();
 
-router.get("/", (req: Request, res: Response) => {
-  res.send("Hiiii");
+//Postman
+router.all("/help", (req: Request, res: Response) => {
+  res.redirect("https://documenter.getpostman.com/view/25563730/2s93RRvskj");
 });
 
 //User methods
@@ -47,5 +48,7 @@ router.post("/get-pdf-review", applicationCont.getPdfReview);
 
 // Punctuattion
 router.post("/punctuate", puncCont.punctuate);
+
+
 
 export default router;
