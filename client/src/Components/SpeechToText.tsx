@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useContext } from "react";
 import * as ApiService from "../Util/ApiService";
-import { Context } from "../Context";
 
 export default function SpeechToText({
   isInterviewerSpeaking,
@@ -8,14 +7,6 @@ export default function SpeechToText({
   video,
   interviewEnd,
 }: SpeechProps) {
-  const {
-    currentUser,
-    setCurrentUser,
-    isAuthenticated,
-    handleGetUser,
-    handleCreateUser,
-  } = useContext(Context) as any;
-
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
     null

@@ -14,8 +14,6 @@ import Spinner from "../Components/Spinner";
 
 import { all } from "q";
 
-
-
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;
 
@@ -28,7 +26,6 @@ export default function Interview() {
     jobTitle: "",
     video: true,
   });
-
 
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -45,19 +42,15 @@ export default function Interview() {
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  //to delay the loading of the avatar
 
+  const [isUserWebCamLoaded, setIsUserWebCamLoaded] = useState(false);
 
-    //to delay the loading of the avatar  
-  
-    const [isUserWebCamLoaded, setIsUserWebCamLoaded] = useState(false);
-
-
-    const handleUserWebCamLoaded = () => {
-      setTimeout(() => {
-        setIsUserWebCamLoaded(true);
-      }, 3000); 
-    };
-  
+  const handleUserWebCamLoaded = () => {
+    setTimeout(() => {
+      setIsUserWebCamLoaded(true);
+    }, 3000);
+  };
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -143,7 +136,7 @@ export default function Interview() {
           { message: transcript, messageType: "user" },
         ]);
       }
-      setIsInterviewerSpeaking(true)
+      setIsInterviewerSpeaking(true);
       const res = await ApiService.updateInterview(
         interviewId,
         audioUrl,
@@ -176,13 +169,13 @@ export default function Interview() {
                 {formValues.video && (
                   <div className="flex flex-col items-center justify-center w-full pt-20">
                     <div className="flex justify-center space-x-1">
-                    <UserWebCam onLoaded={handleUserWebCamLoaded} />
-                  {isUserWebCamLoaded && (
-                    <AvatarWebCam
-                      isInterviewerSpeaking={isInterviewerSpeaking}
-                      video={formValues.video}
-                    />
-                  )}
+                      <UserWebCam onLoaded={handleUserWebCamLoaded} />
+                      {isUserWebCamLoaded && (
+                        <AvatarWebCam
+                          isInterviewerSpeaking={isInterviewerSpeaking}
+                          video={formValues.video}
+                        />
+                      )}
                     </div>
                     <Interviewer
                       videoQuestion={videoQuestion}
@@ -193,34 +186,56 @@ export default function Interview() {
                 )}
                 {!formValues.video && (
                   <>
-                      <div className="interviewer-header">
-                        <div className="speech-title-container">
-                          <img src={MrBPrep} className="avatar avatar-interviewer" alt="Interviewer Avatar" />
-                          <h2 className="speech-title">Mr B. Prep'd</h2>
-                          {isInterviewerSpeaking && (<p className="chat-typing">...is typing</p>)}
+                    <div className="interviewer-header">
+                      <div className="speech-title-container">
+                        <img
+                          src={MrBPrep}
+                          className="avatar avatar-interviewer"
+                          alt="Interviewer Avatar"
+                        />
+                        <h2 className="speech-title">Mr B. Prep'd</h2>
+                        {isInterviewerSpeaking && (
+                          <p className="chat-typing">...is typing</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="chat-container" ref={chatContainerRef}>
+                      {conversation.map((value, index) => (
+                        <div
+                          key={`${value.messageType}-${index}`}
+                          className={`chat-message ${
+                            value.messageType === "interviewer"
+                              ? "interviewer"
+                              : "user"
+                          }`}
+                        >
+                          {value.messageType === "interviewer" && (
+                            <>
+                              <img
+                                src={MrBPrep}
+                                className="avatar avatar-interviewer"
+                                alt="Interviewer Avatar"
+                              />
+                              <div className="chat-bubble interviewer">
+                                {value.message}
+                              </div>
+                            </>
+                          )}
+                          {value.messageType === "user" && (
+                            <>
+                              <img
+                                src={currentUser.image}
+                                className="avatar avatar-user"
+                                alt="User Avatar"
+                              />
+                              <div className="chat-bubble user">
+                                {value.message}
+                              </div>
+                            </>
+                          )}
                         </div>
-                      </div>
-                      <div className="chat-container" ref={chatContainerRef}>
-                        {conversation.map((value, index) => (
-                          <div
-                            key={`${value.messageType}-${index}`}
-                            className={`chat-message ${value.messageType === "interviewer" ? "interviewer" : "user"}`}
-                          >
-                            {value.messageType === "interviewer" && (
-                              <>
-                                <img src={MrBPrep} className="avatar avatar-interviewer" alt="Interviewer Avatar" />
-                                <div className="chat-bubble interviewer">{value.message}</div>
-                              </>
-                            )}
-                            {value.messageType === "user" && (
-                              <>
-                                <img src={currentUser.image} className="avatar avatar-user" alt="User Avatar" />
-                                <div className="chat-bubble user">{value.message}</div>
-                              </>
-                            )}
-                          </div>
-                        ))}
-                      </div>
+                      ))}
+                    </div>
                   </>
                 )}
                 {!interviewEnd ? (

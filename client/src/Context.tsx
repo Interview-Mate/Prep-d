@@ -1,16 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import * as ApiService from './Util/ApiService';
-
-// type IMovie = {
-//   original_title: string;
-//   poster_path: string;
-//   id: number;
-// };
-
-// type IMovieContext = [IMovie[], React.Dispatch<React.SetStateAction<IMovie[]>>];
-
-// export const MovieContext = createContext<IMovieContext>([[], () => null]);
+import React, { createContext, useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import * as ApiService from "./Util/ApiService";
 
 const Context = createContext<any>([[], () => null]);
 
@@ -19,24 +9,18 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { isLoading }: { isLoading: boolean } = useAuth0();
   const { user }: { user?: UserData } = useAuth0();
   const [currentUser, setCurrentUser] = useState({
-    email: '',
-    name: '',
-    surname: '',
-    level: '',
-    image: '',
-    id: '',
+    email: "",
+    name: "",
+    surname: "",
+    level: "",
+    image: "",
+    id: "",
   });
-  // const [authenticated, setAuthenticated] = useState(false);
-
-  // useEffect(() => {
-  //   if (isAuthenticated && authenticated !== true) setAuthenticated(true);
-  // }, [isAuthenticated]);
 
   // Checks if user exists in database
   const handleGetUser = async () => {
     if (user) {
       console.log(user);
-      // setAuthenticated(true);
       const email = user?.email;
       const receivedUser = await ApiService.getUser(email);
       if (receivedUser) {
@@ -55,7 +39,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Creates user in database
   const handleCreateUser = async (newUser: User) => {
-
     const receivedUser = await ApiService.createUser({
       email: newUser.email,
       name: newUser.name,
@@ -80,14 +63,25 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const handleUpdateUser = async (updatedUser: User) => {
     const receivedUser = await ApiService.updateUser({
       id: currentUser.id,
-      email: updatedUser.email === '' ? currentUser.email : updatedUser.email,
-      name: updatedUser.name === currentUser.name ? currentUser.name : updatedUser.name,
-      surname: updatedUser.surname === currentUser.surname ? currentUser.surname : updatedUser.surname,
-      level: updatedUser.level !== currentUser.level ? updatedUser.level : currentUser.level,
-      image: updatedUser.image === '' || undefined ? currentUser.image : updatedUser.image,
+      email: updatedUser.email === "" ? currentUser.email : updatedUser.email,
+      name:
+        updatedUser.name === currentUser.name
+          ? currentUser.name
+          : updatedUser.name,
+      surname:
+        updatedUser.surname === currentUser.surname
+          ? currentUser.surname
+          : updatedUser.surname,
+      level:
+        updatedUser.level !== currentUser.level
+          ? updatedUser.level
+          : currentUser.level,
+      image:
+        updatedUser.image === "" || undefined
+          ? currentUser.image
+          : updatedUser.image,
     });
-    
-    
+
     if (receivedUser) {
       setCurrentUser({
         ...currentUser,
