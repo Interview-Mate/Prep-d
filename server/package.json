@@ -14,7 +14,7 @@
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "buildDeploy": "npm i && tsc",
-    "start": "ls ./dist && node ./dist/src/index.js"
+    "start": "ls ./dist/src && node ./dist/src/index.js"
   },
   "keywords": [],
   "author": "",
