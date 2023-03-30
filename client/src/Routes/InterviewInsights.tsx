@@ -177,7 +177,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageRating >= 1} />
+                      <Rating.Star filled={averageRating >= 1} color={'gray'}/>
                     )}
                     {averageRating >= 2 ? (
                       <Rating.Star
@@ -185,7 +185,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageRating >= 2} />
+                      <Rating.Star filled={averageRating >= 2} color={'gray'}/>
                     )}
                     {averageRating >= 3 ? (
                       <Rating.Star
@@ -193,7 +193,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageRating >= 3} />
+                      <Rating.Star filled={averageRating >= 3} color={'gray'}/>
                     )}
                     {averageRating >= 4 ? (
                       <Rating.Star
@@ -201,7 +201,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageRating >= 4} />
+                      <Rating.Star filled={averageRating >= 4} color={'gray'}/>
                     )}
                     {averageRating >= 5 ? (
                       <Rating.Star
@@ -209,7 +209,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageRating >= 5} />
+                      <Rating.Star filled={averageRating >= 5} color={'gray'}/>
                     )}
                   </Rating>
                 )}
@@ -224,7 +224,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageOverall >= 1} />
+                      <Rating.Star filled={averageOverall >= 1} color={'gray'}/>
                     )}
                     {averageOverall >= 2 ? (
                       <Rating.Star
@@ -232,7 +232,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageOverall >= 2} />
+                      <Rating.Star filled={averageOverall >= 2} color={'gray'}/>
                     )}
                     {averageOverall >= 3 ? (
                       <Rating.Star
@@ -240,7 +240,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageOverall >= 3} />
+                      <Rating.Star filled={averageOverall >= 3} color={'gray'}/>
                     )}
                     {averageOverall >= 4 ? (
                       <Rating.Star
@@ -248,7 +248,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageOverall >= 4} />
+                      <Rating.Star filled={averageOverall >= 4} color={'gray'}/>
                     )}
                     {averageOverall >= 5 ? (
                       <Rating.Star
@@ -256,7 +256,7 @@ const InterviewInsights = () => {
                         color={'#4fbbbd'}
                       />
                     ) : (
-                      <Rating.Star filled={averageOverall >= 5} />
+                      <Rating.Star filled={averageOverall >= 5} color={'gray'}/>
                     )}
                   </Rating>
                 )}

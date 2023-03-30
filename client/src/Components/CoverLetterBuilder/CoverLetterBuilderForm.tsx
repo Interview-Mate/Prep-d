@@ -168,7 +168,7 @@ function CoverLetterBuilderForm({
                   })
                 }
               />
-              <label
+              {/* <label
                 className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
                 htmlFor="state"
               >
@@ -178,14 +178,14 @@ function CoverLetterBuilderForm({
                 className="shadow appearance-none border rounded w-full py-1 px-2 mb-3 text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 id="state"
-                value={CoverLetterData.city}
+                value={CoverLetterData.state}
                 onChange={(e) =>
                   setCoverLetterData({
                     ...CoverLetterData,
-                    city: e.target.value,
+                    state: e.target.value,
                   })
                 }
-              />
+              /> */}
             </Accordion.Content>
           </Accordion.Panel>
           <Accordion.Panel>
