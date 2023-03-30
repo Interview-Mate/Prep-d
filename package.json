@@ -1,0 +1,29 @@
+{
+  "name": "prep-d",
+  "version": "1.0.0",
+  "description": "Prepare for job interviews with our video chatbot, get feedback on your interview answers, get your programming skills up to scratch with our coding challenges and build yourself the perfect CV and cover letter to land your dream job!",
+  "main": "index.js",
+  "scripts": {
+    "install": "cd client && npm i . && cd ../server && npm i .",
+    "server": "npx ts-node server/src/server.ts",
+    "client": "cd client && npm start && cd .. ",
+    "start:server-client": "concurrently \"npm run server\" \"npm run client \""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Interview-Mate/Prep-d"
+  },
+  "keywords": [],
+  "authors": {
+    "Boryana Mincheva": "https://github.com/BoryBo",
+    "Colin Howard": "https://github.com/colinhoward89",
+    "Darian Pirowhedayati": "https://github.com/DarianPiro",
+    "David Chamberlain": "https://github.com/DRC222",
+    "Elise Verhoeye": "https://github.com/huntingforelise",
+    "Sarah Lash": "https://github.com/Sarahlash92"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
