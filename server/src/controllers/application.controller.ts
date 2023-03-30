@@ -5,7 +5,28 @@ import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
 
 
-// import pdf from '../libs/pdf-parse';
+ import pdf from '../libs/pdf-parse';
+
+declare function PdfParse(dataBuffer: Buffer, options?: PdfParse.Options): Promise<PdfParse.Result>;
+
+declare namespace PdfParse {
+    type Version = 'default' | 'v1.9.426' | 'v1.10.100' | 'v1.10.88' | 'v2.0.550';
+    interface Result {
+        numpages: number;
+        numrender: number;
+        info: any;
+        metadata: any;
+        version: Version;
+        text: string;
+    }
+    interface Options {
+        pagerender?: ((pageData: any) => string) | undefined;
+        max?: number | undefined;
+        version?: Version | undefined;
+    }
+}
+
+
 import { Configuration, OpenAIApi } from 'openai';
 
 const openai = new OpenAIApi(
@@ -46,8 +67,8 @@ const createResume = async (req: Request, res: Response) => {
 
 const getPdfReview = async (req: Request | any, res: Response) => {
   try {
-    //let data = await pdf(req.files.file.data)
-    let data = {text: 'placeholder'};
+    let data = await pdf(req.files.file.data)
+    //let data = {text: 'placeholder'};
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: `Review my cover letter: ${data.text}.Rate on a 0-5 scale. Write a text about the quality of the cover letter. Give examples what to improve. The format shoud be: 'Rating: number. Review: review text. Improvement: improvements.'`,
