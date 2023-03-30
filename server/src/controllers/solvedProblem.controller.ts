@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 
 const addSolvedProblem = async (req: Request, res: Response) => {
   try {
- 
+
     let alreadySolved = await SolvedProblem.find({
       $and: [
         { user_id: req.body.user_id },

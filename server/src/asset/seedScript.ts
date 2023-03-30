@@ -1,7 +1,5 @@
 import Exercise from "../models/exercise"
-//WARN:
-// This function populates the "exercises" collection in the database.
-// It needs to be executed only once before starting interacting with that collection.
+//WARN: This function populates the "exercises" collection in the database.
 
 async function populateExerciseCollection () {
   try {

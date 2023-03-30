@@ -4,6 +4,9 @@ import { Request, Response } from 'express';
 const getAllExercises = async (req: Request, res: Response) => {
   try {
     const allExercises = await Exercise.find();
+    if(allExercises.length < 1){
+      throw new Error ('No coding challenges found')
+    }
      res
       .status(200)
       .json(allExercises);
@@ -20,7 +23,7 @@ const getExercise = async (req: Request, res: Response) => {
     const id = req.params.id;
     const result = await Exercise.findById(id);
     if (!result) {
-      throw new Error('Exercise not found');
+      throw new Error('Challenge not found');
     }
     res
       .status(200)
