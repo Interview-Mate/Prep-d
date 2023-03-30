@@ -12,7 +12,7 @@
     "server": "npx ts-node src/server.ts",
     "ts-server": "nodemon --watch './**/*.ts' --exec 'ts-node' src/server.ts",
     "buildDeploy": "npm i && tsc",
-    "start": "node ./dist/index.js"
+    "start": "ls && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
