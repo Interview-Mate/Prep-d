@@ -16,10 +16,11 @@ touch .env.local
 In this file, you will need to store your Cloudinary keys:
 
 ```bash
-REACT_APP_CLOUDINARY_API_KEY="xxx"
-REACT_APP_CLOUDINARY_API_SECRET="xxx"
-REACT_APP_CLOUDINARY_CLOUD_NAME="xxx"
-REACT_APP_CLOUDINARY_UPLOAD_PRESET="xxx"
+REACT_APP_CLOUDINARY_CLOUD_NAME=
+REACT_APP_CLOUDINARY_API_KEY=
+REACT_APP_CLOUDINARY_API_SECRET=
+REACT_APP_CLOUDINARY_UPLOAD_PRESET=
+
 ```
 
 In the `/server` folder, create a file called .env:
@@ -31,10 +32,11 @@ touch .env
 In this file, you will need to store your Cloudinary and OpenAI keys:
 
 ```bash
-REACT_APP_CLOUDINARY_API_KEY="xxx"
-REACT_APP_CLOUDINARY_API_SECRET="xxx"
-REACT_APP_CLOUDINARY_UPLOAD_PRESET="xxx"
-chatGPT_key=xxx
+NODE_ENV=
+SERVER_PORT=
+MONGODB_URI=
+chatGPT_key=
+
 ```
 
 ## Running the app
