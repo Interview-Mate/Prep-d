@@ -11,7 +11,6 @@ const PORT: number = Number(process.env.SERVER_PORT) || 4000;
 (async () => {
   try {
     await dbConnection;
-
     console.log('Connected to DB');
 
     const exercises = await Exercise.find();

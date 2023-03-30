@@ -12,6 +12,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 };
 
 const createUser = async (req: Request, res: Response) => {
+  //TODO ERROR ?? //409
   try {
     const user = await User.create(req.body);
     console.log('User created', user);

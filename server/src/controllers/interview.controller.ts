@@ -13,7 +13,7 @@ const openai = new OpenAIApi(
   })
 );
 
-const getInterviewsByUser = async function (req: Request, res: Response) {
+const getInterviewsByUser = async (req: Request, res: Response) => {
   try {
     if(req.params.userId.length !== 24){
       throw new Error ('The user ID is either missing or invalid.')
@@ -137,12 +137,13 @@ function addHintForChatGPT (inp: any, question_count: number){
 }
 
 //! FE => updateInterview - url/:interview_id/answer` => (interview_id, question_text, answer_audio_url, answer_text, feedback, score)
-//? FE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
-//adds user answer to DB => returnts next question from chatGPT
-const addAnswerToInterview = async (req: Request, res: Response, question_count: number) => {
+//? BE => router.put("/interview/:id/questions", interviewCont.addAnswerToInterview);
+//(adds user answer to DB => returnts next question from chatGPT) x 7 times || question_count
+const addAnswerToInterview = async (req: Request, res: Response) => {
   try {
     const interview_id = req.params.id;
     const { answer_text, answer_audio_url, question_count } = req.body;
+
     const newInteraction = {
       role: "user",
       cloudinary_url: answer_audio_url,
@@ -155,12 +156,10 @@ const addAnswerToInterview = async (req: Request, res: Response, question_count:
       { new: true }
     );
 
-
-
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       //@ts-ignore
-      messages: interview.conversation.map((x) => {
+      messages: interview?.conversation.map((x) => {
         return {
           role: x.role,
           content: x.role == 'user' ? addHintForChatGPT(x.content, question_count) : x.content };
@@ -195,7 +194,8 @@ const addAnswerToInterview = async (req: Request, res: Response, question_count:
   }
 };
 
-function checkContent(objInConversation: any) {
+
+function checkRoleAndParseMessage(objInConversation: any) {
   if (objInConversation.role === "user") {
     return {
       interviewee: objInConversation.content,
@@ -219,6 +219,8 @@ function checkContent(objInConversation: any) {
   }
 }
 
+//? BE: router.post("/interview-rating/:id", interviewCont.getInterviewRating);
+//sends the entire converstion to chat gpt and returns overall feedback and rating
 const getInterviewRating = async (req: Request, res: Response) => {
   try {
     let id = req.params.id;
@@ -230,7 +232,7 @@ const getInterviewRating = async (req: Request, res: Response) => {
 
 
     let entireConversation: any = result.conversation.map((x) =>
-      checkContent(x)
+      checkRoleAndParseMessage(x)
     );
 
     let jsons = entireConversation.map((x) => JSON.stringify(x));
@@ -264,7 +266,6 @@ const getInterviewRating = async (req: Request, res: Response) => {
       );
     }
 
-    // console.log(finalFeedback)
     res.status(200).json(response.data.choices[0].message?.content);
   } catch (err: any) {
     res.status(500).json(err.message);
