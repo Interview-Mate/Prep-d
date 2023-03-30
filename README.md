@@ -1,3 +1,4 @@
+
 # Prep'd
 
 Prepare for job interviews with our video chatbot, get feedback on your interview answers, get your programming skills up to scratch with our coding challenges and build yourself the perfect CV and cover letter to land your dream job!
@@ -15,10 +16,11 @@ touch .env.local
 In this file, you will need to store your Cloudinary keys:
 
 ```bash
-REACT_APP_CLOUDINARY_API_KEY="xxx"
-REACT_APP_CLOUDINARY_API_SECRET="xxx"
-REACT_APP_CLOUDINARY_CLOUD_NAME="xxx"
-REACT_APP_CLOUDINARY_UPLOAD_PRESET="xxx"
+REACT_APP_CLOUDINARY_CLOUD_NAME=
+REACT_APP_CLOUDINARY_API_KEY=
+REACT_APP_CLOUDINARY_API_SECRET=
+REACT_APP_CLOUDINARY_UPLOAD_PRESET=
+
 ```
 
 In the `/server` folder, create a file called .env:
@@ -30,13 +32,28 @@ touch .env
 In this file, you will need to store your Cloudinary and OpenAI keys:
 
 ```bash
-REACT_APP_CLOUDINARY_API_KEY="xxx"
-REACT_APP_CLOUDINARY_API_SECRET="xxx"
-REACT_APP_CLOUDINARY_UPLOAD_PRESET="xxx"
-chatGPT_key=xxx
+NODE_ENV=
+SERVER_PORT=
+MONGODB_URI=
+chatGPT_key=
+
 ```
 
 ## Running the app
+In order to install all the required dependencies, open a terminal from the root folder and run:
+```bash
+npm install
+```
+Once the installation is completed, simply run:
+
+```bash
+npm run start:server-client
+```
+
+To obtain a comprehensive summary of the API endpoints, please refer to this [Postman collection](https://documenter.getpostman.com/view/25563730/2s93RRvskj).
+
+
+## Alternatively:
 
 ### Back End
 
@@ -49,7 +66,7 @@ Change line 6 to:
 
 let isDebugMode = false;
 
-Once this is done, run `npm start` to initiate the server on port 4000.
+Once this is done, run `npm run server` to initiate the server on port 4000.
 
 ### Front End
 

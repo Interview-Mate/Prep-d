@@ -1,10 +1,10 @@
-import type {Config} from 'jest';
+import type {Config} from "jest";
 
 const config: Config = {
   verbose: true,
-//   collectCoverage: true,
-//  coverageDirectory: "coverage",
- "preset": "ts-jest",
+  //   collectCoverage: true,
+  //  coverageDirectory: "coverage",
+  "preset": "ts-jest",
   // coveragePathIgnorePatterns: [
   //   "/node_modules/"
   // ],
@@ -19,21 +19,21 @@ const config: Config = {
   ],
 
   // An array of file extensions your modules use
-   moduleFileExtensions: [
-     "js",
-     "mjs",
-     "cjs",
-     "jsx",
-     "ts",
-     "tsx",
+  moduleFileExtensions: [
+    "js",
+    "mjs",
+    "cjs",
+    "jsx",
+    "ts",
+    "tsx",
   //   "json",
   //   "node"
   ],
 
   // The test environment that will be used for testing
-   testEnvironment: "node",
+  testEnvironment: "node",
 
-   transform: {
+  transform: {
     "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest"
   },
 
