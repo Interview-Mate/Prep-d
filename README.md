@@ -48,6 +48,9 @@ Once the installation is completed, simply run:
 npm run start:server-client
 ```
 
+To obtain a comprehensive summary of the API endpoints, please refer to this [Postman collection](https://documenter.getpostman.com/view/25563730/2s93RRvskj).
+
+
 ## Alternatively:
 
 ### Back End
@@ -61,7 +64,7 @@ Change line 6 to:
 
 let isDebugMode = false;
 
-Once this is done, run `npm start` to initiate the server on port 4000.
+Once this is done, run `npm run server` to initiate the server on port 4000.
 
 ### Front End
 
