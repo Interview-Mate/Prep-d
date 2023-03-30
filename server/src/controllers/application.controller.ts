@@ -5,7 +5,7 @@ import CoverLetter from '../models/coverLetter';
 import { Request, Response } from 'express';
 
 
- import pdf from '../libs/pdf-parse';
+ import pdf from 'pdf-parse';
 
 declare function PdfParse(dataBuffer: Buffer, options?: PdfParse.Options): Promise<PdfParse.Result>;
 
