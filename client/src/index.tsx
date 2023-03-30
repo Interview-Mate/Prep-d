@@ -1,22 +1,25 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Auth0Provider } from "@auth0/auth0-react";
-import { ContextProvider } from "./Context";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { ContextProvider } from './Context';
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
+const url = process.env.REACT_APP_AUTH0_REDIRECT_URI;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN as string}
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID as string}
+      domain={domain as string}
+      clientId={clientId as string}
       authorizationParams={{
-        redirect_uri: process.env.REACT_APP_AUTH0_REDIRECT_URI as string,
+        redirect_uri: url,
       }}
     >
       <ContextProvider>
