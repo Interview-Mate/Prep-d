@@ -17,6 +17,16 @@ Prep'd offers a comprehensive suite of features that are designed to help job se
 
 Whether you're just starting your job search or looking to take your career to the next level, Prep'd is the ultimate tool for success. With cutting-edge technology and personalized guidance, you'll be ready to ace any job interview and land the job of your dreams.
 
+## Table of Contents
+
+- [Prep'd](#prepd)
+  - [Getting Started](#getting-started)
+  - [Running the app](#running-the-app)
+  - [Alternatively:](#alternatively)
+    - [Back End](#back-end)
+    - [Front End](#front-end)
+  - [Tech Stack](#tech-stack)
+  - [Authors](#authors)
 
 ## Getting Started
 
