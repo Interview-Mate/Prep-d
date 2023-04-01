@@ -5,15 +5,15 @@ Looking to ace your next job interview and land your dream job? Look no further 
 
 Prep'd offers a comprehensive suite of features that are designed to help job seekers build the skills, confidence, and materials they need to succeed in today's competitive job market. With Prep'd, users can:
 
-Engage with an interactive 3D chatbot that simulates a job interview, providing personalized feedback and recommendations on how to improve their responses.
+-  Engage with an interactive 3D chatbot that simulates a job interview, providing personalized feedback and recommendations on how to improve their responses.
 
-Sharpen their programming skills with a variety of coding challenges, evaluated in a safe sandbox environment.
+-  Sharpen their programming skills with a variety of coding challenges, evaluated in a safe sandbox environment.
 
-Create the perfect cover letter, tailored to their specific experience and job requirements, with the help of our AI-powered generator.
+-  Create the perfect cover letter, tailored to their specific experience and job requirements, with the help of our AI-powered generator.
 
-Review their existing cover letter and receive critiques and recommendations as well as generate an optimized version, ensuring that it stands out from the crowd and highlights their unique qualifications.
+-  Review an existing cover letter and receive critiques and recommendations as well as generate an optimized version, ensuring that it stands out from the crowd and highlights their unique qualifications.
 
-Track their progress and insights, gaining valuable feedback on their skills and improvements over time.
+-  Track their progress and insights, gaining valuable feedback on their skills and improvements over time.
 
 Whether you're just starting your job search or looking to take your career to the next level, Prep'd is the ultimate tool for success. With cutting-edge technology and personalized guidance, you'll be ready to ace any job interview and land the job of your dreams.
 
@@ -78,8 +78,7 @@ Once in the client folder, install all dependencies using `npm i`. Then, run `np
 
 ## Tech Stack
 
-Frontend: [![React](https://img.shields.io/badge/React-blue?logo=react&logoColor=white)](https://reactjs.org/) [![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![Monaco Code Editor](https://img.shields.io/badge/Monaco%20Code%20Editor-blue?logo=visual-studio-code&logoColor=white)](https://microsoft.github.io/monaco-editor/) [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-blue?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![Flowbite](https://img.shields.io/badge/Flowbite-blue?logo=flow&logoColor=white)](https://flowbite.com/)
-[![React PDF Renderer](https://img.shields.io/badge/React%20PDF%20Renderer-blue?logo=react&logoColor=white)](https://react-pdf.org/)
+Frontend: [![React](https://img.shields.io/badge/React-blue?logo=react&logoColor=white)](https://reactjs.org/) [![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![Monaco Code Editor](https://img.shields.io/badge/Monaco%20Code%20Editor-blue?logo=visual-studio-code&logoColor=white)](https://microsoft.github.io/monaco-editor/) [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-blue?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![React PDF Renderer](https://img.shields.io/badge/React%20PDF%20Renderer-blue?logo=react&logoColor=white)](https://react-pdf.org/)
 [![ChartJS](https://img.shields.io/badge/ChartJS-blue?logo=chartjs&logoColor=white)](https://www.chartjs.org/)
 
 Backend: [![Express.js](https://img.shields.io/badge/Express.js-grey?logo=express&logoColor=white)](https://expressjs.com/) [![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![MongoDB](https://img.shields.io/badge/MongoDB-green?logo=mongodb&logoColor=white)](https://www.mongodb.com/) [![Mongoose](https://img.shields.io/badge/Mongoose-green?logo=mongodb&logoColor=white)](https://mongoosejs.com/) [![OpenAI](https://img.shields.io/badge/OpenAI-grey?logo=openai&logoColor=white)](https://openai.com/) 
