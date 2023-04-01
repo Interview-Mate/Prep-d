@@ -39,7 +39,7 @@ In the `/client` folder, create a file called .env.local:
 touch .env.local
 ```
 
-Copy the contents of the .env.sample file into the .env.local file and add your data:
+Copy the contents of the .env.sample file into the .env file and add your data
 
 
 In the `/server` folder, create a file called .env:
@@ -48,7 +48,8 @@ In the `/server` folder, create a file called .env:
 touch .env
 ```
 
-Copy the contents of the .env.sample file into the .env file and add your data:
+Copy the contents of the .env.sample file into the .env file and add your data
+
 
 ## Running the app
 In order to install all the required dependencies, open a terminal from the root folder and run:
