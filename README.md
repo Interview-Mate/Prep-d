@@ -1,9 +1,11 @@
 
 # Prep'd
 
+
 <p>
 <img src="https://res.cloudinary.com/dc3ejnypr/image/upload/v1680514904/interviewMate/henllagcultgl8u9e0cf.png"  height="700" alt='prepd login screen'>
 </p>
+
 
 Looking to ace your next job interview and land your dream job? Look no further than Prep'd – the revolutionary app that transforms job interview preparation into an immersive and effective experience.
 
@@ -23,6 +25,7 @@ Whether you're just starting your job search or looking to take your career to t
 
 ## Table of Contents
 
+
 - [Getting Started](#getting-started)
 - [Running the app](#running-the-app)
 - [Alternatively:](#alternatively)
@@ -30,6 +33,7 @@ Whether you're just starting your job search or looking to take your career to t
   - [Front End](#front-end)
 - [Tech Stack](#tech-stack)
 - [Authors](#authors)
+
 
 ## Getting Started
 
