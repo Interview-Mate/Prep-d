@@ -2,7 +2,7 @@
 # Prep'd
 
 <p>
-<img src="https://res.cloudinary.com/dc3ejnypr/image/upload/v1680514904/interviewMate/henllagcultgl8u9e0cf.png"  height="500" alt='prepd login screen'>
+<img src="https://res.cloudinary.com/dc3ejnypr/image/upload/v1680514904/interviewMate/henllagcultgl8u9e0cf.png"  height="700" alt='prepd login screen'>
 </p>
 
 Looking to ace your next job interview and land your dream job? Look no further than Prep'd – the revolutionary app that transforms job interview preparation into an immersive and effective experience.
