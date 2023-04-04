@@ -1,0 +1,3 @@
+[submodule "server/src/libs/pdf-parse"]
+	path = server/src/libs/pdf-parse
+	url = https://github.com/DarianPiro/pdf-parse.git

@@ -3,10 +3,10 @@ config();
 
 import { Request, Response } from "express";
 
-// // @ts-ignore
-// import pdfLocal from "../libs/pdf-parse";
+// @ts-ignore
+import pdf from "../libs/pdf-parse";
 
-import pdf from "pdf-parse";
+// import pdf from "pdf-parse";
 
 import { Configuration, OpenAIApi } from "openai";
 
