@@ -1,13 +1,13 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
-import express, { Express, Request, Response } from "express";
-import fileUpload from "express-fileupload";
-import cors from "cors";
-import router from "./router";
-import mongoSanitize from "express-mongo-sanitize";
-import rateLimit from "express-rate-limit";
-import helmet from "helmet";
+import express, { Express, Request, Response } from 'express';
+import fileUpload from 'express-fileupload';
+import cors from 'cors';
+import router from './router';
+import mongoSanitize from 'express-mongo-sanitize';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
 
 dotenv.config();
