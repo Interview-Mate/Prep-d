@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import { Request, Response } from "express";
 
 const punctuate = async (req: Request, res: Response) => {
@@ -8,7 +8,6 @@ const punctuate = async (req: Request, res: Response) => {
     const punctuatedText = response.data;
     res.json({ punctuatedText });
   } catch (error) {
-    // console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

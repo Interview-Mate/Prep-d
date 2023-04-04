@@ -1,11 +1,11 @@
- export type Interview  = {
+export type Interview  = {
   user_id: string;
   company: string;
   field: string;
   title: string,
   date: Date;
   conversation: QorA[];
-  overall: any[] ;
+  overall: string[] ;
 };
 
 export type QorA = {
@@ -27,14 +27,14 @@ export type Exercise = {
   description: string;
   hint: string;
   function: string;
-  solution1: any[];
-  solution2: any[];
-  solution3: any[];
+  solution1: string[];
+  solution2: string[];
+  solution3: string[];
   language: string;
   level: number;
 
 }
-export type SolvedProblem = {
+export type SolvedProblemT = {
   user_id: string;
   problem_id: string;
   solution: string;

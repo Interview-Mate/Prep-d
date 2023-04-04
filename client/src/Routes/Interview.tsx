@@ -1,3 +1,4 @@
+Interview.tsx
 import { useContext, useEffect, useRef } from "react";
 import { Context } from "../Context";
 import Navbar from "../Components/Navbar";
@@ -11,16 +12,10 @@ import AvatarWebCam from "../Components/Interview/AvatarWebCam";
 import InterviewFeedback from "../Components/InterviewFeedback";
 import MrBPrep from "../Assets/MrBPrep.png";
 import Spinner from "../Components/Spinner";
-
 import { all } from "q";
-
-
-
 export default function Interview() {
   const { currentUser } = useContext(Context) as any;
-
   console.log(currentUser);
-
   const [formValues, setFormValues] = useState<InterviewFormValues>({
     jobLevel: "",
     companyName: "",
@@ -28,8 +23,6 @@ export default function Interview() {
     jobTitle: "",
     video: true,
   });
-
-
   const [showInterviewForm, setShowInterviewForm] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [interviewId, setInterviewId] = useState("");
@@ -44,35 +37,25 @@ export default function Interview() {
   const [suggestions, setSuggestions] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
-
-
-    //to delay the loading of the avatar  
-  
+    //to delay the loading of the avatar 
     const [isUserWebCamLoaded, setIsUserWebCamLoaded] = useState(false);
-
-
     const handleUserWebCamLoaded = () => {
       setTimeout(() => {
         setIsUserWebCamLoaded(true);
-      }, 3000); 
+      }, 3000);
     };
-  
-
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
   }, [conversation]);
-
   const handleFormSubmit = async (values: InterviewFormValues) => {
     setFormValues(values);
     setFormSubmitted(true);
     setShowInterviewForm(false);
     await newInterview(values);
   };
-
   const newInterview = async (values: InterviewFormValues) => {
     setIsInterviewerSpeaking(true);
     const res = await ApiService.createInterview(
@@ -89,7 +72,6 @@ export default function Interview() {
       await getQuestion(res._id, values);
     }
   };
-
   const getQuestion = async (id: string, values: InterviewFormValues) => {
     const res = await ApiService.retrieveQuestion({
       id: id,
@@ -102,7 +84,6 @@ export default function Interview() {
       nextQuestion(res, values);
     }
   };
-
   const nextQuestion = (res: string, values: InterviewFormValues) => {
     console.log("res in next question", res);
     if (values.video === true) {
@@ -115,7 +96,6 @@ export default function Interview() {
       setIsInterviewerSpeaking(false);
     }
   };
-
   const endInterview = async (res: string, formValues: InterviewFormValues) => {
     try {
       setIsLoading(true);
@@ -134,7 +114,6 @@ export default function Interview() {
       console.log(error);
     }
   };
-
   const saveUserResponse = async (audioUrl: string, transcript: string) => {
     try {
       if (!audioUrl) {
@@ -150,8 +129,7 @@ export default function Interview() {
         transcript,
         questionCount
       );
-
-      if (questionCount < 8) {
+      if (questionCount < 3) {
         setQuestionCount((count) => count + 1);
         nextQuestion(res, formValues);
       } else {
@@ -161,7 +139,6 @@ export default function Interview() {
       console.log(error);
     }
   };
-
   return (
     <>
       <div className="h-screen w-screen bg-seasalt">
@@ -192,7 +169,7 @@ export default function Interview() {
                   </div>
                 )}
                 {!formValues.video && (
-                  <>
+                  <div className="flex flex-col justify-center items-center">
                       <div className="interviewer-header">
                         <div className="speech-title-container">
                           <img src={MrBPrep} className="avatar avatar-interviewer" alt="Interviewer Avatar" />
@@ -221,7 +198,7 @@ export default function Interview() {
                           </div>
                         ))}
                       </div>
-                  </>
+                  </div>
                 )}
                 {!interviewEnd ? (
                   <div>

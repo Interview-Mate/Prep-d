@@ -1,4 +1,4 @@
-import {mongoose} from './index.models';
+import {mongoose} from "./index.models";
 
 // levels = {
 //   1: 'Beginner',
@@ -19,7 +19,7 @@ const exerciseSchema = new mongoose.Schema({
   level: Number,
 });
 
-const Exercise = mongoose.model('Exercise', exerciseSchema);
+const Exercise = mongoose.model("Exercise", exerciseSchema);
 export default Exercise;
 
 

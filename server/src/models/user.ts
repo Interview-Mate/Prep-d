@@ -20,10 +20,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  level: { // TODO: do we need level here?
-    type: String,
-    required: true,
-  },
+  level: String,
   image: {
     type: String,
     required: false,

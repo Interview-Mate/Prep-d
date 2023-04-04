@@ -1,4 +1,4 @@
-import {mongoose} from './index.models';
+import {mongoose} from "./index.models";
 
 const solvedProblemSchema = new mongoose.Schema({
   user_id: {
@@ -18,7 +18,7 @@ const solvedProblemSchema = new mongoose.Schema({
   solveTime: Number
 });
 
-const SolvedProblem = mongoose.model('SolvedProblem', solvedProblemSchema);
+const SolvedProblem = mongoose.model("SolvedProblem", solvedProblemSchema);
 export default SolvedProblem;
 
 
