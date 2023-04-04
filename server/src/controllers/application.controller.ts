@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 // // @ts-ignore
 // import pdfLocal from "../libs/pdf-parse";
 
-import pdfDeployed from "pdf-parse";
+import pdf from "pdf-parse";
 
 import { Configuration, OpenAIApi } from "openai";
 
@@ -48,10 +48,10 @@ const createResume = async (req: Request, res: Response) => {
 
 const getPdfReview = async (req: Request | any, res: Response) => {
   try {
-    let data;
-    if (process.env.NODE_ENV === "development")
-      data = await pdfLocal(req.files.file.data);
-    else data = await pdfDeployed(req.files.file.data);
+    let data = await pdf(req.files.file.data)
+    // if (process.env.NODE_ENV === "development")
+    //   data = await pdfLocal(req.files.file.data);
+    // else data = await pdfDeployed(req.files.file.data);
 
     const response = await openai.createCompletion({
       model: "text-davinci-003",
