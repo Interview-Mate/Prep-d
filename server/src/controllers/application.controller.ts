@@ -3,8 +3,8 @@ config();
 
 import { Request, Response } from "express";
 
-// @ts-ignore
-import pdfLocal from "../libs/pdf-parse";
+// // @ts-ignore
+// import pdfLocal from "../libs/pdf-parse";
 
 import pdfDeployed from "pdf-parse";
 
