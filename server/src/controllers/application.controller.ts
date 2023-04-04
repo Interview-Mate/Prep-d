@@ -3,7 +3,7 @@ config();
 
 import { Request, Response } from "express";
 
-// ts-ignore
+// @ts-ignore
 import pdf from "../libs/pdf-parse/index.js";
 
 // import pdf from "pdf-parse";
