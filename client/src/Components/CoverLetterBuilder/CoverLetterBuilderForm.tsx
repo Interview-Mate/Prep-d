@@ -1,4 +1,5 @@
-import { Accordion } from "flowbite-react";
+import { Accordion } from 'flowbite-react';
+import Button from '../Button';
 
 function CoverLetterBuilderForm({
   CoverLetterData,
@@ -29,23 +30,25 @@ function CoverLetterBuilderForm({
   };
 
   return (
-    <div className="shadow mr-8 p-4 h-full min-h-max w-full flex flex-col bg-white text-sm">
-      <h2 className='text-center text-xl mb-5 font-bold'>Cover Letter Generator</h2>
-      <form onSubmit={handleSubmit} className="mb-0">
+    <div className='shadow mr-8 p-4 h-full min-h-max w-full flex flex-col bg-white text-sm'>
+      <h2 className='text-center text-xl mb-5 font-bold'>
+        Cover Letter Generator
+      </h2>
+      <form onSubmit={handleSubmit} className='mb-0'>
         <Accordion collapseAll={true}>
           <Accordion.Panel>
             <Accordion.Title>Your Details</Accordion.Title>
             <Accordion.Content>
               <label
-                className="block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1"
-                htmlFor="firstName"
+                className='block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1'
+                htmlFor='firstName'
               >
                 First Name
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="firstName"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='firstName'
                 value={CoverLetterData.firstName}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -56,15 +59,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="lastName"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='lastName'
               >
                 Last Name
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="lastName"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='lastName'
                 value={CoverLetterData.lastName}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -75,15 +78,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="email"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='email'
               >
                 Email
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="email"
-                id="email"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='email'
+                id='email'
                 value={CoverLetterData.email}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -94,15 +97,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="phoneNumber"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='phoneNumber'
               >
                 Phone Number
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="tel"
-                id="phoneNumber"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='tel'
+                id='phoneNumber'
                 value={CoverLetterData.phoneNumber}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -113,15 +116,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="street"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='street'
               >
                 Street
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="street"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='street'
                 value={CoverLetterData.street}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -132,15 +135,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="city"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='city'
               >
                 City
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="city"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='city'
                 value={CoverLetterData.city}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -151,15 +154,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="zipCode"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='zipCode'
               >
                 Zip Code
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="zipCode"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='zipCode'
                 value={CoverLetterData.zipCode}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -192,15 +195,15 @@ function CoverLetterBuilderForm({
             <Accordion.Title>Job details</Accordion.Title>
             <Accordion.Content>
               <label
-                className="block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1"
-                htmlFor="jobTitle"
+                className='block text-gray-700 text-sm font-bold mt-5 mb-2 ml-1'
+                htmlFor='jobTitle'
               >
                 Job Title
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="jobTitle"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='jobTitle'
                 value={CoverLetterData.jobTitle}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -211,15 +214,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Position
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="position"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='position'
                 value={CoverLetterData.position}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -230,15 +233,15 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Company
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                id="company"
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                id='company'
                 value={CoverLetterData.company}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -249,16 +252,16 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Start Date
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="date"
-                id="startDate"
-                min={new Date().toISOString().split("T")[0]}
+                className='shadow appearance-none border rounded w-full py-1 px-2  text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='date'
+                id='startDate'
+                min={new Date().toISOString().split('T')[0]}
                 value={CoverLetterData.startDate}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -269,14 +272,14 @@ function CoverLetterBuilderForm({
               />
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="company"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='company'
               >
                 Description
                 <textarea
-                  className="shadow appearance-none border rounded w-full py-1 px-2 mt-2 mb-3 text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-normal"
+                  className='shadow appearance-none border rounded w-full py-1 px-2 mt-2 mb-3 text-base text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-normal'
                   value={CoverLetterData.description}
-                  id="description"
+                  id='description'
                   onChange={(e) =>
                     setCoverLetterData({
                       ...CoverLetterData,
@@ -284,7 +287,7 @@ function CoverLetterBuilderForm({
                     })
                   }
                 />
-              </label>{" "}
+              </label>{' '}
               <br />
             </Accordion.Content>
           </Accordion.Panel>
@@ -292,15 +295,15 @@ function CoverLetterBuilderForm({
             <Accordion.Title>Work experience</Accordion.Title>
             <Accordion.Content>
               <label
-                className="block text-gray-700 text-sm font-bold mt-3 mb-2 ml-1"
-                htmlFor="workExperience"
+                className='block text-gray-700 text-sm font-bold mt-3 mb-2 ml-1'
+                htmlFor='workExperience'
               >
                 Work Experience
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 value={CoverLetterData.workExperience}
-                id="workExperience"
+                id='workExperience'
                 rows={5}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -308,18 +311,18 @@ function CoverLetterBuilderForm({
                     workExperience: e.target.value,
                   })
                 }
-              />{" "}
+              />{' '}
               <br />
               <label
-                className="block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1"
-                htmlFor="Qualification"
+                className='block text-gray-700 text-sm font-bold mt-2 mb-2 ml-1'
+                htmlFor='Qualification'
               >
                 Qualification
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3  mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className='shadow appearance-none border rounded w-full py-2 px-3  mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 value={CoverLetterData.qualification}
-                id="Qualification"
+                id='Qualification'
                 rows={3}
                 onChange={(e) =>
                   setCoverLetterData({
@@ -327,46 +330,41 @@ function CoverLetterBuilderForm({
                     qualification: e.target.value,
                   })
                 }
-              />{" "}
+              />{' '}
             </Accordion.Content>
           </Accordion.Panel>
           <Accordion.Panel>
             <Accordion.Title>Keywords</Accordion.Title>
             <Accordion.Content>
-              <div className="mt-2  ">
+              <div className='mt-2  '>
                 {CoverLetterData.keywords.map((keyword: any) => (
                   <label
                     key={keyword}
                     htmlFor={keyword}
-                    className="block text-gray-700 text-sm mb-2 "
+                    className='block text-gray-700 text-sm mb-2 '
                   >
                     <input
-                      className="w-4 h-4 text-african-violet-900  border-gray-300 rounded focus:ring-african-violet-900 dark:focus:ring-african-violet-900 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className='w-4 h-4 text-african-violet-900  border-gray-300 rounded focus:ring-african-violet-900 dark:focus:ring-african-violet-900 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                       id={keyword}
-                      type="checkbox"
+                      type='checkbox'
                       value={keyword}
                       checked={CoverLetterData.selectedKeywords.includes(
                         keyword
                       )}
                       onChange={handleKeywordChange}
                     />
-                    <span className="ml-2">{keyword}</span>
+                    <span className='ml-2'>{keyword}</span>
                   </label>
                 ))}
-              </div>{" "}
+              </div>{' '}
               <br />
             </Accordion.Content>
           </Accordion.Panel>
         </Accordion>
         <br />
 
-        <div className="flex items-center justify-center">
-          <button
-            className="w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium"
-            type="submit"
-          >
-            Generate
-          </button>
+        <div className='flex items-center justify-center'>
+          <Button>Generate</Button>
         </div>
       </form>
     </div>

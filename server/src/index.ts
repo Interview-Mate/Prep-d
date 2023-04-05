@@ -1,35 +1,31 @@
+
 import dotenv from "dotenv";
 dotenv.config();
 
-import express, { Express, Request, Response } from "express";
-import fileUpload from "express-fileupload";
-import cors from "cors";
-import router from "./router";
-import mongoSanitize from "express-mongo-sanitize";
-import rateLimit from "express-rate-limit";
-import helmet from "helmet";
+
+import { dbConnection } from './models/index.models';
+import Exercise from './models/exercise';
+import populateExerciseCollection from './asset/seedScript';
+import app from "./index-test";
 
 
-dotenv.config();
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
-const app: Express = express();
 const PORT: number = Number(process.env.SERVER_PORT) || 4000;
+(async () => {
+  try {
+    await dbConnection;
 
-app
-  .use(cors())
-  .use(fileUpload())
-  .use(express.json({ limit: "50mb" })) 
-  .use(router)
-  .use(mongoSanitize())
-  .use(limiter)
-  .use(helmet());
+    console.log("Connected to DB"); //eslint-disable-line no-console
+
+    const exercises = await Exercise.find();
+    if (exercises.length === 0) populateExerciseCollection();
 
 
-export default app;
+    app.listen(PORT, () => {
+      console.log(`Server running at http://localhost:${PORT}`); //eslint-disable-line no-console
+    });
+  } catch (error) {
+    console.error("Unable to connect to the database: ", error); //eslint-disable-line no-console
+
+  }
+})();
+
