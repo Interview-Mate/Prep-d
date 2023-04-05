@@ -2,6 +2,7 @@ import Interview from '../Assets/InterviewMock.JPG';
 import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import ProblemList from '../Components/Coding/ProblemList';
+import Button from '../Components/Button';
 
 export default function Dashboard() {
   return (
@@ -15,9 +16,6 @@ export default function Dashboard() {
           <div className='dashboard-elements bg-white rounded-lg shadow '>
             <ProblemList dashboard={true} />
           </div>
-          {/* <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>
-             Test your skills in Code
-            </button> */}
         </div>
 
         <div className='dashboard-elements '>
@@ -28,11 +26,9 @@ export default function Dashboard() {
               alt='Remote interview'
             />
           </Link>
-          <div className='flex flex-col items-center justify-center'>
+          <div className='flex flex-col items-center justify-center mt-5'>
             <Link to='/interview'>
-              <button className='mt-5 shadow w-full bg-dark-cyan text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>
-                Start an Interview
-              </button>
+              <Button>Start an Interview</Button>
             </Link>
           </div>
         </div>
