@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { useContext } from "react";
-import { Context } from "../../Context";
-import { Link } from "react-router-dom";
-import { getProblems, getSolvedProblems } from "../../Util/ApiService";
+import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { Context } from '../../Context';
+import { Link } from 'react-router-dom';
+import { getProblems, getSolvedProblems } from '../../Util/ApiService';
+import Button from '../Button';
 
 const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
   const { currentUser } = useContext(Context);
@@ -24,126 +25,117 @@ const ProblemList = ({ dashboard }: { dashboard: boolean }) => {
   }, [currentUser]);
 
   const level: Dict = {
-    1: "Beginner",
-    2: "Intermediate",
-    3: "Advanced",
-    4: "Expert",
+    1: 'Beginner',
+    2: 'Intermediate',
+    3: 'Advanced',
+    4: 'Expert',
   };
 
   const lang: Dict = {
-    javascript: "JS",
+    javascript: 'JS',
   };
 
   return dashboard ? (
     <div
       className={
-        "text-center rounded-2xl text-lg p-10 flex flex-col w-full justify-center bg-white"
+        'text-center rounded-2xl text-lg p-10 flex flex-col w-full justify-center bg-white'
       }
     >
-      <h2 className="text-xl mb-5 font-bold">Coding Challenges</h2>
-      <Link
-        to={"/codingtest/level/" + "beginner"}
-        className="hover:opacity-50 active:opacity-75"
-      >
-        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
-           Work on <span className="font-bold">beginner</span> challenges
-        </button>
-      </Link>
-      <Link
-        to={"/codingtest/level/" + "intermediate"}
-        className="hover:opacity-50 active:opacity-75"
-      >
-        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
-        
-        Work on <span className="font-bold">intermediate</span> challenges
-        </button>
-      </Link>
-      <Link
-        to={"/codingtest/level/" + "advanced"}
-        className="hover:opacity-50 active:opacity-75"
-      >
-        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
-        
-        Work on <span className="font-bold">advanced</span> challenges
-        </button>
-      </Link>
-      <Link
-        to={"/codingtest/level/" + "expert"}
-        className="hover:opacity-50 active:opacity-75"
-      >
-        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>   
-        
-        Work on <span className="font-bold">expert</span> challenges
-        </button>
+      <h2 className='text-xl mb-5 font-bold'>Coding Challenges</h2>
+      <div className='mt-5'>
+        <Link to={'/codingtest/level/' + 'beginner'}>
+          <Button>
+            Work on <span className='font-bold'>beginner</span> challenges
+          </Button>
         </Link>
-      <Link
-        to={"/codingtest/level/" + "all"}
-        className="hover:opacity-50 active:opacity-75"
-      >
-        <button className='mt-10 w-full py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'>     
-        Work on <span className="font-bold">all</span> challenges
-        </button>
+      </div>
+      <div className='mt-5'>
+        <Link to={'/codingtest/level/' + 'intermediate'}>
+          <Button>
+            Work on <span className='font-bold'>intermediate</span> challenges
+          </Button>
         </Link>
-       
+      </div>
+      <div className='mt-5'>
+        <Link to={'/codingtest/level/' + 'advanced'}>
+          <Button>
+            Work on <span className='font-bold'>advanced</span> challenges
+          </Button>
+        </Link>
+      </div>
+      <div className='mt-5'>
+        <Link to={'/codingtest/level/' + 'expert'}>
+          <Button>
+            Work on <span className='font-bold'>expert</span> challenges
+          </Button>
+        </Link>
+      </div>
+      <div className='mt-5'>
+        <Link to={'/codingtest/level/' + 'all'}>
+          <Button>
+            Work on <span className='font-bold'>all</span> challenges
+          </Button>
+        </Link>
+      </div>
     </div>
   ) : (
-    <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm">
-      <div className="bg-white w-fit p-10 space-y-8 rounded-lg shadow">
-        <h2 className="text-center text-xl mb-5 font-bold">
+    <div className='flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-black text-sm'>
+      <div className='bg-white w-fit p-10 space-y-8 rounded-lg shadow'>
+        <h2 className='text-center text-xl mb-5 font-bold'>
           Coding Challenges
         </h2>
-        <div className="flex items-center justify-center">
+        <div className='flex items-center justify-center'>
           <div
-            className={"text-right rounded-2xl text-lg p-10 m-5 flex flex-col"}
+            className={'text-right rounded-2xl text-lg p-10 m-5 flex flex-col'}
           >
             <Link
-              to={"/codingtest/level/" + "beginner"}
-              className="hover:opacity-50 active:opacity-75"
+              to={'/codingtest/level/' + 'beginner'}
+              className='hover:opacity-50 active:opacity-75'
             >
-              Work on <span className="font-bold">beginner</span> challenges
+              Work on <span className='font-bold'>beginner</span> challenges
             </Link>
             <Link
-              to={"/codingtest/level/" + "intermediate"}
-              className="hover:opacity-50 active:opacity-75"
+              to={'/codingtest/level/' + 'intermediate'}
+              className='hover:opacity-50 active:opacity-75'
             >
-              Work on <span className="font-bold">intermediate</span> challenges
+              Work on <span className='font-bold'>intermediate</span> challenges
             </Link>
             <Link
-              to={"/codingtest/level/" + "advanced"}
-              className="hover:opacity-50 active:opacity-75"
+              to={'/codingtest/level/' + 'advanced'}
+              className='hover:opacity-50 active:opacity-75'
             >
-              Work on <span className="font-bold">advanced</span> challenges
+              Work on <span className='font-bold'>advanced</span> challenges
             </Link>
             <Link
-              to={"/codingtest/level/" + "expert"}
-              className="hover:opacity-50 active:opacity-75"
+              to={'/codingtest/level/' + 'expert'}
+              className='hover:opacity-50 active:opacity-75'
             >
-              Work on <span className="font-bold">expert</span> challenges
+              Work on <span className='font-bold'>expert</span> challenges
             </Link>
             <Link
-              to={"/codingtest/level/" + "all"}
-              className="hover:opacity-50 active:opacity-75"
+              to={'/codingtest/level/' + 'all'}
+              className='hover:opacity-50 active:opacity-75'
             >
-              Work on <span className="font-bold">all</span> challenges
+              Work on <span className='font-bold'>all</span> challenges
             </Link>
           </div>
           <div
             className={
-              "text-left rounded-2xl text-lg p-10 m-5  h-4/5 flex flex-col"
+              'text-left rounded-2xl text-lg p-10 m-5  h-4/5 flex flex-col'
             }
           >
             {problems.map((problem) => (
               <Link
-                to={"/codingtest/" + problem._id}
+                to={'/codingtest/' + problem._id}
                 key={problem._id}
-                className="hover:opacity-50 active:opacity-75"
+                className='hover:opacity-50 active:opacity-75'
               >
-                {problem.name}{" "}
-                <span className="m-0.5 border text-black border-dark-cyan rounded-sm text-xs pl-0.5 pr-0.5">
+                {problem.name}{' '}
+                <span className='m-0.5 border text-black border-dark-cyan rounded-sm text-xs pl-0.5 pr-0.5'>
                   {level[problem.level]}
                 </span>
                 {solvedIds.includes(problem._id) && (
-                  <span className="m-0.5 border border-dark-cyan rounded-sm text-xs pl-0.5 pr-0.5 bg-dark-cyan text-white">
+                  <span className='m-0.5 border border-dark-cyan rounded-sm text-xs pl-0.5 pr-0.5 bg-dark-cyan text-white'>
                     Solved
                   </span>
                 )}

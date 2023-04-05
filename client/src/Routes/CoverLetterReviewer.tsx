@@ -8,6 +8,7 @@ import {
   reviewTextCoverLetter,
   improveCoverLetter,
 } from '../Util/ApiService';
+import Button from '../Components/Button';
 
 function parseReview(reviewStr: string) {
   const ratingMatch = reviewStr.match(/Rating: (\d+)/);
@@ -150,12 +151,7 @@ const CoverLetterReviewer = () => {
                     </div>
 
                     <div className='flex items-center justify-center'>
-                      <button
-                        type='submit'
-                        className='w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'
-                      >
-                        Review
-                      </button>
+                      <Button>Review</Button>
                     </div>
                   </form>
                 )}
@@ -186,12 +182,7 @@ const CoverLetterReviewer = () => {
                     </div>
 
                     <div className='flex items-center justify-center'>
-                      <button
-                        type='submit'
-                        className='w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'
-                      >
-                        Review
-                      </button>
+                      <Button>Review</Button>
                     </div>
                   </form>
                 )}
@@ -243,12 +234,9 @@ const CoverLetterReviewer = () => {
                       {improvement}
                     </div>
                   </div>
-                  <button
-                    onClick={handleImprove}
-                    className='w-fit py-2 px-4 bg-dark-cyan text-black font-bold text-black hover:bg-african-violet-900 hover:text-seasalt rounded-md px-3 py-2 text-base font-medium'
-                  >
-                    Improve
-                  </button>
+                  <div onClick={handleImprove}>
+                    <Button>Improve</Button>
+                  </div>
                 </div>
               </div>
             )}
